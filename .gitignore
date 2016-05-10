@@ -38,3 +38,6 @@ jspm_packages
 
 # remove platforms folder
 src/Frontend/platforms
+
+# remove Webstorm folder .idea
+src/Frontend/.idea
