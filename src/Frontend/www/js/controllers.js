@@ -47,4 +47,36 @@ angular.module('app.controllers', [])
 .controller('profilCtrl', function($scope) {
 
 })
+   
+.controller('anfrageBersichtCtrl', function($scope) {
+
+})
+   
+.controller('anfragenannahmeCtrl', function($scope) {
+
+})
+   
+.controller('anfrageErstellenCtrl', function($scope) {
+
+})
+   
+.controller('angebotsBersichtCtrl', function($scope) {
+
+})
+   
+.controller('anfrageErstellenBersichtCtrl', function($scope) {
+
+})
+   
+.controller('paketeCtrl', function($scope) {
+
+})
+   
+.controller('chatEinzelpersonCtrl', function($scope) {
+
+})
+   
+.controller('chatGruppenchatCtrl', function($scope) {
+
+})
  

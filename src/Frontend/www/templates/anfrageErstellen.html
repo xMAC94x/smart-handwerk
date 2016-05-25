@@ -1,0 +1,175 @@
+<ion-view title="Anfrage erstellen" id="page16" class=" ">
+    <ion-content padding="true" class="has-header">
+        <h2 id="anfrageErstellen-heading4" style="color:#000000;" class=" ">Anfrage einstellen</h2>
+        <div class="item item-body " id="anfrageErstellen-list-item-container15">
+            <p id="anfrageErstellen-markdown13" style="margin-top:0px;color:#000000;" class=" ">Some friendly
+                <strong>markdown</strong>
+            </p>
+        </div>
+        <p>This is the about view.</p>
+
+<input type="checkbox" class="auswahl" id="ch1" ng-model="showMyText1" ng-init="showMyText1 = false">
+<label for="ch1">Boden</label><br/>
+<div class="divEbene1" ng-show="showMyText1">
+    <span ng-init="showMyText11 = false">
+          <input type="checkbox" ng-model="showMyText11" ng-init="showMyText11 = false">Fliesen<br/>
+          <div class="divEbene1" ng-show="showMyText11">
+                <span ng-init="showMyText111 = false">
+                    <input id="ch111" type="checkbox" class="auswahl" ng-model="showMyText111" ng-init="showMyText111 = false">
+                    <label for="ch111">Eigenschaften</label><br/>
+                         <div class="divEbene1" ng-show="showMyText111">
+                               <span ng-init="showMyText1111 = false">
+                                     <input type="checkbox" ng-model="showMyText1111" ng-init="showMyText1111 = false">Farbe<br/>
+                               </span>
+                               <span ng-init="showMyText1112 = false">
+                                     <input type="checkbox" ng-model="showMyText1112" ng-init="showMyText1112 = false">Größe<br/>
+                               </span>
+                               <span ng-init="showMyText1113 = false">
+                                     <input type="checkbox" ng-model="showMyText1113" ng-init="showMyText1113 = false">Form<br/>
+                               </span>
+                               <span ng-init="showMyText1114 = false">
+                                     <input type="checkbox" ng-model="showMyText1114" ng-init="showMyText1114 = false">Fliesenmuster<br/>
+                               </span>
+                         </div>
+                </span>
+                <span ng-init="showMyText112 = false">
+                     <input id="ch112" class="auswahl" type="checkbox" ng-model="showMyText112" ng-init="showMyText112 = false">
+                     <label for="ch112">Legen und/oder kaufen</label><br/>
+                        <div class="divEbene1" ng-show="showMyText112">
+                             <input type="checkbox" ng-model="showMyText1121" ng-init="showMyText1121 = false"/>Legen<br/>
+                             <input type="checkbox" ng-model="showMyText1122" ng-init="showMyText1122 = false" />Kaufen
+
+                    </div>
+                </span>
+          </div>
+    </span>
+</div>
+
+<input id="ch2" class="auswahl" type="checkbox" ng-model="showMyText2" ng-init="showMyText2 = false">
+<label for="ch2">Sanitär</label><br/>
+<div class="divEbene1" ng-show="showMyText2">
+    <span ng-init="showMyText21 = false">
+          <input type="checkbox" ng-model="showMyText21" ng-init="showMyText21 = false">Toilette<br/>
+    </span>
+    <span ng-init="showMyText22 = false">
+          <input type="checkbox" ng-model="showMyText22" ng-init="showMyText22 = false">Pissoir<br/>
+    </span>
+    <span ng-init="showMyText23 = false">
+          <input type="checkbox" ng-model="showMyText23" ng-init="showMyText23 = false">Dusche<br/>
+                <div class="divEbene1" ng-show="showMyText23">
+                            <input type="Radio" name="Dusche" value="Vorhang"/> Vorhang<br/>
+                    <input type="Radio" name="Dusche" value="Tuer"/> Tür
+                </div>
+        
+    </span>
+    <span ng-init="showMyText24 = false">
+          <input type="checkbox" ng-model="showMyText24" ng-init="showMyText24 = false">Badewanne<br/>
+                <div class="divEbene1" ng-show="showMyText24">
+                     <input type="Radio" name="Badewanne" value="freistehend"/>freistehend<br/>
+                     <input type="Radio" name="Badewanne" value="ecke"/>Eckbadewanne<br/>
+                     <input type="Radio" name="Badewanne" value="whirlpool"/>Whirlpool<br/>
+                     <input type="Radio" name="Badewanne" value="mitDusche" ng-model="showMyText244" ng-init="showMyText244 = false"/>Mit Dusche<br/>
+                      <div class="divEbene1" ng-show="showMyText244">
+                            <input type="Radio" name="BadewanneMitDusche" value="Vorhang"/>Vorhang<br/>
+                            <input type="Radio" name="BadewanneMitDusche" value="Glaswand"/>Glaswand<br/>
+                      </div>
+                </div>
+        
+    </span>
+    <span ng-init="showMyText25 = false">
+          <input type="checkbox" ng-model="showMyText25" ng-init="showMyText25 = false">Waschbecken<br/>
+                <div class="divEbene1" ng-show="showMyText25">
+                     <input type="Radio" name="Waschbecken" value="freistehend"/>freistehend<br/>
+                     <input type="Radio" name="Waschbecken" value="tisch"/>Waschtisch<br/>
+                     Anzahl Becken: <input type="text" size="1" maxlength="1" value="1"/><br/>
+                </div>
+        
+    </span>
+    <span ng-init="showMyText26 = false">
+          <input type="checkbox" ng-model="showMyText26" ng-init="showMyText26 = false">Bidet<br/>
+    </span>
+</div>
+
+<input id="ch3" class="auswahl" type="checkbox" ng-model="showMyText3" ng-init="showMyText3 = false">
+<label for="ch3">Heizung</label><br/>
+<div class="divEbene1" ng-show="showMyText3">
+    <span ng-init="showMyText31 = false">
+          <input type="checkbox" ng-model="showMyText31" ng-init="showMyText31 = false">Handtuchheizung<br/>
+    </span>
+    <span ng-init="showMyText32 = false">
+          <input type="checkbox" ng-model="showMyText32" ng-init="showMyText32 = false">Fußbodenheizung<br/>
+    </span>
+   <span ng-init="showMyText33 = false">
+          <input type="checkbox" ng-model="showMyText33" ng-init="showMyText33 = false">Normale Heizung<br/>
+    </span>
+</div>
+
+<input id="ch4" class="auswahl" type="checkbox" ng-model="showMyText4" ng-init="showMyText4 = false">
+<label for="ch4">Schränke</label><br/>
+<div class="divEbene1" ng-show="showMyText4">
+    <span ng-init="showMyText41 = false">
+          <input type="checkbox" ng-model="showMyText41" ng-init="showMyText41 = false">Unterbauschrank<br/>
+    </span>
+    <span ng-init="showMyText42 = false">
+          <input type="checkbox" ng-model="showMyText42" ng-init="showMyText42 = false">Hängeschrank<br/>
+                 <div class="divEbene1" ng-show="showMyText42">
+                     <input type="Radio" name="Spiegel" value="ja"/>mit Spiegel<br/>
+                     <input type="Radio" name="Spiegel" value="nein"/>ohne Spiegel<br/>
+                </div>
+    </span>
+</div>
+
+<input id="ch5" class="auswahl" type="checkbox" ng-model="showMyText5" ng-init="showMyText5 = false">
+<label for="ch5">Beleuchtung</label><br/>
+<div class="divEbene1" ng-show="showMyText5">
+    <span ng-init="showMyText51 = false">
+          <input type="checkbox" ng-model="showMyText51" ng-init="showMyText51 = false">Deckenbeleuchtung<br/>
+                <div class="divEbene1" ng-show="showMyText51">
+                     <input type="Radio" name="Beleuchtung" value="leds"/>Eingebaute LEDs<br/>
+                     <input type="Radio" name="Beleuchtung" value="lampe"/>Hängelampe<br/>
+                </div>
+    </span>
+    <span ng-init="showMyText52 = false">
+          <input type="checkbox" ng-model="showMyText52" ng-init="showMyText52 = false">Spiegelbeleuchtung<br/>
+    </span>
+</div>
+
+<input id="ch6" class="auswahl" type="checkbox" ng-model="showMyText6" ng-init="showMyText6 = false">
+<label for="ch6">Zusätzliche Einrichtung</label><br/>
+<div class="divEbene1" ng-show="showMyText6">
+    <span>
+          <input type="checkbox">Klopapierrollenhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Klobürstenhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Handtuchhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Föhnhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Zahnputzbecherhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Seifenspender<br/>
+    </span>
+    <span>
+          <input type="checkbox">Seifenhalter<br/>
+    </span>
+    <span>
+          <input type="checkbox">Gardine<br/>
+    </span>
+    <span>
+          <input type="checkbox">Spiegel<br/>
+    </span>
+</div>
+
+        <div id="anfrageErstellen-button-bar4" class=" button-bar ">
+            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button17" class=" button button-positive  button-block ">Abbrechen</a>
+            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button18" class=" button button-positive  button-block ">Speichern</a>
+            <button id="anfrageErstellen-button19" class=" button button-positive  button-block ">Weiter</button>
+        </div>
+    </ion-content>
+</ion-view>
