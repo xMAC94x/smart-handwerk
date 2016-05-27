@@ -1,0 +1,53 @@
+[
+ {"oberkategorie": "Wand / Boden",
+  "elemente": [
+    {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display:inline;width:5em", "name": "qm" },
+    {"id": "parkett", "art": "checkbox", "name": "Parkett" },
+    {"id": "teppich", "art": "checkbox", "name": "Teppichboden" },
+    {"id": "fliesen", "art": "checkbox", "name": "Fliesen" },
+    {"id": "pvc", "art": "checkbox", "name": "PVC" },
+    {"id": "laminat", "art": "checkbox", "name": "Laminat" },
+    {"id": "tapete", "art": "checkbox", "name": "Tapete" },
+    {"id": "farbe", "art": "checkbox", "name": "Farbe" }
+  ]
+ },
+ {"oberkategorie": "Einrichtung",
+  "elemente": [
+    {"id": "bett", "art": "checkbox", "name": "Bett" },
+    {"id": "schrank", "art": "checkbox", "name": "Schrank" },
+    {"id": "nachttisch", "art": "checkbox", "name": "Nachttisch" },
+    {"id": "kommode", "art": "checkbox", "name": "Kommode" },
+    {"id": "buecherregal", "art": "checkbox", "name": "Bücherregal" }
+  ]
+ },
+ {"oberkategorie": "Beleuchtung",
+  "elemente": [
+    {"id": "deckenbeleuchtung", "art": "checkbox", "name": "Deckenbeleuchtung" },
+    {"id": "nachttischlampe", "art": "checkbox", "name": "Nachttischlampe" },
+    {"id": "stehlampe", "art": "checkbox", "name": "Stehlampe" }
+  ]
+ },
+ {"oberkategorie": "Zusätzliche Einrichtung",
+  "elemente": [
+    {"id": "gardine", "art": "checkbox", "name": "Gardine" },
+    {"id": "spiegel", "art": "checkbox", "name": "Spiegel" }
+  ]
+ },
+{"oberkategorie": "Dienstleistung",
+  "elemente": [
+    {"id": "bodenleger", "art": "checkbox", "name": "Bodenleger" },
+    {"id": "tapezierer", "art": "checkbox", "name": "Tapezierer" },
+    {"id": "maler", "art": "checkbox", "name": "Maler" },
+    {"id": "elektrik", "art": "checkbox", "name": "Elektrik" },
+    {"id": "schreiner", "art": "checkbox", "name": "Schreiner" },
+    {"id": "montage", "art": "checkbox", "name": "Montage" },
+    {"id": "schneider", "art": "checkbox", "name": "Schneider" },
+    {"id": "planungsberater", "art": "checkbox", "name": "Planungsberater" }
+  ]
+ },
+{"oberkategorie": "Sonstiges",
+  "elemente": [
+    {"beschriftung": "Kommentare", "id": "freitext", "art": "textarea" }      
+  ]
+ }
+]

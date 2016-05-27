@@ -56,9 +56,18 @@ angular.module('app.controllers', [])
 
 })
    
-.controller('anfrageErstellenCtrl', function($scope) {
-
+.controller('anfrageErstellenCtrl', function($scope, $http) {
+    $http.get('ElementeAnfrage.json').then(function(elementsResponse) {
+      $scope.kategorien = elementsResponse.data;
+      });
 })
+
+.controller('einblendenCtrl', function($scope) {
+    $scope.myVar = false;
+    $scope.toggle = function() {
+        $scope.myVar = !$scope.myVar;
+    };
+ })
    
 .controller('angebotsBersichtCtrl', function($scope) {
 
