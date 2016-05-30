@@ -16,6 +16,8 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
+    "cordova-plugin-compat",
+    "cordova-plugin-geolocation",
     "cordova-plugin-device",
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
