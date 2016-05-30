@@ -14,10 +14,14 @@ cd src/Frontend
 ```
 6. Add Platform browser and android
 ```bash
-cordova platform add browser
-cordova platform add android
+ionic platform add browser
+ionic platform add android
 ```
-7. Run and Enjoy
+7. Build Platform browser
 ```bash
-cordova run browser
+ionic build android
+```
+8. Run and Enjoy
+```bash
+ionic emulate browser
 ```
