@@ -10,7 +10,7 @@
             <div style="height:0.5em" ng-show="myVar"></div>
             <div style="padding-left:0.5em" ng-show="myVar" ng-repeat="element in kategorie.elemente">
                 <span style="font-size:14pt">{{element.beschriftung}}</span>
-                <input type="{{element.art}}" id="{{element.id}}" style="{{element.style}};font-size:14pt">
+                <input type="{{element.art}}" id="{{element.id}}" style="{{element.style}};font-size:14pt" name="{{element.gruppe}}">
                 </input>
                 <label style="font-size:14pt" for="{{element.id}}">{{element.name}}</label>
             </div>

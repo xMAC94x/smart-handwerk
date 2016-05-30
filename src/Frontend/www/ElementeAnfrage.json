@@ -2,11 +2,11 @@
  {"oberkategorie": "Wand / Boden",
   "elemente": [
     {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display:inline;width:5em", "name": "qm" },
-    {"id": "parkett", "art": "checkbox", "name": "Parkett" },
-    {"id": "teppich", "art": "checkbox", "name": "Teppichboden" },
-    {"id": "fliesen", "art": "checkbox", "name": "Fliesen" },
-    {"id": "pvc", "art": "checkbox", "name": "PVC" },
-    {"id": "laminat", "art": "checkbox", "name": "Laminat" },
+    {"id": "parkett", "art": "radio", "name": "Parkett", "gruppe": "boden" },
+    {"id": "teppich", "art": "radio", "name": "Teppichboden", "gruppe": "boden" },
+    {"id": "fliesen", "art": "radio", "name": "Fliesen", "gruppe": "boden" },
+    {"id": "pvc", "art": "radio", "name": "PVC", "gruppe": "boden" },
+    {"id": "laminat", "art": "radio", "name": "Laminat", "gruppe": "boden" },
     {"id": "tapete", "art": "checkbox", "name": "Tapete" },
     {"id": "farbe", "art": "checkbox", "name": "Farbe" }
   ]

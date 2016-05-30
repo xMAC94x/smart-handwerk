@@ -7,9 +7,31 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.ionicframework.test1815864"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
+        }
+    }
 }
