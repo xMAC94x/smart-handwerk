@@ -60,7 +60,7 @@
             "type": "registry",
             "id": "cordova-plugin-compat"
         },
-        "is_top_level": false,
+        "is_top_level": true,
         "variables": {}
     }
 }
