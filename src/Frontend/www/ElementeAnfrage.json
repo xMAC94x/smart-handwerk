@@ -1,19 +1,34 @@
 [
  {"oberkategorie": "Wand / Boden",
   "elemente": [
-    {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display:inline;width:5em", "name": "qm" },
-    {"id": "parkett", "art": "radio", "name": "Parkett", "gruppe": "boden" },
-    {"id": "teppich", "art": "radio", "name": "Teppichboden", "gruppe": "boden" },
-    {"id": "fliesen", "art": "radio", "name": "Fliesen", "gruppe": "boden" },
-    {"id": "pvc", "art": "radio", "name": "PVC", "gruppe": "boden" },
-    {"id": "laminat", "art": "radio", "name": "Laminat", "gruppe": "boden" },
-    {"id": "tapete", "art": "checkbox", "name": "Tapete" },
-    {"id": "farbe", "art": "checkbox", "name": "Farbe" }
+    {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display:inline;width:5em", "name": "qm", "ngmodel": "" },
+    {"id": "parkett", "art": "radio", "name": "Parkett", "gruppe": "boden", "ngmodel": "myVar2" },
+    {"id": "teppich", "art": "radio", "name": "Teppichboden", "gruppe": "boden", "ngmodel": "myVar2", "eigenschaften": [
+        {"id": "teppich-farbe", "art": "text", "beschriftung": "Farbe:", "style": "display:inline;width:5em"}
+    ] },
+    {"id": "fliesen", "art": "radio", "name": "Fliesen", "gruppe": "boden", "ngmodel": "myVar2", "eigenschaften": [
+        {"id": "fliesen-farbe", "art": "text", "beschriftung": "Farbe:", "style": "display:inline;width:5em"}
+    ] },
+    {"id": "pvc", "art": "radio", "name": "PVC", "gruppe": "boden", "ngmodel": "myVar2", "eigenschaften": [
+        {"id": "pvc-farbe", "art": "text", "beschriftung": "Farbe:", "style": "display:inline;width:5em"}
+    ] },
+    {"id": "laminat", "art": "radio", "name": "Laminat", "gruppe": "boden", "ngmodel": "myVar2" },
+    {"id": "tapete", "art": "checkbox", "name": "Tapete", "ngmodel": "false", "eigenschaften": [
+        {"id": "tapete-farbe", "art": "text", "beschriftung": "Farbe:", "style": "display:inline;width:5em"}
+    ] },
+    {"id": "farbe", "art": "checkbox", "name": "Farbe", "eigenschaften": [
+        {"id": "farbe-farbe", "art": "text", "beschriftung": "Farbe:", "style": "display:inline;width:5em"},
+        {"id": "farbe-selbst-streichen", "art": "radio", "name": "selbst streichen", "gruppe": "streichen" },
+        {"id": "farbe-nicht-selbst-streichen", "art": "radio", "name": "streichen lassen", "gruppe": "streichen" }
+    ]  }
   ]
  },
  {"oberkategorie": "Einrichtung",
   "elemente": [
-    {"id": "bett", "art": "checkbox", "name": "Bett" },
+    {"id": "bett", "art": "checkbox", "name": "Bett", "eigenschaften": [
+        {"id": "bett-groesse" },
+        {"id": "bett-material", "art": "text", }
+    ] },
     {"id": "schrank", "art": "checkbox", "name": "Schrank" },
     {"id": "nachttisch", "art": "checkbox", "name": "Nachttisch" },
     {"id": "kommode", "art": "checkbox", "name": "Kommode" },
@@ -47,7 +62,13 @@
  },
 {"oberkategorie": "Sonstiges",
   "elemente": [
-    {"beschriftung": "Kommentare", "id": "freitext", "art": "textarea" }      
-  ]
+    {"beschriftung": "Kommentare", "id": "freitext", "art": "textarea" },
+    {"id": "lokal", "art": "radio", "name": "lokale Suche", "gruppe": "ort" },
+    {"id": "ort-egal", "art": "radio", "name": "egal", "gruppe": "ort" },
+    {"id": "hobby", "art": "radio", "name": "Hobby", "gruppe": "skill" },
+    {"id": "professional", "art": "radio", "name": "Professional", "gruppe": "skill" },
+    {"id": "skill-egal", "art": "radio", "name": "egal", "gruppe": "skill" }
+
+   ]
  }
 ]

@@ -6,4 +6,15 @@ angular.module('app.services', [])
 
 .service('BlankService', [function(){
 
-}]);
+}])
+
+.factory('DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl', [function () {
+
+         return {
+             anfrageData: {},
+             titel: {}
+
+         };
+
+ }]);
+
