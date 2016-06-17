@@ -17,11 +17,25 @@ cd src/Frontend
 ionic platform add browser
 ionic platform add android
 ```
-7. Build Platform browser
+7. Install bower
+```bash
+npm install -b bower
+```
+7. Install all cordova plugins, if an error occurs, install the missing plugin. All current known plugins are:
+```bash
+cordova plugin add cordova-plugin-geolocation
+cordova plugin add cordova-plugin-console
+cordova plugin add cordova-plugin-device
+cordova plugin add cordova-plugin-splashscreen
+cordova plugin add cordova-plugin-statusbar
+cordova plugin add ionic-plugin-keyboard
+cordova plugin add cordova-plugin-compat
+```
+9. Build Platform browser
 ```bash
 ionic build android
 ```
-8. Run and Enjoy
+10. Run and Enjoy
 ```bash
 ionic emulate browser
 ```
