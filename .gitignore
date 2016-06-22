@@ -41,3 +41,6 @@ src/Frontend/platforms
 
 # remove Webstorm folder .idea
 src/Frontend/.idea
+
+# ignore Brackets file
+src/Frontend/.brackets.json
