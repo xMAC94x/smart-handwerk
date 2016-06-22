@@ -4,22 +4,26 @@ angular.module('app.controllers', [])
 .controller('homeTabCtrl', function($scope, $http) {
   $scope.anzeigenByID=function(id) {
     //alert("Geklickt");
-    $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=5').success(function (response) {
+    $http.get('http://localhost:3000/api/smarthandwerk/anfrage/anfrageanzeigen?id=879dc144-3873-11e6-b2ab-5f6e49001b77').success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
-      /*  if(!error && response.statusCode==200){
+      alert ("ich bin drin");
+      console.log(response);//Response in console schrieben
+      //console.log(response.data);
+      /*if(response.status <= 200){
        //erfolgreich
        alert("Erfolgreich angezeigt")
        }
        else{
        //nicht erfolgreich
-       alert("Fehler: " + response.statusCode); //hier noch internen Fehlercode
-       }
-       })
-       //hier noch generisch ändern!*/
-      console.log(response);
+       alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
+       }*/
+
+
     })
-  }
-})
+    }
+  })
+
+
 
 .controller('nachrichtenCtrl', function($scope) {
 
