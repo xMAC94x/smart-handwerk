@@ -2,9 +2,21 @@
 angular.module('app.controllers', [])
 
 .controller('homeTabCtrl', function($scope, $http) {
+  $http({
+    method: 'GET',
+    url: 'http://localhost:3000/api/smarthandwerk/homepage/alleanfragenanzeigen'
+  }).then(function successCallback(response) {
+    $scope.anfragen = response.data;
+
+  }, function errorCallback(response) {
+    alert("error");
+  });
+
+
+
   $scope.anzeigenByID=function(id) {
     //alert("Geklickt");
-    $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=5').success(function (response) {
+    $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=bfa673de-21f7-11e6-b56d-4b52f205267c').success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
       /*  if(!error && response.statusCode==200){
        //erfolgreich

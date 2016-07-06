@@ -1,6 +1,22 @@
 <ion-view title="Home Tab" id="page2" class=" ">
     <ion-content padding="true" class="has-header">
-        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Angebote</h1>
+        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Übersicht</h1>
+
+        <div style="padding:0;margin:0" ng-repeat="anfrage in anfragen" class="item item-body " id="anfrageErstellen-list-item-container6">
+
+
+          <div class="item item-body " id="">
+            <ion-list class=" ">
+              <ion-item class="item-thumbnail-left  ">
+                <h2>{{anfrage.titel}}</h2>
+              </ion-item>
+            </ion-list>
+            <p  style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
+          </div>
+        </div>
+
+
+
         <div ng-click="anzeigenByID(id)" ui-sref="anfrageBersicht" class="item item-body " id="homeTab-list-item-container4">
             <p id="homeTab-markdown3" style="margin-top:0px;color:#000000;" class=" ">SucheTEEEEEEEEEEEEST...</p>
         </div>
@@ -32,5 +48,7 @@
         <div class="item item-body " id="homeTab-list-item-container9">
             <p id="homeTab-markdown8" style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
         </div>
+
+
     </ion-content>
 </ion-view>
