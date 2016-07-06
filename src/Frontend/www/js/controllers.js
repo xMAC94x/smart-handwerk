@@ -45,7 +45,21 @@ angular.module('app.controllers', [])
   });
 })
 
-.controller('loginCtrl', function($scope) {
+.controller('loginCtrl', function($scope, $http) {
+
+  $scope.login=function(){
+    //if(provider==="email"){
+
+      /*$http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.formData.email,password: $scope.formData.password}})
+        .then(function(result) {
+          $scope.data.access_token = result.data.access_token;
+          $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+        },function(error) {
+        })*/
+    //user in default header schreiben
+    $http.defaults.headers.common['User'] = 'bfa673de-21f7-11e6-b56d-4b52f205267c';
+    }
+ // }
 
 })
 
@@ -97,13 +111,19 @@ angular.module('app.controllers', [])
 //})
 
 .controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, $http) {
-
     
-    $http.get('http://localhost:3000/api/smarthandwerk/anfrage/anfrageerstellen').then(function(elementsResponse) {
-     // $scope.kategorien = elementsResponse.data;
+$http({
+  method: 'GET',
+  url: 'http://localhost:3000/api/smarthandwerk/anfrage/anfrageerstellen'
+}).then(function successCallback(response) {
+        $scope.kategorien = response.data;
+
+  }, function errorCallback(response) {
+    alert("error");
   });
     
-    
+
+ /*   
 $scope.kategorien = [
  {"oberkategorie": "Wand / Boden",
   "elemente": {
@@ -235,8 +255,8 @@ $scope.kategorien = [
     "weitereKommentare": {"id": "weitereKommentare" },
   }
  }
-]
-
+    ]
+*/
 
 
     $scope.jsonErstellen = function() {
@@ -299,6 +319,17 @@ $scope.kategorien = [
         i=0;
         }
         
+        
+        
+        var laenge = $scope.kategorien.length;
+        for (var i=laenge;i--;) {
+            var elements = $scope.kategorien[i].elemente;
+            if((Object.keys(elements).length === 0) && (elements.constructor === Object)) {
+                //delete  $scope.kategorien[j];
+                delete  $scope.kategorien.splice(i,1);
+            }            
+        }  
+        
         var anfrageTitel = $document[0].getElementById('anfrageTitel');
         
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel = anfrageTitel.value;
@@ -323,6 +354,9 @@ $scope.kategorien = [
        alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
        }*/
 
+    $scope.zurueckZumBearbeiten = function() {
+        
+    }
 
     
 })
@@ -354,7 +388,7 @@ $scope.kategorien = [
     console.log(JSON.stringify($scope.auswahl));
 
    $scope.anfrageJSONsenden = function() {
-       alert("geklickt");
+       alert("Übertrage Daten....");
        var req = {
             method: 'POST',
             url: 'http://localhost:3000/api/smarthandwerk/anfrage/anfragespeichern',
