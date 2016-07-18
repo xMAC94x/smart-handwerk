@@ -16,7 +16,7 @@ angular.module('app.controllers', [])
 
   $scope.anzeigenByID=function(id) {
     //alert("Geklickt");
-    $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=bfa673de-21f7-11e6-b56d-4b52f205267c').success(function (response) {
+    $http.get('http://localhost:3000/api/smarthandwerk/anfrage/anfrageanzeigen?id=bfa673de-21f7-11e6-b56d-4b52f205267c').success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
       /*  if(!error && response.statusCode==200){
        //erfolgreich
@@ -69,7 +69,7 @@ angular.module('app.controllers', [])
         },function(error) {
         })*/
     //user in default header schreiben
-    $http.defaults.headers.common['User'] = 'bfa673de-21f7-11e6-b56d-4b52f205267c';
+    $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
     }
  // }
 
@@ -115,7 +115,7 @@ angular.module('app.controllers', [])
 
 })
 
-   
+
 //.controller('anfrageErstellenCtrl', function($scope, $http) {
 //    $http.get('ElementeAnfrage.json').then(function(elementsResponse) {
 //      $scope.kategorien = elementsResponse.data;
@@ -123,7 +123,7 @@ angular.module('app.controllers', [])
 //})
 
 .controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, $http) {
-    
+
 $http({
   method: 'GET',
   url: 'http://localhost:3000/api/smarthandwerk/anfrage/anfrageerstellen'
@@ -133,9 +133,9 @@ $http({
   }, function errorCallback(response) {
     alert("error");
   });
-    
 
- /*   
+
+ /*
 $scope.kategorien = [
  {"oberkategorie": "Wand / Boden",
   "elemente": {
@@ -275,28 +275,28 @@ $scope.kategorien = [
      //   $scope.url = "";
 
         for (var j in $scope.kategorien) {
-        for (var i in $scope.kategorien[j].elemente) { 
-            
+        for (var i in $scope.kategorien[j].elemente) {
+
             var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
             var art = $scope.kategorien[j].elemente[i].art;
             if(art==="radio" || art==="checkbox") {
                 if(!ele.checked) {
                     delete  $scope.kategorien[j].elemente[i];
                 } else {
-                                 
+
         //     var urltext = ele.id.toString() + "=" + ele.checked.toString();
-        //     $scope.url = $scope.url + urltext + "&"; 
+        //     $scope.url = $scope.url + urltext + "&";
                 if(ele.checked && $scope.kategorien[j].elemente[i].eigenschaften != null) {
                 for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
                     var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
             var eigart = $scope.kategorien[j].elemente[i].eigenschaften[k].art;
-                
+
                 if(eigart==="radio" || eigart==="checkbox") {
          //       var urltext = eig.id.toString() + "=" + eig.checked.toString();
-                    
+
                  if(!eig.checked) {
                     delete  $scope.kategorien[j].elemente[i].eigenschaften[k];
-                } else {   
+                } else {
 
             }
                 }
@@ -309,8 +309,8 @@ $scope.kategorien = [
                 $scope.kategorien[j].elemente[i].eigenschaften[k].value = eig.value;
                      }
             }
-           //  $scope.url = $scope.url + urltext + "&";   
-            
+           //  $scope.url = $scope.url + urltext + "&";
+
                 }
                 k=0
             }
@@ -326,32 +326,32 @@ $scope.kategorien = [
                     $scope.kategorien[j].elemente[i].value = ele.value;
                 }
             }
-            
+
             };
         i=0;
         }
-        
-        
-        
+
+
+
         var laenge = $scope.kategorien.length;
         for (var i=laenge;i--;) {
             var elements = $scope.kategorien[i].elemente;
             if((Object.keys(elements).length === 0) && (elements.constructor === Object)) {
                 //delete  $scope.kategorien[j];
                 delete  $scope.kategorien.splice(i,1);
-            }            
-        }  
-        
+            }
+        }
+
         var anfrageTitel = $document[0].getElementById('anfrageTitel');
-        
+
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel = anfrageTitel.value;
-        
+
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData = $scope.kategorien;
         return $scope.kategorien;
     }
-    
-    
-    
+
+
+
   /*    $scope.anzeigenByID = function(id) {
     //alert("Geklickt");
     $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=5').success(function (response) {
@@ -367,10 +367,10 @@ $scope.kategorien = [
        }*/
 
     $scope.zurueckZumBearbeiten = function() {
-        
+
     }
 
-    
+
 })
 
 
@@ -387,11 +387,11 @@ $scope.kategorien = [
     $scope.auswahleinblenden = function() {
         $scope.myVar2 = !$scope.myVar2;
     };
-    
+
  })
-   
+
 .controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl) {
-    
+
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
@@ -415,12 +415,12 @@ $scope.kategorien = [
            alert("response");
           console.log(elementsResponse.data);
       });
-       
+
    }
-    
+
 })
 
-   
+
 .controller('angebotsBersichtCtrl', function($scope) {
 
 })
