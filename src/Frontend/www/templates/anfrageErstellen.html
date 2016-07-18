@@ -26,7 +26,19 @@
                 </input>
                 <label style="font-size:14pt" for="{{element.id}}">{{element.name}}</label>
                 </div>
-                <div ng-show="myVar2" style="padding-left:0.5em" ng-repeat="eigenschaft in element.eigenschaften">
+                <div ng-show="myVar2" style="padding-left:0.5em">
+                    
+                    
+                    <table>
+                        <tr style="font-size:13pt" ng-repeat="eigenschaft in element.eigenschaften">
+                            <td><label style="font-size:14pt" for="{{eigenschaft.id}}"></label>{{eigenschaft.beschriftung}}</td>
+                            <td><input type="{{eigenschaft.art}}" id="{{eigenschaft.id}}" style="{{eigenschaft.style}};font-size:13pt" name="{{eigenschaft.gruppe}}" placeholder="{{eigenschaft.placeholder}}">
+                    </input></td>
+                            <td>{{eigenschaft.name}}</td>
+                        </tr>
+                    </table>
+                    
+                    
                     &nbsp&nbsp&nbsp
                     <label style="font-size:14pt" for="{{eigenschaft.id}}">{{eigenschaft.beschriftung}}
                         <input type="{{eigenschaft.art}}" id="{{eigenschaft.id}}" style="{{eigenschaft.style}};font-size:13pt" name="{{eigenschaft.gruppe}}" placeholder="{{eigenschaft.placeholder}}">
