@@ -15,8 +15,8 @@ angular.module('app.controllers', [])
 
 
   $scope.anzeigenByID=function(id) {
-    //alert(id);
-    $http.get(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen?id=bfa673de-21f7-11e6-b56d-4b52f205267c')).success(function (response) {
+    alert(id);
+    $http.get(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen?id='+ id)).success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
       /*  if(!error && response.statusCode==200){
        //erfolgreich
@@ -28,7 +28,8 @@ angular.module('app.controllers', [])
        }
        })
        //hier noch generisch ändern!*/
-      console.log(response);
+      //console.log(response);
+      $scope.AnfrageData = response.data;
     })
   }
 
