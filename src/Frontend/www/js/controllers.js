@@ -15,7 +15,7 @@ angular.module('app.controllers', [])
 
 
   $scope.anzeigenByID=function(id) {
-    //alert("Geklickt");
+    alert(id);
     $http.get('http://localhost:3000/api/smarthandwerk/anfrage/anfrageanzeigen?id=bfa673de-21f7-11e6-b56d-4b52f205267c').success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
       /*  if(!error && response.statusCode==200){
@@ -31,6 +31,8 @@ angular.module('app.controllers', [])
       console.log(response);
     })
   }
+
+  $scope.listCanSwipe = true;
 })
 
 .controller('nachrichtenCtrl', function($scope) {
