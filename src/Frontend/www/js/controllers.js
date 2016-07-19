@@ -1,10 +1,10 @@
 //import {Http} from "angular/http";
 angular.module('app.controllers', [])
 
-.controller('homeTabCtrl', function($scope, $http) {
+.controller('homeTabCtrl', function($scope, $http, smartbackend) {
   $http({
     method: 'GET',
-    url: 'http://localhost:3000/api/smarthandwerk/homepage/alleanfragenanzeigen'
+    url: smartbackend.getApiUrl('/smarthandwerk/homepage/alleanfragenanzeigen')
   }).then(function successCallback(response) {
     $scope.anfragen = response.data;
 
@@ -15,8 +15,8 @@ angular.module('app.controllers', [])
 
 
   $scope.anzeigenByID=function(id) {
-    alert(id);
-    $http.get('http://localhost:3000/api/smarthandwerk/anfrage/anfrageanzeigen?id=bfa673de-21f7-11e6-b56d-4b52f205267c').success(function (response) {
+    //alert(id);
+    $http.get(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen?id=bfa673de-21f7-11e6-b56d-4b52f205267c')).success(function (response) {
       //body der function um erfolgmeldungen abzuarbeiten
       /*  if(!error && response.statusCode==200){
        //erfolgreich
@@ -124,11 +124,12 @@ angular.module('app.controllers', [])
 //      });
 //})
 
-.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, $http) {
+
+.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend, $http) {
 
 $http({
   method: 'GET',
-  url: 'http://localhost:3000/api/smarthandwerk/anfrage/anfrageerstellen'
+  url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageerstellen')
 }).then(function successCallback(response) {
         $scope.kategorien = response.data;
 
@@ -392,8 +393,8 @@ $scope.kategorien = [
 
  })
 
-.controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl) {
 
+.controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
@@ -405,7 +406,7 @@ $scope.kategorien = [
        alert("Übertrage Daten....");
        var req = {
             method: 'POST',
-            url: 'http://localhost:3000/api/smarthandwerk/anfrage/anfragespeichern',
+            url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfragespeichern'),
            headers: {
                'Content-Type': 'application/json',
            },
