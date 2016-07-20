@@ -1,0 +1,49 @@
+<html ng-app="ionicApp">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+  <title>Ionic Template</title>
+
+  <link href="chat.css" rel="stylesheet">
+  <script src="chatTest.js"></script>
+</head>
+
+<body ng-controller="Messages">
+<ion-pane "class="messaging-view">
+<ion-header-bar class="bar-calm">
+  <h1 class="title">Ioinc Chat</h1>
+</ion-header-bar>
+
+<ion-content class="content-stable"
+             on-swipe-left="hideTime = false"
+             on-swipe-right="hideTime = true">
+
+  <div ng-repeat="message in messages"
+       ng-class="{other: message.userId != myId}"
+       class="messages">
+
+    <div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">
+      <span>{{ message.text }}</span>
+    </div>
+
+    <div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>
+
+
+  </div>
+
+</ion-content>
+
+<ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+  <label class="item-input-wrapper">
+    <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+  </label>
+  <button class="button button-clear" ng-click="sendMessage()">
+    Send
+  </button>
+</ion-footer-bar>
+</ion-pane>
+</body>
+
+</html>

@@ -1,22 +1,45 @@
 <ion-view title="Chat Gruppenchat" id="page21" class=" ">
-    <ion-content padding="true" class="has-header">
+  <link href="chat.css" rel="stylesheet">
+    <ion-content padding="true" class="content-stable"
+                 on-swipe-left="hideTime = false"
+                 on-swipe-right="hideTime = true">
         <ion-list id="chatGruppenchat-list16" class=" ">
             <ion-item class="item-avatar  " id="chatGruppenchat-list-item33">
-                <img src="img/NGe22aPvTGmVawWRYePa_Passbild.jpg">
-                <h2>Franziska Mönster</h2>
+                <img src="NGe22aPvTGmVawWRYePa_Passbild.jpg" width="80" height="80">
+                <h2>Franziska Moenster</h2>
             </ion-item>
             <ion-item class="item-avatar positive  " id="chatGruppenchat-list-item34">
-                <img src="img/Rl0wvotQqOFhnTCRdtZH_snap.jpg">
-                <h2positive>Annika Schimbold</h2positive>
+                <img src="Rl0wvotQqOFhnTCRdtZH_snap.jpg" width="80" height="80">
+                <h2>Annika Schimbold</h2>
             </ion-item>
         </ion-list>
-        <div class="spacer" style="width: 283px; height: 214px;"></div>
+      <div ng-repeat="message in messages"
+           ng-class="{other: message.userId != myId}"
+           class="messages">
+
+        <div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">
+          <span>{{ message.text }}</span>
+        </div>
+
+        <div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>
+
+
+      </div>
+        <!--<div class="spacer" style="width: 283px; height: 214px;"></div>
         <form id="chatGruppenchat-form7" class="list ">
             <label class="item item-input " id="chatGruppenchat-input8">
-                <span class="input-label">Hi...</span>
+                <span class="input-label">Gib deine Nachricht ein!</span>
                 <input type="text" placeholder="">
             </label>
         </form>
-        <button id="chatGruppenchat-button27" class=" button button-positive  icon-right ion-android-send "></button>
+        <button id="chatGruppenchat-button27" class=" button button-positive  icon-right ion-android-send " ng-click="sendMessage()"></button>-->
     </ion-content>
+  <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+    </label>
+    <button class="button button-clear" ng-click="sendMessage()">
+      Send
+    </button>
+  </ion-footer-bar>
 </ion-view>

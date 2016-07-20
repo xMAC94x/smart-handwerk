@@ -1,18 +1,33 @@
-<ion-view title="Chat Einzelperson" id="page20" class=" ">
+<ion-view title="Chat Einzelperson" id="page20" class="einzelchat">
     <ion-content padding="true" class="has-header">
-        <ion-list id="chatEinzelperson-list14" class=" ">
+        <ion-list id="chatEinzelperson-list14" class="chatEinzel">
             <ion-item class="item-avatar  " id="chatEinzelperson-list-item31">
                 <img src="img/NGe22aPvTGmVawWRYePa_Passbild.jpg">
                 <h2>Franziska Mönster</h2>
             </ion-item>
         </ion-list>
+      <ion-content class="content-stable"
+                   on-swipe-left="hideTime = false"
+                   on-swipe-right="hideTime = true">
+
+        <div ng-repeat="message in messages"
+             ng-class="{other: message.userId != myId}"
+             class="messages">
+
+          <div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">
+            <span>{{ message.text }}</span>
+          </div>
+
+          <div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.time}}</div>
+
+
+        </div>
         <div class="spacer" style="width: 283px; height: 214px;"></div>
         <form id="chatEinzelperson-form5" class="list ">
-            <label class="item item-input " id="chatEinzelperson-input7">
-                <span class="input-label">Hi...</span>
-                <input type="text" placeholder="">
-            </label>
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+          </label>
         </form>
-        <button id="chatEinzelperson-button26" class=" button button-positive  icon-right ion-android-send "></button>
+        <button id="chatEinzelperson-button26" class=" button button-positive  icon-right ion-android-send " ng-click="sendMessage()"></button>
     </ion-content>
 </ion-view>

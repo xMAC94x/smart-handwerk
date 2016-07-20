@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/html">
+<title></title>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-chat/angular-chat.js"></script>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- configuration -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script>
+  angular.module('chat').constant( 'config', {
+    //
+    // Get your PubNub API Keys in link below phone demo.
+    //
+    "pubnub": {
+      "publish-key"   : "YOUR-PUBLISH-KEY",
+      "subscribe-key" : "YOUR-SUBSCRIBE-KEY"
+    }
+  } );
+</script>
+
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- controller -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<script>
+  var chat = angular.module( 'BasicChat', ['chat'] );
+  chat.controller( 'chat', [ 'Messages', '$scope',
+    function( Messages, $scope ) {
+      // Message Inbox
+      $scope.messages = [];
+
+      // Receive Messages
+      Messages.receive(function(message){
+        $scope.messages.push(message);
+      });
+
+      // Send Messages
+      $scope.send = function() {
+        Messages.send({ data : $scope.textbox });
+      };
+    } ] );
+</script>
+</title>
+<body>
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<!-- view -->
+<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+<div ng-app="BasicChat">
+  <div ng-controller="chat">
+    <div ng-repeat="message in messages">
+      {{ message.user.name }}:
+      {{ message.data }}
+    </div>
+    <form ng-submit="send()">
+      <input ng-model="textbox">
+    </form>
+  </div>
+</div>
+</body>
+</html>
