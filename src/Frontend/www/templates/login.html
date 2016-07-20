@@ -1,6 +1,6 @@
 <ion-view title="Login" id="page5" class=" ">
     <ion-content padding="true" class="has-header">
-        <form id="login-form1" class="list ">
+        <form id="login-form1" class="list" ng-controller="loginCtrl">
             <ion-list id="login-list1" class=" ">
                 <label class="item item-input " id="login-input1">
                     <span class="input-label">Username</span>
@@ -16,7 +16,6 @@
             <a id="facebook" class=" button button-positive  button-block" ng-click="authenticate('facebook')">Facebook Log in</a>
             <!--<a id="google" class=" button button-positive  button-block" ng-click="authenticate('google') ">Google+ Log in</a>-->
             <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block button-clear " ng-click="signup.html">Or create an account</a>
-          
         </form>
     </ion-content>
 </ion-view>
