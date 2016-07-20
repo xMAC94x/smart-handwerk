@@ -2,20 +2,26 @@
     <ion-content padding="true" class="has-header">
         <form id="signup-form2" class="list ">
             <ion-list id="signup-list2" class=" ">
-                <label class="item item-input " id="signup-input3">
-                    <span class="input-label">Name</span>
+                <label class="item item-input " id="vname">
+                    <span class="input-label">Vorname</span>
                     <input type="text" placeholder="">
                 </label>
-                <label class="item item-input " id="signup-input4">
-                    <span class="input-label">Username</span>
-                    <input type="text" placeholder="">
-                </label>
-                <label class="item item-input " id="signup-input5">
+              <label class="item item-input " id="nname">
+                <span class="input-label">Nachname</span>
+                <input type="text" placeholder="">
+              </label>
+              <label class="item item-input " id="email">
+                <span class="input-label">E-Mail</span>
+                <input type="email" placeholder="">
+              </label>
+                <label class="item item-input " id="pword">
                     <span class="input-label">Password</span>
-                    <input type="text" placeholder="">
+                    <input type="password" placeholder="" minlength="7" maxlength="12">
                 </label>
             </ion-list>
-            <a ui-sref="login" id="signup-button7" class=" button button-stable  button-block ">Sign up</a>
+            <button ui-sref="login" id="signup" class=" button button-stable  button-block " ng-click="signup('provider')">Sign up</button>
+            
+            <!-- Verbindung von HTML zum Backend um die Einträge zu senden und in die Datenbank zu schreiben-->
         </form>
     </ion-content>
 </ion-view>
