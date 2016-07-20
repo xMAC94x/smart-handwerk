@@ -1,3 +1,11 @@
+# READ ALL LICENSE FILES RECURSIVE IN THIS FOLDER
+
+```bash
+find . -name "LICENSE" | /dev/yourBrain
+# alternative
+find . -name "LICENSE" -print0 | xargs -0 cat
+```
+
 #Setting up
 
 1. Install node.js current 6.1.0
@@ -21,7 +29,7 @@ ionic platform add android
 ```bash
 npm install -b bower
 ```
-7. Install all cordova plugins, if an error occurs, install the missing plugin. All current known plugins are:
+8. Install all cordova plugins, if an error occurs, install the missing plugin. All current known plugins are:
 ```bash
 cordova plugin add cordova-plugin-geolocation
 cordova plugin add cordova-plugin-console
@@ -35,7 +43,8 @@ cordova plugin add cordova-plugin-compat
 ```bash
 ionic build android
 ```
-10. Run and Enjoy
+10. Now Read the License like i recommented to you. I am sure you did not read it. So read it now. Just do it!
+11. Run and Enjoy
 ```bash
 ionic emulate browser
 ```
