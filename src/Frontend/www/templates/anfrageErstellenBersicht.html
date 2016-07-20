@@ -1,14 +1,31 @@
 <ion-view title="Anfrage erstellen - Übersicht" id="page17" class=" ">
     <ion-content padding="true" class="has-header">
-        <h2 id="anfrageErstellenBersicht-heading5" style="color:#000000;" class=" ">Anfrage einstellen</h2>
-        <div class="item item-body " id="anfrageErstellenBersicht-list-item-container16">
-            <p id="anfrageErstellenBersicht-markdown14" style="margin-top:0px;color:#000000;" class=" ">Some friendly
-                <strong>markdown</strong>
-            </p>
-        </div>
+        <h2 id="anfrageErstellenBersicht-heading5" style="color:#000000;" class=" " ng-model="titel">{{titel}}</h2>
+        
+        
+        <div ng-model="auswahl" style="padding:0;margin:0" ng-repeat="kategorie in auswahl" class="item item-body " id="anfrageErstellen-list-item-container6">
+            
+            <div style="padding:0.5em;background:#e6e6e6" >
+            <p id="anfrageErstellen-markdown13" style="margin-top:0px;color:#000000;font-size:14pt" class=" ">{{kategorie.oberkategorie}}</p>
+            </div> 
+            
+            
+            <div style="padding-left:0.5em" ng-repeat="element in kategorie.elemente">
+                <div>
+                <span style="font-size:14pt">{{element.beschriftung}}&nbsp{{element.value}}&nbsp{{element.name}}</span>
+                </div>
+                <div style="padding-left:0.5em" ng-repeat="eigenschaft in element.eigenschaften">
+                    &nbsp&nbsp&nbsp
+                    <span style="font-size:14pt">{{eigenschaft.beschriftung}}&nbsp{{eigenschaft.value}}&nbsp{{eigenschaft.name}}</span>
+                </div>
+         </div>
+    </div>
+        
+        
+        
         <div id="anfrageErstellenBersicht-button-bar5" class=" button-bar ">
-            <a ui-sref="anfrageErstellen" id="anfrageErstellenBersicht-button20" class=" button button-positive  button-block ">Bearbeiten</a>
-            <a ui-sref="tabsController.homeTab" id="anfrageErstellenBersicht-button21" class=" button button-positive  button-block ">Abschicken</a>
+            <a ng-click="zurueckZumBearbeiten()" ui-sref="tabsController.anfrageErstellen" id="anfrageErstellenBersicht-button20" class=" button button-positive  button-block ">Bearbeiten</a>
+            <a ng-click="anfrageJSONsenden()" ui-sref="tabsController.homeTab" id="anfrageErstellenBersicht-button21" class=" button button-positive  button-block ">Abschicken</a>
         </div>
     </ion-content>
 </ion-view>
