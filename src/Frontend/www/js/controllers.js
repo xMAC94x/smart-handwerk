@@ -73,10 +73,13 @@ angular.module('app.controllers', [])
             .then(function(result) {
                 $scope.data.access_token = result.data.access_token;
                 $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+               // $http(method: "PUT", url: + "profile", data:{
+                    //  vname: 
+                      })
             },function(error) {
                 // toSomething
-            })
-    }
+            }
+    
     $scope.login=function(provider){
         if(provider==="email"){
               //SENT EMAIL TO SERVER GET A SALT
@@ -85,11 +88,11 @@ angular.module('app.controllers', [])
                     .then(function(result) {
                                 $scope.data.access_token = result.data.access_token;
                                 $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
-                    window.location = '#/page1/page2';
+                 //   $state.go('tabsController.homeTab');
+                   window.location = '#/Startseite/Home';
                     
                     },function(error) {
                             // toSomething
-                    alert("Error");
                     })
             
         }
@@ -116,8 +119,27 @@ angular.module('app.controllers', [])
             })
             }
 }}])
-   
-.controller('signupCtrl', function($scope, $document) {
+    
+.controller('signupCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth, $document) {
+    $scope.data = {};
+    // $scope.email="";//neu50@yahoo.de";
+   // $scope.password="";//12345678";
+    var sha512 = function(password, salt){ // bower install crypto-js --save
+        var hash = window.CryptoJS.HmacSHA512(password, salt).toString(); /** Hashing algorithm sha512 */
+        return hash;
+    };    
+      $scope.signup=function(provider){
+         $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT                  
+            $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
+            .then(function(result) {
+                $scope.data.access_token = result.data.access_token;
+                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+               // $http(method: "PUT", url: + "profile", data:{
+                    //  vname: 
+                      })
+            },function(error) {
+                // toSomething
+            }
 
 $scope.formOutput= function(){  
 
@@ -224,7 +246,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 } 
 
    
-})
+}])
 
 .controller('anlegenCtrl', function($scope) {
 

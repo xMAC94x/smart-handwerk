@@ -1,25 +1,28 @@
-<ion-view title="Signup" id="page6" class=" ">
+<ion-view title="Signup" id="templates/signup.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <form id="signup-form2" class="list ">
+        <form id="signup-form2" class="list " ng-controller="signupCtrl">
             <ion-list id="signup-list2" class=" ">
                 <label class="item item-input " id="vname">
                     <span class="input-label">Vorname</span>
-                    <input type="text" placeholder="">
+                    <input ng-model="vname" type="text" placeholder="">
                 </label>
               <label class="item item-input " id="nname">
                 <span class="input-label">Nachname</span>
-                <input type="text" placeholder="">
+                <input ng-model="nname" type="text" placeholder="">
               </label>
               <label class="item item-input " id="email">
                 <span class="input-label">E-Mail</span>
-                <input type="email" placeholder="">
+                <input ng-model="email" type="email" placeholder="">
               </label>
-                <label class="item item-input " id="pword">
+                <label class="item item-input " id="password">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="" minlength="7" maxlength="12">
+                    <input ng-model="password" type="password" placeholder="" minlength="7" maxlength="12">
                 </label>
             </ion-list>
-            <button ui-sref="login" id="signup" class=" button button-stable  button-block " ng-click="signup('provider')">Sign up</button>
+            <a id="signup" class=" button button-positive  button-block" ng-click="signup('provider')" >Registrieren</a>
+           <!-- <button  id="signup" class=" button button-stable  button-block " ng-click="signup(provider)">Sign up</button>
+
+ <div class="spacer" style="height: 40px;"></div>-->
             
             <!-- Verbindung von HTML zum Backend um die Einträge zu senden und in die Datenbank zu schreiben-->
         </form>
