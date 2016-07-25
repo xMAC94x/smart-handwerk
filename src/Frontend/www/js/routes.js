@@ -32,6 +32,23 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+  
+.state('agbs', {
+    url: '/AGBs',
+    templateUrl: 'templates/agbs.html',
+    controller: 'agbsCtrl'
+  })
+.state('datenschutz', {
+    url: '/Datenschutz',
+    templateUrl: 'templates/datenschutz.html',
+    controller: 'datenschutzCtrl'
+  })
+
+  .state('impressum', {
+    url: '/Impressum',
+    templateUrl: 'templates/impressum.html',
+    controller: 'impressumCtrl'
+  }) 
 
   .state('tabsController.nachrichten', {
     url: '/Nachrichten',

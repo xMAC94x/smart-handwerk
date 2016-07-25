@@ -73,19 +73,27 @@ angular.module('app.controllers', [])
     $scope.login=function(provider){
         if(provider==="email"){
               //SENT EMAIL TO SERVER GET A SALT
-                $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
+                $scope.passwordPost= sha512($scope.password || "",  $scope.email || "");  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
                 $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.email,password: $scope.passwordPost}})
                     .then(function(result) {
                                 $scope.data.access_token = result.data.access_token;
-                                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+                                //$http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+                        $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+
                  //   $state.go('tabsController.homeTab');
                    window.location = '#/Startseite/Home';
                     
                     },function(error) {
                             // toSomething
+                    
+                        $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+
+                 //   $state.go('tabsController.homeTab');
+                   window.location = '#/Startseite/Home';
                     })
             
         }
+
     }
     $scope.authenticate=function(provider){
             if(provider==="facebook"){     
@@ -616,7 +624,7 @@ $scope.kategorien = [
             if(art==="date") {
                 if(ele.value == null || ele.value == "") {
                     
-                    valid = false;
+                    return false;
                     
                 } else {
                     
@@ -685,7 +693,7 @@ $scope.kategorien = [
    
        $scope.zurueckZumBearbeiten = function() {
         
-            DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe = $scope.kategorien;
+       //     DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe = $scope.kategorien;
 
         
         
@@ -693,6 +701,18 @@ $scope.kategorien = [
     
 
 })
+
+.controller('agbsCtrl', function($scope) {
+
+})
+
+.controller('datenschutzCtrl', function($scope) {
+
+})
+
+.controller('impressumCtrl', function($scope) {
+
+}) 
 
 
 .controller('angebotsBersichtCtrl', function($scope){
