@@ -1,8 +1,9 @@
-<ion-view title="Anfrage erstellen" id="page16" class=" ">
+<ion-view title="Anfrage erstellen" id="templates/anfrageErstellen.html" class=" ">
     <ion-content padding="true" class="has-header">
         <h2 id="anfrageErstellen-heading4" style="color:#000000;" class=" ">Anfrage einstellen</h2>
-        
-        
+
+        <form name="checkliste" data-ng-submit="jsonErstellen()" novalidate ng-model="checkliste">
+
         <div>
         
         <span style="font-size:14pt">Titel:</span>
@@ -10,8 +11,7 @@
                 </input>        
         </div>
         
-        
-    <div style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
+    <div ng-model="addform" style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
             
             <div style="padding:0.5em;background:#e6e6e6" ng-click="toggle()" >
             <p id="anfrageErstellen-markdown13" style="margin-top:0px;color:#000000;font-size:14pt" class=" ">{{kategorie.oberkategorie}}</p>
@@ -45,13 +45,14 @@
          </div>
         <div style="height:0.5em" ng-show="myVar"></div>
     </div>
-    
 
 
     <div id="anfrageErstellen-button-bar4" class=" button-bar ">
-            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button17" class=" button button-positive  button-block ">Abbrechen</a>
-            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button18" class=" button button-positive  button-block ">Speichern</a>
-            <button method="post" ng-click="jsonErstellen()" id="anfrageErstellen-button19" class=" button button-positive  button-block " ui-sref="anfrageErstellenBersicht">Weiter</button>
+            <button ui-sref="tabsController.homeTab" type="button" id="anfrageErstellen-button17" class=" button button-positive  button-block " ng-click="abbrechen()">Abbrechen</button>
+            <button type="submit" method="post" id="anfrageErstellen-button19" class=" button button-positive  button-block ">Weiter</button>
         </div>
+    </form>
+</div>
+
     </ion-content>
 </ion-view>
