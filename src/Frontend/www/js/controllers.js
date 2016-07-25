@@ -277,6 +277,11 @@ $scope.kategorien = [
 
     $scope.jsonErstellen = function() {
      //   $scope.url = "";
+        
+    
+   //     if($scope.validateRequest()) {
+
+
 
         for (var j in $scope.kategorien) {
         for (var i in $scope.kategorien[j].elemente) {
@@ -288,8 +293,6 @@ $scope.kategorien = [
                     delete  $scope.kategorien[j].elemente[i];
                 } else {
 
-        //     var urltext = ele.id.toString() + "=" + ele.checked.toString();
-        //     $scope.url = $scope.url + urltext + "&";
                 if(ele.checked && $scope.kategorien[j].elemente[i].eigenschaften != null) {
                 for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
                     var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
@@ -306,14 +309,13 @@ $scope.kategorien = [
                 }
             else {
                 var inputtext = eig.value;
-                if(inputtext ==="") {                delete  $scope.kategorien[j].elemente[i].eigenschaften[k];
+                if(inputtext ==="") {  
+                    delete $scope.kategorien[j].elemente[i].eigenschaften[k];
                 }
-            //    var urltext = eig.id.toString() + "=" + inputtext;
                 else {
                 $scope.kategorien[j].elemente[i].eigenschaften[k].value = eig.value;
                      }
             }
-           //  $scope.url = $scope.url + urltext + "&";
 
                 }
                 k=0
@@ -321,10 +323,9 @@ $scope.kategorien = [
             }
             }
             else {
-         //       ele.id.toString() + "=" + ele.id.value;
-         //       $scope.url = $scope.url + urltext + "&";
                  var inputtext = ele.value;
-                if(inputtext ==="") {                delete  $scope.kategorien[j].elemente[i];
+                if(inputtext ==="") { 
+                    delete  $scope.kategorien[j].elemente[i];
                 }
                 else {
                     $scope.kategorien[j].elemente[i].value = ele.value;
@@ -351,7 +352,18 @@ $scope.kategorien = [
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel = anfrageTitel.value;
 
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData = $scope.kategorien;
+            
+ //        $window.location="anfrageErstellenBersicht";
+            
         return $scope.kategorien;
+            
+            
+  //      }else {
+//            alert("Datum ist mandatory");
+            //Fehlermeldung ausgeben, wenn form nicht korrekt ausgefüllt
+            
+            
+  //      }
     }
 
 
@@ -370,8 +382,76 @@ $scope.kategorien = [
        alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
        }*/
 
-    $scope.zurueckZumBearbeiten = function() {
+    
+    
+        $scope.abbrechen = function() {
+        
+    
+            
 
+        for (var j in $scope.kategorien) {
+        for (var i in $scope.kategorien[j].elemente) {
+
+            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+            var art = $scope.kategorien[j].elemente[i].art;
+            if(art==="radio" || art==="checkbox") {
+                ele.checked=false;
+                
+                if($scope.kategorien[j].elemente[i].eigenschaften != null) {
+                for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
+                    var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
+            var eigart = $scope.kategorien[j].elemente[i].eigenschaften[k].art;
+
+            if(eigart==="radio" || eigart==="checkbox") {
+                    eig.checked=false;
+                }
+            else {
+                $scope.kategorien[j].elemente[i].eigenschaften[k].value = "ds";
+                     
+            }
+
+            }
+            }
+            
+            }
+            else {
+                $scope.kategorien[j].elemente[i].value = "dsa";
+                
+            }
+
+            };
+        }
+
+
+    }
+    
+    
+    
+    $scope.validateRequest = function() {
+        
+        
+        for (var j in $scope.kategorien) {
+        for (var i in $scope.kategorien[j].elemente) {
+
+            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+            var art = $scope.kategorien[j].elemente[i].art;
+            if(art==="date") {
+                if(ele.value == null || ele.value == "") {
+                    
+                    return false;
+                    
+                } else {
+                    
+                    return true;
+
+            }
+        }
+         k=0
+        }
+        i=0;
+        }
+
+        
     }
 
 
@@ -399,6 +479,8 @@ $scope.kategorien = [
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
+    $scope.gesamteListe = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe;
+
 
     console.log(JSON.stringify($scope.titel));
     console.log(JSON.stringify($scope.auswahl));
@@ -421,6 +503,16 @@ $scope.kategorien = [
       });
 
    }
+   
+   
+       $scope.zurueckZumBearbeiten = function() {
+        
+            DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe = $scope.kategorien;
+
+        
+        
+    }
+    
 
 })
 

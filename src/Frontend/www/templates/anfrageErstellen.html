@@ -49,9 +49,8 @@
 
 
     <div id="anfrageErstellen-button-bar4" class=" button-bar ">
-            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button17" class=" button button-positive  button-block ">Abbrechen</a>
-            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button18" class=" button button-positive  button-block ">Speichern</a>
-            <button method="post" ng-click="jsonErstellen()" id="anfrageErstellen-button19" class=" button button-positive  button-block " ui-sref="anfrageErstellenBersicht">Weiter</button>
+            <a ui-sref="tabsController.homeTab" id="anfrageErstellen-button17" class=" button button-positive  button-block " ng-click="abbrechen()">Abbrechen</a>
+            <button method="post" ng-click="jsonErstellen()" id="anfrageErstellen-button19" ui-sref="anfrageErstellenBersicht" class=" button button-positive  button-block ">Weiter</button>
         </div>
     </ion-content>
 </ion-view>
