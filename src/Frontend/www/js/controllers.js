@@ -555,9 +555,10 @@ $scope.kategorien = [
     
         $scope.abbrechen = function() {
         
-    
-            
+               window.location = '#/Startseite/Home';
 
+            
+/*
         for (var j in $scope.kategorien) {
         for (var i in $scope.kategorien[j].elemente) {
 
@@ -589,7 +590,7 @@ $scope.kategorien = [
             }
 
             };
-        }
+        }*/
 
 
     }
