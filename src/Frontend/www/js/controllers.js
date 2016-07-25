@@ -448,7 +448,7 @@ $scope.kategorien = [
      //   $scope.url = "";
         
     
-   //     if($scope.validateRequest()) {
+        if($scope.validateRequest()) {
 
 
 
@@ -522,17 +522,17 @@ $scope.kategorien = [
 
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData = $scope.kategorien;
             
- //        $window.location="anfrageErstellenBersicht";
+         window.location='#/AnfrageErstellenUebersicht';
             
         return $scope.kategorien;
             
             
-  //      }else {
-//            alert("Datum ist mandatory");
+        }else {
+            alert("Datum ist ein Pflichtfeld");
             //Fehlermeldung ausgeben, wenn form nicht korrekt ausgefüllt
             
             
-  //      }
+        }
     }
 
 
@@ -598,6 +598,7 @@ $scope.kategorien = [
     
     $scope.validateRequest = function() {
         
+        var valid = false;
         
         for (var j in $scope.kategorien) {
         for (var i in $scope.kategorien[j].elemente) {
@@ -607,11 +608,11 @@ $scope.kategorien = [
             if(art==="date") {
                 if(ele.value == null || ele.value == "") {
                     
-                    return false;
+                    valid = false;
                     
                 } else {
                     
-                    return true;
+                    valid = true;
 
             }
         }
@@ -619,7 +620,7 @@ $scope.kategorien = [
         }
         i=0;
         }
-
+        return valid;
         
     }
 
