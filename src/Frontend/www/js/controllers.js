@@ -95,12 +95,29 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('einstellungenCtrl', function($scope, $http, smartbackend) {
+.controller('einstellungenCtrl', function($scope, $http, $location, $document, smartbackend) {
   $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+
+  $scope.speichern=function(abc){
+    var data = {};
+    data.setting_allow_geolocation = $scope.settingsList[0].checked;
+    data.setting_allow_notification = $scope.settingsList[1].checked;
+    console.log(data);
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/user/setSettingsFromUser'), data).success(function (response) {
+      console.log(response);
+      //$location.path("/page1");
+    });
+  };
+
+  $scope.settingsList = [
+    { text: "GPS Zugriff erlauben", checked: false },
+    { text: "Notification erlauben", checked: false }
+  ];
+
   $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
     console.log(response);
-    $scope.setting_allow_geolocation = response.setting_allow_geolocation;
-    $scope.setting_allow_notification = response.setting_allow_notification;
+    $scope.settingsList[0].checked = response.setting_allow_geolocation;
+    $scope.settingsList[1].checked = response.setting_allow_notification;
   });
 })
 
