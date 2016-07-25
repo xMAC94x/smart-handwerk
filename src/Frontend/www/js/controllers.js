@@ -95,16 +95,41 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('einstellungenCtrl', function($scope) {
-
+.controller('einstellungenCtrl', function($scope, $http, smartbackend) {
+  $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
+    console.log(response);
+    $scope.setting_allow_geolocation = response.setting_allow_geolocation;
+    $scope.setting_allow_notification = response.setting_allow_notification;
+  });
 })
 
 .controller('hilfeCtrl', function($scope) {
 
 })
 
-.controller('profilCtrl', function($scope) {
+.controller('profilCtrl', function($scope, $http, smartbackend) {
+  $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
+  console.log(response);
+  $scope.username = response.fullname;
+  $scope.birthday = response.birthday;
+  $scope.email = response.email;
+  $scope.prename = response.prename;
+  $scope.name = response.name;
+  $scope.country = response.country;
+  $scope.state = response.state;
+  $scope.city = response.city;
+  $scope.postal_code = response.postal_code;
+  $scope.street = response.street;
+  $scope.house_number = response.house_number;
+  $scope.extra = response.extra;
 
+  //$scope.request = response;
+  //$scope.titel = response.general.titel;
+  //$scope.requestitems = response.requestitems;
+  //console.log(JSON.stringify($scope.titel));
+  });
 })
 
 .controller('anfrageBersichtCtrl', function($scope) {
