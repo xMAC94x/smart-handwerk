@@ -1,19 +1,21 @@
-<ion-view title="Login" id="page5" class=" ">
+<ion-view title="Login" id="templates/login.html" class=" ">
     <ion-content padding="true" class="has-header">
         <form id="login-form1" class="list" ng-controller="loginCtrl">
             <ion-list id="login-list1" class=" ">
                 <label class="item item-input " id="login-input1">
                     <span class="input-label">Username</span>
-                    <input type="text" placeholder="">
+                    <input type="text" ng-model="email" placeholder="">
                 </label>
                 <label class="item item-input " id="login-input2">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="">
+                    <input type="password" ng-model="password" placeholder="">
                 </label>
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>
-            <a ng-click="login()" ui-sref="tabsController.homeTab" id="login-button5" class=" button button-positive  button-block ">Log in</a>
-            <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block button-clear ">Or create an account</a>
+            <a id="login-button5" class=" button button-positive  button-block" ng-click="login('email')" >Log in</a>
+            <a id="facebook" class=" button button-positive  button-block" ng-click="authenticate('facebook')">Facebook Log in</a>
+            <!--<a id="google" class=" button button-positive  button-block" ng-click="authenticate('google') ">Google+ Log in</a>-->
+            <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block button-clear " >Or create an account</a>
         </form>
     </ion-content>
 </ion-view>
