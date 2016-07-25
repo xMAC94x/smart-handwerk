@@ -50,19 +50,9 @@ angular.module('app.controllers', [])
 .controller('loginCtrl', function($scope, $http) {
 
   $scope.login=function(){
-    //if(provider==="email"){
-
-      /*$http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.formData.email,password: $scope.formData.password}})
-        .then(function(result) {
-          $scope.data.access_token = result.data.access_token;
-          $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
-        },function(error) {
-        })*/
-    //user in default header schreiben
+    //workaround: Lisa Sommer authorization in default header schreiben
     $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
     }
- // }
-
 })
 
 .controller('signupCtrl', function($scope) {
