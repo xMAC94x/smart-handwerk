@@ -12,7 +12,8 @@ angular.module('app.services', [])
 
          return {
              anfrageData: {},
-             titel: {}
+             titel: {},
+             gesamteListe: {}
 
          };
 
