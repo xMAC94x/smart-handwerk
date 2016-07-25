@@ -6,12 +6,14 @@
 <!--loop + anzeigen aller Items -->
 
             <ion-list class=" " can-swipe="listCanSwipe">
-              <ion-item class="item" ng-repeat="anfrage in anfragen" ng-click="anzeigenByID(anfrage.id)" >
-                <h2>{{anfrage.titel}}</h2>
-                <p>blabla</p>
+              <ion-item class="item item-thumbnail-left" ng-repeat="anfrage in anfragen" ng-click="anzeigenByID(anfrage.id)" ui-sref="anfrageBersicht" >
+                <img src="img/{{anfrage.type}}.png">
+                <h3>{{anfrage.titel}}</h3>
+                <span class="item-note">{{anfrage.cnt}} Anfrageposten</span>
+                <p>{{anfrage.prename}} {{anfrage.name}}</p>
+                <p>{{anfrage.minPrice}} - {{anfrage.maxPrice}}</p>
+                <p>Von {{anfrage.begindate}} bis {{anfrage.enddate}}</p>
               </ion-item>
             </ion-list>
-
-
     </ion-content>
 </ion-view>

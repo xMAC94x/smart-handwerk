@@ -18,6 +18,16 @@ angular.module('app.services', [])
 
  }])
 
+.factory('DataFromHomeTabCtrlToAnfrageBersichtCtrl', [function () {
+
+  return {
+    reqId: {}
+
+
+  };
+
+}])
+
 .factory('smartbackend', [function(){
   var smartbackend={};
 

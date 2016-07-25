@@ -1,7 +1,7 @@
 //import {Http} from "angular/http";
 angular.module('app.controllers', [])
 
-.controller('homeTabCtrl', function($scope, $http, smartbackend) {
+.controller('homeTabCtrl', function($scope, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
   $http({
     method: 'GET',
     url: smartbackend.getApiUrl('/smarthandwerk/homepage/alleanfragenanzeigen')
@@ -15,22 +15,9 @@ angular.module('app.controllers', [])
 
 
   $scope.anzeigenByID=function(id) {
-    alert(id);
-    $http.get(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen?id='+ id)).success(function (response) {
-      //body der function um erfolgmeldungen abzuarbeiten
-      /*  if(!error && response.statusCode==200){
-       //erfolgreich
-       alert("Erfolgreich angezeigt")
-       }
-       else{
-       //nicht erfolgreich
-       alert("Fehler: " + response.statusCode); //hier noch internen Fehlercode
-       }
-       })
-       //hier noch generisch ändern!*/
-      //console.log(response);
-      $scope.AnfrageData = response.data;
-    })
+    //alert(id);
+    //ausgewählten Request: Id weitergeben
+    DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId = id;
   }
 
   $scope.listCanSwipe = true;
@@ -110,8 +97,28 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('anfrageBersichtCtrl', function($scope) {
+.controller('anfrageBersichtCtrl', function($scope, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+  //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
+  var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
 
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageanzeigen?id=' + reqId)).success(function (response) {
+    //body der function um erfolgmeldungen abzuarbeiten
+    /*  if(!error && response.statusCode==200){
+     //erfolgreich
+     alert("Erfolgreich angezeigt")
+     }
+     else{
+     //nicht erfolgreich
+     alert("Fehler: " + response.statusCode); //hier noch internen Fehlercode
+     }
+     })
+     //hier noch generisch ändern!*/
+    console.log(response);
+    $scope.request = response;
+    $scope.titel = response.general.titel;
+    $scope.requestitems = response.requestitems;
+    console.log(JSON.stringify($scope.titel));
+  })
 })
 
 .controller('anfragenannahmeCtrl', function($scope) {
@@ -425,7 +432,7 @@ $scope.kategorien = [
 })
 
 
-.controller('angebotsBersichtCtrl', function($scope) {
+.controller('angebotsBersichtCtrl', function($scope){
 
 })
 
@@ -439,4 +446,4 @@ $scope.kategorien = [
 
 .controller('chatGruppenchatCtrl', function($scope) {
 
-})
+});
