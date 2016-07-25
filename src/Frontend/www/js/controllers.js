@@ -1,7 +1,8 @@
 //import {Http} from "angular/http";
+
 angular.module('app.controllers', [])
 
-.controller('homeTabCtrl', function($scope, $http, smartbackend) {
+.controller('homeTabCtrl', function($scope, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
   $http({
     method: 'GET',
     url: smartbackend.getApiUrl('/smarthandwerk/homepage/alleanfragenanzeigen')
@@ -15,22 +16,12 @@ angular.module('app.controllers', [])
 
 
   $scope.anzeigenByID=function(id) {
-    //alert("Geklickt");
-    $http.get(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen?id=bfa673de-21f7-11e6-b56d-4b52f205267c')).success(function (response) {
-      //body der function um erfolgmeldungen abzuarbeiten
-      /*  if(!error && response.statusCode==200){
-       //erfolgreich
-       alert("Erfolgreich angezeigt")
-       }
-       else{
-       //nicht erfolgreich
-       alert("Fehler: " + response.statusCode); //hier noch internen Fehlercode
-       }
-       })
-       //hier noch generisch ändern!*/
-      console.log(response);
-    })
+    //alert(id);
+    //ausgewählten Request: Id weitergeben
+    DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId = id;
   }
+
+  $scope.listCanSwipe = true;
 })
 
 .controller('nachrichtenCtrl', function($scope) {
@@ -57,27 +48,204 @@ angular.module('app.controllers', [])
   });
 })
 
-.controller('loginCtrl', function($scope, $http) {
+.controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth) {
+    $scope.data = {};
+    // $scope.email="";//neu50@yahoo.de";
+   // $scope.password="";//12345678";
+    var sha512 = function(password, salt){ // bower install crypto-js --save
+        var hash = window.CryptoJS.HmacSHA512(password, salt).toString(); /** Hashing algorithm sha512 */
+        return hash;
+    };
 
-  $scope.login=function(){
-    //if(provider==="email"){
+    $scope.signup=function(provider){
+         $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
+            $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
+            .then(function(result) {
+                $scope.data.access_token = result.data.access_token;
+                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+               // $http(method: "PUT", url: + "profile", data:{
+                    //  vname:
+                      })
+            },function(error) {
+                // toSomething
+            }
 
-      /*$http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.formData.email,password: $scope.formData.password}})
-        .then(function(result) {
-          $scope.data.access_token = result.data.access_token;
-          $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
-        },function(error) {
-        })*/
-    //user in default header schreiben
-    $http.defaults.headers.common['User'] = 'bfa673de-21f7-11e6-b56d-4b52f205267c';
+    $scope.login=function(provider){
+        if(provider==="email"){
+              //SENT EMAIL TO SERVER GET A SALT
+                $scope.passwordPost= sha512($scope.password || "",  $scope.email || "");  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
+                $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.email,password: $scope.passwordPost}})
+                    .then(function(result) {
+                                $scope.data.access_token = result.data.access_token;
+                                //$http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+                        $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+
+                 //   $state.go('tabsController.homeTab');
+                   window.location = '#/Startseite/Home';
+
+                    },function(error) {
+                            // toSomething
+
+                        $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+
+                 //   $state.go('tabsController.homeTab');
+                   window.location = '#/Startseite/Home';
+                    })
+
+        }
+
     }
- // }
+    $scope.authenticate=function(provider){
+            if(provider==="facebook"){
 
-})
+                  $auth.authenticate(provider).then(function(response) {
+            console.log($auth.getToken());
+            console.log($auth.getPayload());
+                $http({method: "GET", url:"https://sb.pftclan.de:546/api/smartbackend/auth/"+provider+"/", params:{id_token: $auth.getToken()}})
+                .then(function(result) {
+                        console.log('yes im ok');
 
-.controller('signupCtrl', function($scope) {
+                    },function(error) {
+                        console.log('Error: ' + error);
+                    }
 
-})
+            )
+            .catch(function(response) {
+                userService.SocialLoginFailed();
+            });
+
+            })
+            }
+}}])
+
+.controller('signupCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth, $document) {
+    $scope.data = {};
+    // $scope.email="";//neu50@yahoo.de";
+   // $scope.password="";//12345678";
+    var sha512 = function(password, salt){ // bower install crypto-js --save
+        var hash = window.CryptoJS.HmacSHA512(password, salt).toString(); /** Hashing algorithm sha512 */
+        return hash;
+    };
+      $scope.signup=function(provider){
+         $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
+            $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
+            .then(function(result) {
+                $scope.data.access_token = result.data.access_token;
+                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+               // $http(method: "PUT", url: + "profile", data:{
+                    //  vname:
+                      })
+            },function(error) {
+                // toSomething
+            }
+
+
+$scope.formOutput= function(){
+
+    $scope.formValidation();
+
+    if(!$scope.formValidation()){
+       alert("Richtig");
+    }else{
+   alert("Falsch");
+    }
+}
+
+
+$scope.formValidation= function(){
+var v = $document[0].getElementById("vname");
+//var n = $document[0].getElementById("nname");
+//var u = $document[0].getElementById("uname");
+//var e = $document[0].getElementById("email");
+//var p = $document[0].getElementById("pword");
+
+var vname = v.form[0].value;
+var nname = v.form[1].value;
+var uname = v.form[2].value;
+var email = v.form[3].value;
+var pword = v.form[4].value;
+
+
+if($scope.username_validation(uname,5,12)){
+    if($scope.pword_validation(pword,7,12)){
+        if($scope.allLetter(vname)){
+            if($scope.allLetterN(nname)){
+                if($scope.ValidateEmail(email)){
+                    }
+                }
+            }
+        }
+    }
+return false;
+}
+
+
+$scope.username_validation= function(uname,mx,my){
+
+var uname_len = uname.length;
+var letters = /^[A-Za-z]+$/;
+    if (uname_len == 0 || uname_len >= my || uname_len < mx || !uname.value.match(letters) ){
+        alert("Username should not be empty / length be between "+mx+" to "+my+"or Username must have alphabet characters only");
+        uname.focus();
+        return false;
+    }
+    return true;
+}
+
+$scope.pword_validation=function(pword,mx,my) {
+
+var pword_len = pword.length;
+    if (pword_len == 0 ||pword_len >= my || pword_len < mx)  {
+        alert("Password should not be empty / length be between "+mx+" to "+my);
+        pword.focus();
+        return false;
+    }
+    return true;
+}
+
+
+$scope.allLetter=function(vname){
+
+var letters = /^[A-Za-z]+$/;
+    if(vname.match(letters)){
+        return true;
+    }
+    else{
+        alert('Vorname must have alphabet characters only');
+        vname.focus();
+        return false;
+    }
+}
+
+$scope.allLetterN=function(nname){
+
+var letters = /^[A-Za-z]+$/;
+    if(nname.match(letters)){
+        return true;
+    }
+    else{
+        alert('Nachname must have alphabet characters only');
+        nname.focus();
+        return false;
+    }
+}
+
+
+$scope.ValidateEmail=function(email){
+
+var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(email.match(mailformat)){
+        return true;
+    }
+    else  {
+        alert("You have entered an invalid email address!");
+        email.focus();
+        return false;
+    }
+}
+
+
+}])
 
 .controller('anlegenCtrl', function($scope) {
 
@@ -107,8 +275,28 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('anfrageBersichtCtrl', function($scope) {
+.controller('anfrageBersichtCtrl', function($scope, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+  //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
+  var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
 
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageanzeigen?id=' + reqId)).success(function (response) {
+    //body der function um erfolgmeldungen abzuarbeiten
+    /*  if(!error && response.statusCode==200){
+     //erfolgreich
+     alert("Erfolgreich angezeigt")
+     }
+     else{
+     //nicht erfolgreich
+     alert("Fehler: " + response.statusCode); //hier noch internen Fehlercode
+     }
+     })
+     //hier noch generisch ändern!*/
+    console.log(response);
+    $scope.request = response;
+    $scope.titel = response.general.titel;
+    $scope.requestitems = response.requestitems;
+    console.log(JSON.stringify($scope.titel));
+  })
 })
 
 .controller('anfragenannahmeCtrl', function($scope) {
@@ -122,157 +310,31 @@ angular.module('app.controllers', [])
 //      });
 //})
 
-.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend, $http) {
+
+.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, ChecklisteOriginalCtrl, smartbackend, $http, $state) {
 
 $http({
   method: 'GET',
   url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageerstellen')
 }).then(function successCallback(response) {
         $scope.kategorien = response.data;
+        $scope.checkliste = response.data;
+        ChecklisteOriginalCtrl.gesamteListe = $scope.kategorien;
+
 
   }, function errorCallback(response) {
     alert("error");
   });
 
 
- /*
-$scope.kategorien = [
- {"oberkategorie": "Wand / Boden",
-  "elemente": {
-    "raumgroesse": {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display: inline-block;padding-top: 8px;padding-bottom:15px;width:5em;text-align:right", "name": "qm" },
-    "parkett": {"id": "parkett", "art": "radio", "name": "Parkett", "gruppe": "boden", "eigenschaften": {
-    "parkettlegenlassen": {"id": "parkett-legen-lassen", "art": "checkbox", "name": "Parkett legen lassen" }
-               } },
-    "teppich": {"id": "teppich", "art": "radio", "name": "Teppichboden", "gruppe": "boden", "eigenschaften": {
-       "teppichfarbe": {"id": "teppich-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-        "teppichlegenlassen": {"id": "teppich-legen-lassen", "art": "checkbox", "name": "Teppich legen lassen" }
-  } },
-    "fliesen": {"id": "fliesen", "art": "radio", "name": "Fliesen", "gruppe": "boden", "eigenschaften": {
-      "fliesenfarbe":  {"id": "fliesen-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "fliesenlegenlassen":  {"id": "fliesen-legen-lassen", "art": "checkbox", "name": "Fliesen legen lassen" }
-  } },
-    "pvc": {"id": "pvc", "art": "radio", "name": "PVC", "gruppe": "boden", "eigenschaften": {
-      "pvcfarbe":  {"id": "pvc-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "pvclegenlassen": {"id": "pvc-legen-lassen", "art": "checkbox", "name": "PVC verlegen lassen" }
-  } },
-    "laminat": {"id": "laminat", "art": "radio", "name": "Laminat", "gruppe": "boden", "eigenschaften": {
-        "laminatlegenlassen": {"id": "laminat-legen-lassen", "art": "checkbox", "name": "Laminat verlegen lassen" }
-               } },
-    "tapete": {"id": "tapete", "art": "checkbox", "name": "Tapete", "eigenschaften": {
-       "tapetefarbe": {"id": "tapete-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "tapezierenlassen": {"id": "tapezieren-lassen", "art": "checkbox", "name": "tapezieren lassen" }
- } },
-    "farbe": {"id": "farbe", "art": "checkbox", "name": "Farbe", "eigenschaften": {
-      "farbefarbe":  {"id": "farbe-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "farbestreichenlassen": {"id": "farbe-nicht-selbst-streichen", "art": "checkbox", "name": "streichen lassen" }
- }  }
-            }
- },
- {"oberkategorie": "Einrichtung",
-  "elemente": {
-    "bett": {"id": "bett", "art": "checkbox", "name": "Bett", "eigenschaften": {
-      "bettgroesse":  {"id": "bett-groesse1", "beschriftung": "Maße:", "placeholder": "z.B. 80x200"},
-       "bettmaterial": {"id": "bett-material", "beschriftung": "Material:", "style": "width:10em"},
-       "bettbettgestell": {"id": "bett-bettgestell", "art": "checkbox", "name": "Bettgestell"},
-        "bettkopfteil": {"id": "bett-kopfteil", "art": "checkbox", "name": "Kopfteil"},
-       "bettlattenrost": {"id": "bett-lattenrost", "art": "checkbox", "name": "Lattenrost"},
-       "bettmatratze": {"id": "bett-matratze", "art": "checkbox", "name": "Matratze"},
-       "bettsonstiges": {"id": "bett-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-        "bettaufbauenlassen": {"id": "bett-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-   "schrank": {"id": "schrank", "art": "checkbox", "name": "Schrank", "eigenschaften": {
-       "schrankmasse": {"id": "schrank-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-        "schrankmaterial": {"id": "schrank-material", "beschriftung": "Material:", "style": "width:10em"},
-       "schrankschiebetuer": {"id": "schrank-schiebetuer", "art": "radio", "name": "Schiebetür", "gruppe": "tuer"},
-       "schranknormaletuer": {"id": "schrank-normale-tuer", "art": "radio", "name": "Normale Tür", "gruppe": "tuer"},
-        "schrankspiegel": {"id": "schrank-spiegel", "art": "checkbox", "name": "Mit Spiegel"},
-        "schranktuerenanzahl": {"id": "schrank-tueren-anzahl", "beschriftung": "Anzahl Türen:", "style": "width:3em"},
-        "schranksetzboedenanzahl": {"id": "schrank-setzboeden-anzahl", "beschriftung": "Anzahl Setzböden:", "style": "width:3em"},
-        "schrankschubladenanzahl": {"id": "schrank-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "schrankstangenanzahl": {"id": "schrank-stangen-anzahl", "beschriftung": "Anzahl Stangen:", "style": "width:3em"},
-        "bettsonstiges": {"id": "bett-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-        "schrankaufbauenlassen": {"id": "schrank-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-   "nachttisch": {"id": "nachttisch", "art": "checkbox", "name": "Nachttisch", "eigenschaften": {
-       "nachttischmasse":  {"id": "nachttisch-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-        "nachttischmaterial": {"id": "nachttisch-material", "beschriftung": "Material:", "style": "width:10em"},
-       "nachttischanzahl": {"id": "nachttisch-anzahl", "beschriftung": "Anzahl:", "style": "width:3em"},
-        "nachttischschubladenanzahl": {"id": "nachttisch-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "nachttischsonstiges": {"id": "nachttisch-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-       "nachttischaufbauenlassen": {"id": "nachttisch-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-    "kommode": {"id": "kommode", "art": "checkbox", "name": "Kommode", "eigenschaften": {
-       "kommodemasse": {"id": "kommode-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-       "kommodematerial": {"id": "kommode-material", "beschriftung": "Material:", "style": "width:10em"},
-        "kommodeschubladenanzahl": {"id": "kommode-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "kommodeschubladentueren": {"id": "kommode-schubladen-tueren", "beschriftung": "Anzahl Türen:", "style": "width:3em"},
-        "kommodesonstiges": {"id": "kommode-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-       "kommodeaufbauenlassen": {"id": "kommode-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-    "buecherregal": {"id": "buecherregal", "art": "checkbox", "name": "Bücherregal" }
-            }
- },
- {"oberkategorie": "Beleuchtung",
-  "elemente": {
-    "deckenbeleuchtung": {"id": "deckenbeleuchtung", "art": "checkbox", "name": "Deckenbeleuchtung" },
-    "nachttischlampe": {"id": "nachttischlampe", "art": "checkbox", "name": "Nachttischlampe" },
-    "stehlampe": {"id": "stehlampe", "art": "checkbox", "name": "Stehlampe" }
-    }
- },
- {"oberkategorie": "Zusätzliche Einrichtung",
-  "elemente": {
-   "gardine": {"id": "gardine", "art": "checkbox", "name": "Gardine" },
-    "spiegel": {"id": "spiegel", "art": "checkbox", "name": "Spiegel" }
-    }
- },
-{"oberkategorie": "Dienstleistung",
-  "elemente": {
-   "bodenleger": {"id": "bodenleger", "art": "checkbox", "name": "Bodenleger" },
-   "tapezierer": {"id": "tapezierer", "art": "checkbox", "name": "Tapezierer" },
-    "maler": {"id": "maler", "art": "checkbox", "name": "Maler" },
-    "elektriker": {"id": "elektrik", "art": "checkbox", "name": "Elektrik" },
-   "schreiner": {"id": "schreiner", "art": "checkbox", "name": "Schreiner" },
-   "montage": {"id": "montage", "art": "checkbox", "name": "Montage" },
-    "schneider": {"id": "schneider", "art": "checkbox", "name": "Schneider" },
-    "planungsberater": {"id": "planungsberater", "art": "checkbox", "name": "Planungsberater" }
-    }
- },
-{"oberkategorie": "Ort",
-  "elemente": {
-   "lokal": {"id": "lokal", "art": "radio", "name": "lokale Suche", "gruppe": "ort" },
-    "ortegal": {"id": "ort-egal", "art": "radio", "name": "egal", "gruppe": "ort" }
-    }
- },
-{"oberkategorie": "Skill-Level",
-  "elemente": {
-    "hobby": {"id": "hobby", "art": "radio", "name": "Hobby", "gruppe": "skill" },
-    "professional": {"id": "professional", "art": "radio", "name": "Professional", "gruppe": "skill" },
-    "skillegal": {"id": "skill-egal", "art": "radio", "name": "egal", "gruppe": "skill" }
-
-    }
- },
-     {"oberkategorie": "Preisvorstellung",
-  "elemente": {
-    "mindestens": {"beschriftung": "Mindestens", "id": "preis-min", "name": "€", "style": "width:5em" },
-    "maximal": {"beschriftung": "Maximal", "id": "preis-max", "name": "€", "style": "width:5em" }
-    }
- },
-  {"oberkategorie": "Fertigstellungstermin",
-  "elemente": {
-      "spaetesterTermin": {"beschriftung": "Spätester Termin:", "art": "date", "id": "fertigstellungstermin"}
-  }
- },
-  {"oberkategorie": "Weitere Kommentare",
-  "elemente": {
-    "weitereKommentare": {"id": "weitereKommentare" },
-  }
- }
-    ]
-*/
-
 
     $scope.jsonErstellen = function() {
      //   $scope.url = "";
+
+
+        if($scope.validateRequest()) {
+
+
 
         for (var j in $scope.kategorien) {
         for (var i in $scope.kategorien[j].elemente) {
@@ -284,8 +346,6 @@ $scope.kategorien = [
                     delete  $scope.kategorien[j].elemente[i];
                 } else {
 
-        //     var urltext = ele.id.toString() + "=" + ele.checked.toString();
-        //     $scope.url = $scope.url + urltext + "&";
                 if(ele.checked && $scope.kategorien[j].elemente[i].eigenschaften != null) {
                 for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
                     var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
@@ -302,14 +362,13 @@ $scope.kategorien = [
                 }
             else {
                 var inputtext = eig.value;
-                if(inputtext ==="") {                delete  $scope.kategorien[j].elemente[i].eigenschaften[k];
+                if(inputtext ==="") {
+                    delete $scope.kategorien[j].elemente[i].eigenschaften[k];
                 }
-            //    var urltext = eig.id.toString() + "=" + inputtext;
                 else {
                 $scope.kategorien[j].elemente[i].eigenschaften[k].value = eig.value;
                      }
             }
-           //  $scope.url = $scope.url + urltext + "&";
 
                 }
                 k=0
@@ -317,10 +376,9 @@ $scope.kategorien = [
             }
             }
             else {
-         //       ele.id.toString() + "=" + ele.id.value;
-         //       $scope.url = $scope.url + urltext + "&";
                  var inputtext = ele.value;
-                if(inputtext ==="") {                delete  $scope.kategorien[j].elemente[i];
+                if(inputtext ==="") {
+                    delete  $scope.kategorien[j].elemente[i];
                 }
                 else {
                     $scope.kategorien[j].elemente[i].value = ele.value;
@@ -342,12 +400,24 @@ $scope.kategorien = [
             }
         }
 
+
         var anfrageTitel = $document[0].getElementById('anfrageTitel');
 
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel = anfrageTitel.value;
 
         DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData = $scope.kategorien;
+
+         window.location='#/AnfrageErstellenUebersicht';
+
         return $scope.kategorien;
+
+
+        }else {
+            alert("Datum ist ein Pflichtfeld");
+            //Fehlermeldung ausgeben, wenn form nicht korrekt ausgefüllt
+
+
+        }
     }
 
 
@@ -366,12 +436,109 @@ $scope.kategorien = [
        alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
        }*/
 
-    $scope.zurueckZumBearbeiten = function() {
+
+
+
+    $scope.abbrechen = function() {
+
+
+            $state.go($state.current, {}, {reload: true});
+
+
+            var path = "#/Startseite/Home";
+            window.location.href = path;
+
+
+    }
+
+    $scope.validateRequest = function() {
+
+        var valid = false;
+
+        for (var j in $scope.kategorien) {
+        for (var i in $scope.kategorien[j].elemente) {
+
+            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+            var art = $scope.kategorien[j].elemente[i].art;
+            if(art==="date") {
+                if(ele.value == null || ele.value == "") {
+
+                    return false;
+
+                } else {
+
+                    valid = true;
+
+            }
+        }
+         k=0
+        }
+        i=0;
+        }
+        return valid;
+
+    }
+
+})
+/*
+.controller('listeCtrl', function($scope, ChecklisteOriginalCtrl, $document) {
+
+        $scope.abbrechen = function() {
+
+            $scope.kategorien = ChecklisteOriginalCtrl.gesamteListe;
+
+
+       //     $scope.kategorien = $scope.checkliste;
+           // alert($scope.kategorien);
+      //      $scope.kategorien = ChecklisteOriginalCtrl.gesamteListe;
+      //      window.location = '#/Startseite/Home';
+           // $scope.addform.$setPristine();
+
+
+   /*     for (var j in $scope.kategorien) {
+        for (var i in $scope.kategorien[j].elemente) {
+
+            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+            var art = $scope.kategorien[j].elemente[i].art;
+            if(art==="radio" || art==="checkbox") {
+                ele.checked=false;
+
+                if($scope.kategorien[j].elemente[i].eigenschaften != null) {
+                for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
+                    var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
+            var eigart = $scope.kategorien[j].elemente[i].eigenschaften[k].art;
+
+            if(eigart==="radio" || eigart==="checkbox") {
+                    eig.checked=false;
+                }
+            else {
+                $scope.kategorien[j].elemente[i].eigenschaften[k].value = "";
+
+            }
+
+            }
+            }
+
+            }
+            else {
+                $scope.kategorien[j].elemente[i].value = "";
+
+            }
+
+            };
+        }
+            $scope.checkliste.$setPristine();
+
+            var path = "#/Startseite/AnfrageErstellen";
+            window.location.href = path;
+
+
 
     }
 
 
-})
+
+ })*/
 
 
 .controller('einblendenCtrl', function($scope) {
@@ -390,11 +557,12 @@ $scope.kategorien = [
 
  })
 
-.controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
 
+.controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
+
 
     console.log(JSON.stringify($scope.titel));
     console.log(JSON.stringify($scope.auswahl));
@@ -418,10 +586,31 @@ $scope.kategorien = [
 
    }
 
+
+       $scope.zurueckZumBearbeiten = function() {
+
+
+
+
+    }
+
+
+})
+
+.controller('agbsCtrl', function($scope) {
+
+})
+
+.controller('datenschutzCtrl', function($scope) {
+
+})
+
+.controller('impressumCtrl', function($scope) {
+
 })
 
 
-.controller('angebotsBersichtCtrl', function($scope) {
+.controller('angebotsBersichtCtrl', function($scope){
 
 })
 
@@ -429,10 +618,13 @@ $scope.kategorien = [
 
 })
 
+
 .controller('chatEinzelpersonCtrl', function($scope) {
+
+
 
 })
 
 .controller('chatGruppenchatCtrl', function($scope) {
 
-})
+});

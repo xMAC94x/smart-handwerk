@@ -1,14 +1,27 @@
-<ion-view title="Anfrageübersicht" id="page14" class=" ">
+<ion-view title="Anfrageübersicht" id="templates/anfrageBersicht.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <h1 id="anfrageBersicht-heading2" style="color:#000000;" class=" ">Schrank gesucht!</h1>
-        <ion-list id="anfrageBersicht-list10" class=" ">
-            <ion-item id="anfrageBersicht-list-item22" class="  ">Größe</ion-item>
-            <ion-item id="anfrageBersicht-list-item24" class="  ">Material</ion-item>
+      <h1 id="anfrageErstellenBersicht-heading1" style="color:#000000;" class=" " ng-model="titel">{{titel}}</h1>
+      <h4>{{request.general.prename}} {{request.general.name}}</h4>
+      <span class="item-note">{{request.general.minprice}} - {{request.general.maxprice}}</span>
+      <p>Zu erledigen zwischen {{request.general.begin}} und {{request.general.end}}</p>
+    <!--loop + anzeigen aller Items -->
+      <ion-list>
+        <ion-item ng-repeat="requestitem in requestitems" class="divider" >
+          <h3>{{requestitem.item_description}}</h3>
+          <ion-list>
+            <div ng-repeat="attribute in requestitem.attributes">
+              {{attribute.attribute_description}}: {{attribute.value}} {{attribute.uom}}
+            </div>
+          </ion-list>
+          </ion-item>
         </ion-list>
-        <div id="anfrageBersicht-button-bar2" class=" button-bar ">
-            <a ui-sref="tabsController.homeTab" id="anfrageBersicht-button11" class=" button button-positive  button-block ">Ablehnen</a>
-            <a ui-sref="meineBeitrGe" id="anfrageBersicht-button12" class=" button button-positive  button-block ">Merken</a>
-            <a ui-sref="anfragenannahme" id="anfrageBersicht-button13" class=" button button-positive  button-block ">Weiter</a>
-        </div>
+
+  <!-- <ion-footer-bar class="bar bar-positive"> -->
+    <div class="button-bar">
+        <a ui-sref="tabsController.homeTab" id="anfrageBersicht-button11" class="button button-positive">Ablehnen</a>
+        <a ui-sref="meineBeitrGe" id="anfrageBersicht-button12" class="button button-positive">Merken</a>
+        <a ui-sref="anfragenannahme" id="anfrageBersicht-button13" class="button button-positive">Weiter</a>
+      </div>
     </ion-content>
+
 </ion-view>
