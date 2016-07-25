@@ -11,7 +11,7 @@
         </div>
         
         
-    <div style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
+    <form style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
             
             <div style="padding:0.5em;background:#e6e6e6" ng-click="toggle()" >
             <p id="anfrageErstellen-markdown13" style="margin-top:0px;color:#000000;font-size:14pt" class=" ">{{kategorie.oberkategorie}}</p>
@@ -44,7 +44,7 @@
                 </div>
          </div>
         <div style="height:0.5em" ng-show="myVar"></div>
-    </div>
+    </form>
     
 
 

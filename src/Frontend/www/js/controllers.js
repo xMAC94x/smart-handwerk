@@ -406,7 +406,7 @@ $scope.kategorien = [
                     eig.checked=false;
                 }
             else {
-                $scope.kategorien[j].elemente[i].eigenschaften[k].value = "ds";
+                $scope.kategorien[j].elemente[i].eigenschaften[k].value = "";
                      
             }
 
@@ -415,7 +415,7 @@ $scope.kategorien = [
             
             }
             else {
-                $scope.kategorien[j].elemente[i].value = "dsa";
+                $scope.kategorien[j].elemente[i].value = "";
                 
             }
 
