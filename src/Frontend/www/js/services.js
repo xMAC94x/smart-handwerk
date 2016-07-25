@@ -12,7 +12,14 @@ angular.module('app.services', [])
 
          return {
              anfrageData: {},
-             titel: {},
+             titel: {}
+         };
+
+ }])
+
+.factory('ChecklisteOriginalCtrl', [function () {
+
+         return {
              gesamteListe: {}
 
          };

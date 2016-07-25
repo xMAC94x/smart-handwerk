@@ -310,153 +310,21 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 //})
 
 
-.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend, $http) {
+.controller('anfrageErstellenCtrl', function($scope, $document, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, ChecklisteOriginalCtrl, smartbackend, $http, $state) {
 
 $http({
   method: 'GET',
   url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageerstellen')
 }).then(function successCallback(response) {
         $scope.kategorien = response.data;
+        $scope.checkliste = response.data;
+        ChecklisteOriginalCtrl.gesamteListe = $scope.kategorien;
+
 
   }, function errorCallback(response) {
     alert("error");
   });
 
-
- /*
-$scope.kategorien = [
- {"oberkategorie": "Wand / Boden",
-  "elemente": {
-    "raumgroesse": {"id": "raumgroesse", "art": "number", "beschriftung": "Raumgröße", "style": "display: inline-block;padding-top: 8px;padding-bottom:15px;width:5em;text-align:right", "name": "qm" },
-    "parkett": {"id": "parkett", "art": "radio", "name": "Parkett", "gruppe": "boden", "eigenschaften": {
-    "parkettlegenlassen": {"id": "parkett-legen-lassen", "art": "checkbox", "name": "Parkett legen lassen" }
-               } },
-    "teppich": {"id": "teppich", "art": "radio", "name": "Teppichboden", "gruppe": "boden", "eigenschaften": {
-       "teppichfarbe": {"id": "teppich-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-        "teppichlegenlassen": {"id": "teppich-legen-lassen", "art": "checkbox", "name": "Teppich legen lassen" }
-  } },
-    "fliesen": {"id": "fliesen", "art": "radio", "name": "Fliesen", "gruppe": "boden", "eigenschaften": {
-      "fliesenfarbe":  {"id": "fliesen-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "fliesenlegenlassen":  {"id": "fliesen-legen-lassen", "art": "checkbox", "name": "Fliesen legen lassen" }
-  } },
-    "pvc": {"id": "pvc", "art": "radio", "name": "PVC", "gruppe": "boden", "eigenschaften": {
-      "pvcfarbe":  {"id": "pvc-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "pvclegenlassen": {"id": "pvc-legen-lassen", "art": "checkbox", "name": "PVC verlegen lassen" }
-  } },
-    "laminat": {"id": "laminat", "art": "radio", "name": "Laminat", "gruppe": "boden", "eigenschaften": {
-        "laminatlegenlassen": {"id": "laminat-legen-lassen", "art": "checkbox", "name": "Laminat verlegen lassen" }
-               } },
-    "tapete": {"id": "tapete", "art": "checkbox", "name": "Tapete", "eigenschaften": {
-       "tapetefarbe": {"id": "tapete-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "tapezierenlassen": {"id": "tapezieren-lassen", "art": "checkbox", "name": "tapezieren lassen" }
- } },
-    "farbe": {"id": "farbe", "art": "checkbox", "name": "Farbe", "eigenschaften": {
-      "farbefarbe":  {"id": "farbe-farbe", "beschriftung": "Farbton:", "style": "width:10em"},
-       "farbestreichenlassen": {"id": "farbe-nicht-selbst-streichen", "art": "checkbox", "name": "streichen lassen" }
- }  }
-            }
- },
- {"oberkategorie": "Einrichtung",
-  "elemente": {
-    "bett": {"id": "bett", "art": "checkbox", "name": "Bett", "eigenschaften": {
-      "bettgroesse":  {"id": "bett-groesse1", "beschriftung": "Maße:", "placeholder": "z.B. 80x200"},
-       "bettmaterial": {"id": "bett-material", "beschriftung": "Material:", "style": "width:10em"},
-       "bettbettgestell": {"id": "bett-bettgestell", "art": "checkbox", "name": "Bettgestell"},
-        "bettkopfteil": {"id": "bett-kopfteil", "art": "checkbox", "name": "Kopfteil"},
-       "bettlattenrost": {"id": "bett-lattenrost", "art": "checkbox", "name": "Lattenrost"},
-       "bettmatratze": {"id": "bett-matratze", "art": "checkbox", "name": "Matratze"},
-       "bettsonstiges": {"id": "bett-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-        "bettaufbauenlassen": {"id": "bett-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-   "schrank": {"id": "schrank", "art": "checkbox", "name": "Schrank", "eigenschaften": {
-       "schrankmasse": {"id": "schrank-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-        "schrankmaterial": {"id": "schrank-material", "beschriftung": "Material:", "style": "width:10em"},
-       "schrankschiebetuer": {"id": "schrank-schiebetuer", "art": "radio", "name": "Schiebetür", "gruppe": "tuer"},
-       "schranknormaletuer": {"id": "schrank-normale-tuer", "art": "radio", "name": "Normale Tür", "gruppe": "tuer"},
-        "schrankspiegel": {"id": "schrank-spiegel", "art": "checkbox", "name": "Mit Spiegel"},
-        "schranktuerenanzahl": {"id": "schrank-tueren-anzahl", "beschriftung": "Anzahl Türen:", "style": "width:3em"},
-        "schranksetzboedenanzahl": {"id": "schrank-setzboeden-anzahl", "beschriftung": "Anzahl Setzböden:", "style": "width:3em"},
-        "schrankschubladenanzahl": {"id": "schrank-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "schrankstangenanzahl": {"id": "schrank-stangen-anzahl", "beschriftung": "Anzahl Stangen:", "style": "width:3em"},
-        "bettsonstiges": {"id": "bett-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-        "schrankaufbauenlassen": {"id": "schrank-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-   "nachttisch": {"id": "nachttisch", "art": "checkbox", "name": "Nachttisch", "eigenschaften": {
-       "nachttischmasse":  {"id": "nachttisch-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-        "nachttischmaterial": {"id": "nachttisch-material", "beschriftung": "Material:", "style": "width:10em"},
-       "nachttischanzahl": {"id": "nachttisch-anzahl", "beschriftung": "Anzahl:", "style": "width:3em"},
-        "nachttischschubladenanzahl": {"id": "nachttisch-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "nachttischsonstiges": {"id": "nachttisch-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-       "nachttischaufbauenlassen": {"id": "nachttisch-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-    "kommode": {"id": "kommode", "art": "checkbox", "name": "Kommode", "eigenschaften": {
-       "kommodemasse": {"id": "kommode-masse", "beschriftung": "Maße:", "placeholder": "Breite x Höhe x Tiefe"},
-       "kommodematerial": {"id": "kommode-material", "beschriftung": "Material:", "style": "width:10em"},
-        "kommodeschubladenanzahl": {"id": "kommode-schubladen-anzahl", "beschriftung": "Anzahl Schubladen:", "style": "width:3em"},
-        "kommodeschubladentueren": {"id": "kommode-schubladen-tueren", "beschriftung": "Anzahl Türen:", "style": "width:3em"},
-        "kommodesonstiges": {"id": "kommode-sonstiges", "art": "textarea", "beschriftung": "Sonstiges:"},
-       "kommodeaufbauenlassen": {"id": "kommode-nicht-selbst-aufbauen", "art": "checkbox", "name": "aufbauen lassen" }
-    } },
-    "buecherregal": {"id": "buecherregal", "art": "checkbox", "name": "Bücherregal" }
-            }
- },
- {"oberkategorie": "Beleuchtung",
-  "elemente": {
-    "deckenbeleuchtung": {"id": "deckenbeleuchtung", "art": "checkbox", "name": "Deckenbeleuchtung" },
-    "nachttischlampe": {"id": "nachttischlampe", "art": "checkbox", "name": "Nachttischlampe" },
-    "stehlampe": {"id": "stehlampe", "art": "checkbox", "name": "Stehlampe" }
-    }
- },
- {"oberkategorie": "Zusätzliche Einrichtung",
-  "elemente": {
-   "gardine": {"id": "gardine", "art": "checkbox", "name": "Gardine" },
-    "spiegel": {"id": "spiegel", "art": "checkbox", "name": "Spiegel" }
-    }
- },
-{"oberkategorie": "Dienstleistung",
-  "elemente": {
-   "bodenleger": {"id": "bodenleger", "art": "checkbox", "name": "Bodenleger" },
-   "tapezierer": {"id": "tapezierer", "art": "checkbox", "name": "Tapezierer" },
-    "maler": {"id": "maler", "art": "checkbox", "name": "Maler" },
-    "elektriker": {"id": "elektrik", "art": "checkbox", "name": "Elektrik" },
-   "schreiner": {"id": "schreiner", "art": "checkbox", "name": "Schreiner" },
-   "montage": {"id": "montage", "art": "checkbox", "name": "Montage" },
-    "schneider": {"id": "schneider", "art": "checkbox", "name": "Schneider" },
-    "planungsberater": {"id": "planungsberater", "art": "checkbox", "name": "Planungsberater" }
-    }
- },
-{"oberkategorie": "Ort",
-  "elemente": {
-   "lokal": {"id": "lokal", "art": "radio", "name": "lokale Suche", "gruppe": "ort" },
-    "ortegal": {"id": "ort-egal", "art": "radio", "name": "egal", "gruppe": "ort" }
-    }
- },
-{"oberkategorie": "Skill-Level",
-  "elemente": {
-    "hobby": {"id": "hobby", "art": "radio", "name": "Hobby", "gruppe": "skill" },
-    "professional": {"id": "professional", "art": "radio", "name": "Professional", "gruppe": "skill" },
-    "skillegal": {"id": "skill-egal", "art": "radio", "name": "egal", "gruppe": "skill" }
-
-    }
- },
-     {"oberkategorie": "Preisvorstellung",
-  "elemente": {
-    "mindestens": {"beschriftung": "Mindestens", "id": "preis-min", "name": "€", "style": "width:5em" },
-    "maximal": {"beschriftung": "Maximal", "id": "preis-max", "name": "€", "style": "width:5em" }
-    }
- },
-  {"oberkategorie": "Fertigstellungstermin",
-  "elemente": {
-      "spaetesterTermin": {"beschriftung": "Spätester Termin:", "art": "date", "id": "fertigstellungstermin"}
-  }
- },
-  {"oberkategorie": "Weitere Kommentare",
-  "elemente": {
-    "weitereKommentare": {"id": "weitereKommentare" },
-  }
- }
-    ]
-*/
 
 
     $scope.jsonErstellen = function() {
@@ -530,6 +398,7 @@ $scope.kategorien = [
                 delete  $scope.kategorien.splice(i,1);
             }
         }
+            
 
         var anfrageTitel = $document[0].getElementById('anfrageTitel');
 
@@ -566,15 +435,66 @@ $scope.kategorien = [
        alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
        }*/
 
-    
-    
-        $scope.abbrechen = function() {
-        
-               window.location = '#/Startseite/Home';
 
+    
+    
+    $scope.abbrechen = function() {
             
-/*
+
+            $state.go($state.current, {}, {reload: true});
+
+                                    
+            var path = "#/Startseite/Home";
+            window.location.href = path;
+
+
+    }
+    
+    $scope.validateRequest = function() {
+        
+        var valid = false;
+        
         for (var j in $scope.kategorien) {
+        for (var i in $scope.kategorien[j].elemente) {
+
+            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+            var art = $scope.kategorien[j].elemente[i].art;
+            if(art==="date") {
+                if(ele.value == null || ele.value == "") {
+                    
+                    return false;
+                    
+                } else {
+                    
+                    valid = true;
+
+            }
+        }
+         k=0
+        }
+        i=0;
+        }
+        return valid;
+        
+    }
+
+})
+/*
+.controller('listeCtrl', function($scope, ChecklisteOriginalCtrl, $document) {
+
+        $scope.abbrechen = function() {
+            
+            $scope.kategorien = ChecklisteOriginalCtrl.gesamteListe;
+                      
+            
+       //     $scope.kategorien = $scope.checkliste;
+           // alert($scope.kategorien);
+      //      $scope.kategorien = ChecklisteOriginalCtrl.gesamteListe;
+      //      window.location = '#/Startseite/Home';
+           // $scope.addform.$setPristine();
+            
+            
+   /*     for (var j in $scope.kategorien) {
         for (var i in $scope.kategorien[j].elemente) {
 
             var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
@@ -605,43 +525,19 @@ $scope.kategorien = [
             }
 
             };
-        }*/
+        }
+            $scope.checkliste.$setPristine();  
+            
+            var path = "#/Startseite/AnfrageErstellen";
+            window.location.href = path;
+
 
 
     }
     
     
-    
-    $scope.validateRequest = function() {
-        
-        var valid = false;
-        
-        for (var j in $scope.kategorien) {
-        for (var i in $scope.kategorien[j].elemente) {
 
-            var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
-            var art = $scope.kategorien[j].elemente[i].art;
-            if(art==="date") {
-                if(ele.value == null || ele.value == "") {
-                    
-                    return false;
-                    
-                } else {
-                    
-                    valid = true;
-
-            }
-        }
-         k=0
-        }
-        i=0;
-        }
-        return valid;
-        
-    }
-
-
-})
+ })*/
 
 
 .controller('einblendenCtrl', function($scope) {
@@ -665,7 +561,6 @@ $scope.kategorien = [
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
-    $scope.gesamteListe = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe;
 
 
     console.log(JSON.stringify($scope.titel));
@@ -693,7 +588,6 @@ $scope.kategorien = [
    
        $scope.zurueckZumBearbeiten = function() {
         
-       //     DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.gesamteListe = $scope.kategorien;
 
         
         

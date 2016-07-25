@@ -182,6 +182,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
   
   .state('tabsController.anfrageErstellen', {
+    cache: false,
     url: '/AnfrageErstellen',
     views: {
       'tab2': {
