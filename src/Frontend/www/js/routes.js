@@ -113,12 +113,31 @@ angular.module('app.routes', ['ionicUIRouter'])
     templateUrl: 'templates/einstellungen.html',
     controller: 'einstellungenCtrl'
   })
+  
+   .state('agbs', {
+    url: '/AGBs',
+    templateUrl: 'templates/agbs.html',
+    controller: 'agbsCtrl'
+  })
 
   .state('hilfe', {
     url: '/Hilfe',
     templateUrl: 'templates/hilfe.html',
     controller: 'hilfeCtrl'
   })
+  
+  .state('datenschutz', {
+    url: '/Datenschutz',
+    templateUrl: 'templates/datenschutz.html',
+    controller: 'datenschutzCtrl'
+  })
+
+  .state('impressum', {
+    url: '/Impressum',
+    templateUrl: 'templates/impressum.html',
+    controller: 'impressumCtrl'
+  })
+
 
   .state('profil', {
     url: '/Profil',

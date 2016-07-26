@@ -67,19 +67,7 @@ angular.module('app.controllers', [])
         return hash;
     };
 
-    $scope.signup=function(provider){
-         $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT                  
-            $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
-            .then(function(result) {
-                $scope.data.access_token = result.data.access_token;
-                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
-               // $http(method: "PUT", url: + "profile", data:{
-                    //  vname: 
-                      })
-            },function(error) {
-                // toSomething
-            }
-    
+
     $scope.login=function(provider){
         if(provider==="email"){
               //SENT EMAIL TO SERVER GET A SALT
@@ -93,6 +81,7 @@ angular.module('app.controllers', [])
                     
                     },function(error) {
                             // toSomething
+                    alert('Falsche E-Mail Adresse oder Passwort')
                     })
             
         }
@@ -606,5 +595,17 @@ $scope.kategorien = [
 })
 
 .controller('chatGruppenchatCtrl', function($scope) {
+
+})
+
+.controller('agbsCtrl', function($scope) {
+
+})
+
+.controller('datenschutzCtrl', function($scope) {
+
+})
+
+.controller('impressumCtrl', function($scope) {
 
 })
