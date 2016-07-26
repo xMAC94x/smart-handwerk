@@ -378,11 +378,20 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   $scope.angebotanDB=function(){
     //auswahl abfragen
     var offer = {};
-    var offeritems = [];
+    var singleOfferItem = {};
+    var offerItems = [];
     //general data
     offer.discounttotalprice = $scope.offerSel.discount;
     console.log(offer.discounttotalprice);
-
+    for (i in $scope.requestitems){
+      if ($scope.requestitems[i].checked) {
+        singleOfferItem.price = $scope.requestitems[i].preis;
+        console.log(singleOfferItem.price);
+        singleOfferItem.requestitem_id = $scope.requestitems[i].requestitem_id;
+        console.log(singleOfferItem.requestitem_id);
+        offerItems.push(singleOfferItem);
+      }//else: requestitem wurde nicht ausgewählt
+    }
 
     //Auswahl an db
     $http.post(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen'), offer).success(function (response) {
