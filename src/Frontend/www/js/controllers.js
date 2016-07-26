@@ -310,7 +310,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   var vorherTitel = $ionicHistory.backTitle();
   if (vorherTitel == "Home Tab") {
     var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
-  }else{
+  }else{ 
     var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
   }
 
@@ -380,7 +380,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     var offerSel = [];
     var general = {};
     var offeritems = [];
-
+    /*
     for (var j in $scope.request) {
       //general data
       general.reqid = $scope.request[j].general.reqid;
@@ -426,7 +426,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         template: 'Danke für dein Angebot!',
         duration: 1000
       });
-    })
+    }) */
   }//function
 })
 
