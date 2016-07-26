@@ -293,27 +293,72 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('profilCtrl', function($scope, $http, smartbackend) {
+.controller('profilCtrl', function($scope, $http, $document, smartbackend) {
+
+  $scope.skilllist = [];
+
   $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
   $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
-  console.log(response);
-  $scope.username = response.fullname;
-  $scope.birthday = response.birthday;
-  $scope.email = response.email;
-  $scope.prename = response.prename;
-  $scope.name = response.name;
-  $scope.country = response.country;
-  $scope.state = response.state;
-  $scope.city = response.city;
-  $scope.postal_code = response.postal_code;
-  $scope.street = response.street;
-  $scope.house_number = response.house_number;
-  $scope.extra = response.extra;
+    console.log(response);
+    $scope.username = response.fullname;
+    $scope.birthday = response.birthday;
+    $scope.email = response.email;
+    $scope.prename = response.prename;
+    $scope.name = response.name;
+    $scope.country = response.country;
+    $scope.state = response.state;
+    $scope.city = response.city;
+    $scope.postal_code = response.postal_code;
+    $scope.street = response.street;
+    $scope.house_number = response.house_number;
+    $scope.extra = response.extra;
+  });
 
-  //$scope.request = response;
-  //$scope.titel = response.general.titel;
-  //$scope.requestitems = response.requestitems;
-  //console.log(JSON.stringify($scope.titel));
+  var skillArray = [];
+
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getAllSkills')).success(function (response) {
+    console.log(response);
+    $scope.skilllist= [];
+    for (var i = 0; i < response.getAllSkills.length; i++) {
+      var dataJson = { description: response.getAllSkills[i].description, id: response.getAllSkills[i].id, s1:"true"};
+      skillArray.push( dataJson );
+    };
+
+
+    $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSkillFromUser')).success(function (response) {
+      console.log(response);
+      for (var j = 0; j < skillArray.length; j++) {
+        skillArray[j].s1 = "true";
+        delete skillArray[j].s2;
+        delete skillArray[j].s3;
+        delete skillArray[j].s4;
+      }
+      for (var i = 0; i < response.skills.length; i++) {
+        var curSkill = response.skills[i];
+        for (var j = 0; j < skillArray.length; j++) {
+          if (skillArray[j].id == curSkill.skillcatalog_id) {
+            delete skillArray[j].s1;
+            switch(curSkill.level) {
+              case "learned":
+                skillArray[j].s2 = "true";
+                break;
+              case "hobby":
+                skillArray[j].s3 = "true";
+                break;
+              case "professional":
+                skillArray[j].s4 = "true";
+                break;
+              default:
+                skillArray[j].s1 = "true";
+            }
+          }
+        };
+      };
+      for (var j = 0; j < skillArray.length; j++) {
+        $scope.skilllist.push(skillArray[j]);
+      }
+    });
+
   });
 })
 

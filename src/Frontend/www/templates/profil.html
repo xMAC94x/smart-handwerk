@@ -55,8 +55,29 @@
                     <span class="input-label">Extra</span>
                     <input type="text" placeholder="e.g. a" value="{{extra}}">
                   </label>
+                  <label class="item item-input " id="profil-divider">
+                    <span class="input-label">Skills</span>
+                  </label>
+
+                      <label class="item item-input item-select" ng-repeat="item in skilllist">
+                        <div class="input-label">
+                          {{item.description}}
+                        </div>
+                        <select id="{{item.id}}_sel">
+                          <option id="{{item.id}}_1" ng-selected="{{item.s1}}">Nicht vorhanden</option>
+                          <option id="{{item.id}}_2" ng-selected="{{item.s2}}">Hobby</option>
+                          <option id="{{item.id}}_3" ng-selected="{{item.s3}}">Gelernt</option>
+                          <option id="{{item.id}}_4" ng-selected="{{item.s4}}">Professional</option>
+                        </select>
+                      </label>
+
                 </form>
             </div>
         </div>
+      <!-- <ion-footer-bar class="bar bar-positive"> -->
+      <div class="button-bar">
+        <!-- <a ui-sref="tabsController.homeTab" id="anfrageBersicht-button11" class="button button-positive">Abbrechen</a> -->
+        <a ng-click="speichern()" id="einstellungen-button13" <a ui-sref="tabsController.homeTab" class="button button-positive">Speichern</a>
+      </div>
     </ion-content>
 </ion-view>
