@@ -30,6 +30,9 @@
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.ionicframework.test1815864"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.test1815864"
         }
     },
     "dependent_plugins": {}

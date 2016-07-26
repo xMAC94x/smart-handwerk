@@ -115,6 +115,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page9
   */
   .state('meineBeitrGe', {
+    cache:false,
     url: '/MeineBeitraege',
     templateUrl: 'templates/meineBeitrGe.html',
     controller: 'meineBeitrGeCtrl'

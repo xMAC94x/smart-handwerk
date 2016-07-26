@@ -34,6 +34,15 @@ angular.module('app.services', [])
 
 }])
 
+  .factory('DataFromBeitrCtrlToAnfrageBersichtCtrl', [function () {
+
+    return {
+      reqId: {}
+    };
+
+  }])
+
+
 .factory('smartbackend', [function(){
   var smartbackend={};
 

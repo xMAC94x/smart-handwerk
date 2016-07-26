@@ -21,8 +21,8 @@
   <!-- <ion-footer-bar class="bar bar-positive"> -->
     <div class="button-bar">
         <a ui-sref="tabsController.homeTab" ng-click="ignoreRequest(request.general.reqid)" id="anfrageBersicht-button11" class="button button-positive">Ablehnen</a>
-        <a ui-sref="meineBeitrGe" id="anfrageBersicht-button12" class="button button-positive">Merken</a>
-        <a ui-sref="anfragenannahme" id="anfrageBersicht-button13" class="button button-positive">Weiter</a>
+        <a ui-sref="meineBeitrGe" ng-click="makefavourite(request.general.reqid)" id="anfrageBersicht-button12" class="button button-positive">Merken</a>
+        <a ui-sref="anfragenannahme" ng-click="testM()" id="anfrageBersicht-button13" class="button button-positive">Weiter</a>
       </div>
     </ion-content>
 

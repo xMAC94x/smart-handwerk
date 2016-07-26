@@ -255,8 +255,37 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('meineBeitrGeCtrl', function($scope) {
+.controller('meineBeitrGeCtrl',function($scope, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl) {
+  $http({
+    method: 'GET',
+    url: smartbackend.getApiUrl('/smarthandwerk/anfrage/favouritenliste')
+  }).then(function successCallback(response) {
+    var anfragen = response.data;
+    $scope.meineAnfr = [];
+    $scope.favAnfr = [];
+    for (i=0; i< anfragen.length; i++){
+      if (anfragen[i].myself == "true"){
+        //meine eigenen Requests
+        $scope.meineAnfr.push(anfragen[i]);
+      }else{
+        //Favouritenliste
+        $scope.favAnfr.push(anfragen[i]);
+      }
+    }
 
+      }, function errorCallback(response) {
+    alert("error");
+  });
+
+
+
+  $scope.anzeigenByID=function(id) {
+    //alert(id);
+    //ausgewählten Request: Id weitergeben
+    DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId = id;
+  }
+
+  $scope.listCanSwipe = true;
 })
 
 .controller('historieCtrl', function($scope) {
@@ -275,9 +304,15 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('anfrageBersichtCtrl', function($scope, $state, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+.controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
   //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
-  var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
+  //abfragen woher ich komme
+  var vorherTitel = $ionicHistory.backTitle();
+  if (vorherTitel == "Home Tab") {
+    var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
+  }else{
+    var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
+  }
 
   $http.get(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageanzeigen?id=' + reqId)).success(function (response) {
     //body der function um erfolgmeldungen abzuarbeiten
@@ -299,17 +334,41 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   })
 
   $scope.ignoreRequest=function(reqId) {
-    alert("ignoriert");
     //ID ans Backend senden
     $http.post(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageignorieren?id=' + reqId)).success(function (response) {
-      //seite neu laden
+      //Meldung
+      $ionicLoading.show({
+        template: 'Die Anfrage wird dir nicht mehr angezeigt.',
+        duration: 1000
+      });
+      // seite neu laden
       $state.go($state.current, {}, {reload: true});
       var path = "#/Startseite/Home";
       window.location.href = path;
-
     })
   }
 
+  $scope.makefavourite=function(reqId) {
+    //ID ans Backend senden
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfragemerken?id=' + reqId)).success(function (response) {
+      //Meldung
+      $ionicLoading.show({
+        template: 'Diese Anfrage wurde erfolgreich in deine Favouriten gespeichert!',
+        duration: 1000
+      });
+      // seite neu laden
+      $state.go($state.current, {}, {reload: true});
+      var path = "#/templates/meineBeitrGe.html";
+      window.location.href = path;
+    })
+  }
+
+  $scope.testM=function() {
+    $ionicLoading.show({
+      template: 'Testtext',
+      duration: 2000
+    });
+  }
 })
 
 .controller('anfragenannahmeCtrl', function($scope) {
@@ -432,26 +491,6 @@ $http({
 
         }
     }
-
-
-
-  /*    $scope.anzeigenByID = function(id) {
-    //alert("Geklickt");
-    $http.get('http://localhost:3000/api/smarthandwerk/angebot/angeboterstellen?id=5').success(function (response) {
-      //body der function um erfolgmeldungen abzuarbeiten
-      console.log(response);//Response in console schrieben
-      /*if(response.status <= 200){
-       //erfolgreich
-       alert("Erfolgreich angezeigt")
-       }
-       else{
-       //nicht erfolgreich
-       alert("Fehler: " + response.statusText); //hier noch internen Fehlercode
-       }*/
-
-
-
-
     $scope.abbrechen = function() {
 
 
@@ -571,7 +610,7 @@ $http({
  })
 
 
-.controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
+.controller('anfrageErstellenBersichtCtrl', function($scope, $http, $ionicLoading, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
 
     $scope.auswahl = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.anfrageData;
     $scope.titel = DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl.titel;
@@ -581,7 +620,10 @@ $http({
     console.log(JSON.stringify($scope.auswahl));
 
    $scope.anfrageJSONsenden = function() {
-       alert("Übertrage Daten....");
+     $ionicLoading.show({
+       template: 'Deine Anfrage wurde erfolgreich gespeichert!',
+       duration: 1000
+     });
        var req = {
             method: 'POST',
             url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfragespeichern'),

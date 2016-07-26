@@ -1,8 +1,33 @@
 <ion-view title="Meine Beiträge" id="templates/meineBeitrGe.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <ion-list id="meineBeitrGe-list19" class=" ">
-            <ion-item id="meineBeitrGe-list-item40" ui-sref="pakete" class="  ">Schrank gesucht!</ion-item>
-            <ion-item id="meineBeitrGe-list-item41" class="  ">Pinke Tapete mit Glitzer</ion-item>
+      <div class ="list">
+        <div class="item item-divider">
+          Meine Favouriten
+        </div>
+        <ion-list class=" " can-swipe="listCanSwipe">
+          <ion-item class="item item-thumbnail-left" ng-repeat="anfrage in favAnfr" ng-click="anzeigenByID(anfrage.id)" ui-sref="anfrageBersicht" >
+            <img src="img/{{anfrage.type}}.png">
+            <h3>{{anfrage.titel}}</h3>
+            <span class="item-note">{{anfrage.cnt}} Anfrageposten</span>
+            <p>{{anfrage.prename}} {{anfrage.name}}</p>
+            <p>{{anfrage.minPrice}} - {{anfrage.maxPrice}}</p>
+            <p>Von {{anfrage.begindate}} bis {{anfrage.enddate}}</p>
+          </ion-item>
         </ion-list>
+        <div class="item item-divider">
+          Meine gestellten Anfragen
+        </div>
+        <ion-list class=" " can-swipe="listCanSwipe">
+          <ion-item class="item item-thumbnail-left" ng-repeat="anfrage in meineAnfr" ng-click="anzeigenByID(anfrage.id)" ui-sref="anfrageBersicht" >
+            <img src="img/{{anfrage.type}}.png">
+            <h3>{{anfrage.titel}}</h3>
+            <span class="item-note">{{anfrage.cnt}} Anfrageposten</span>
+            <p>{{anfrage.prename}} {{anfrage.name}}</p>
+            <p>{{anfrage.minPrice}} - {{anfrage.maxPrice}}</p>
+            <p>Von {{anfrage.begindate}} bis {{anfrage.enddate}}</p>
+          </ion-item>
+        </ion-list>
+      </div>
     </ion-content>
 </ion-view>
+
