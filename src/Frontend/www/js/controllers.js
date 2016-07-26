@@ -109,7 +109,7 @@ angular.module('app.controllers', [])
             }
 }}])
     
-.controller('signupCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth, $document) {
+.controller('signupCtrl', ['$scope', '$http','$auth', '$document', function($scope, $http,$auth, $document) {
     $scope.data = {};
     // $scope.email="";//neu50@yahoo.de";
    // $scope.password="";//12345678";
@@ -117,7 +117,7 @@ angular.module('app.controllers', [])
         var hash = window.CryptoJS.HmacSHA512(password, salt).toString(); /** Hashing algorithm sha512 */
         return hash;
     };    
-      $scope.signup=function(provider){
+      $scope.signup=function(){
          $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT                  
             $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
             .then(function(result) {
@@ -126,113 +126,11 @@ angular.module('app.controllers', [])
                // $http(method: "PUT", url: + "profile", data:{
                     //  vname: 
                       })
+            window.location  ='#/Einloggen';
             },function(error) {
                 // toSomething
-            }
-
-$scope.formOutput= function(){  
-
-    $scope.formValidation();
-    
-    if(!$scope.formValidation()){
-       alert("Richtig");
-    }else{
-   alert("Falsch");
-    }
-}
-    
-    
-$scope.formValidation= function(){  
-var v = $document[0].getElementById("vname"); 
-//var n = $document[0].getElementById("nname"); 
-//var u = $document[0].getElementById("uname");   
-//var e = $document[0].getElementById("email");   
-//var p = $document[0].getElementById("pword"); 
-    
-var vname = v.form[0].value; 
-var nname = v.form[1].value; 
-var uname = v.form[2].value;   
-var email = v.form[3].value;   
-var pword = v.form[4].value;   
-
-
-if($scope.username_validation(uname,5,12)){  
-    if($scope.pword_validation(pword,7,12)){  
-        if($scope.allLetter(vname)){  
-            if($scope.allLetterN(nname)){
-                if($scope.ValidateEmail(email)){   
-                    }
-                }
-            }
-        }
-    }
-return false;
-} 
-
-
-$scope.username_validation= function(uname,mx,my){  
-    
-var uname_len = uname.length;  
-var letters = /^[A-Za-z]+$/;
-    if (uname_len == 0 || uname_len >= my || uname_len < mx || !uname.value.match(letters) ){  
-        alert("Username should not be empty / length be between "+mx+" to "+my+"or Username must have alphabet characters only");  
-        uname.focus();  
-        return false;  
-    }  
-    return true;  
-}
-
-$scope.pword_validation=function(pword,mx,my) {
-    
-var pword_len = pword.length;  
-    if (pword_len == 0 ||pword_len >= my || pword_len < mx)  {  
-        alert("Password should not be empty / length be between "+mx+" to "+my);  
-        pword.focus();  
-        return false;  
-    }  
-    return true;  
-}  
-
-
-$scope.allLetter=function(vname){
-    
-var letters = /^[A-Za-z]+$/;  
-    if(vname.match(letters)){  
-        return true;  
-    }  
-    else{  
-        alert('Vorname must have alphabet characters only');  
-        vname.focus();  
-        return false;  
-    }  
-}  
-
-$scope.allLetterN=function(nname){
-    
-var letters = /^[A-Za-z]+$/;  
-    if(nname.match(letters)){  
-        return true;  
-    }  
-    else{  
-        alert('Nachname must have alphabet characters only');  
-        nname.focus();  
-        return false;  
-    }  
-}  
-
-
-$scope.ValidateEmail=function(email){
-    
-var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
-    if(email.match(mailformat)){  
-        return true;  
-    }  
-    else  {  
-        alert("You have entered an invalid email address!");  
-        email.focus();  
-        return false;  
-    }  
-} 
+      alert ("Konnte nicht registriert werden!")      
+      }
 
    
 }])
