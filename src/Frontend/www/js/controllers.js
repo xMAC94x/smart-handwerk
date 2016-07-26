@@ -419,16 +419,163 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('einstellungenCtrl', function($scope) {
+.controller('einstellungenCtrl', function($scope, $http, $location, $document, smartbackend) {
+  $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
 
+  $scope.speichern=function(){
+    var data = {};
+    data.setting_allow_geolocation = $scope.settingsList[0].checked;
+    data.setting_allow_notification = $scope.settingsList[1].checked;
+    console.log(data);
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/user/setSettingsFromUser'), data).success(function (response) {
+      console.log(response);
+      //$location.path("/page1");
+    });
+  };
+
+  $scope.settingsList = [
+    { text: "GPS Zugriff erlauben", checked: false },
+    { text: "Notification erlauben", checked: false }
+  ];
+
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
+    console.log(response);
+    $scope.settingsList[0].checked = response.setting_allow_geolocation;
+    $scope.settingsList[1].checked = response.setting_allow_notification;
+  });
 })
 
 .controller('hilfeCtrl', function($scope) {
 
 })
 
-.controller('profilCtrl', function($scope) {
+.controller('profilCtrl', function($scope, $http, $document, smartbackend) {
 
+  $scope.skilllist = [];
+
+  $http.defaults.headers.common['Authorization']="Bearer a54738c81db59ac2a06a13dd3634f1e90fd79b778d20efb900470887766e5c64a28845d738226854359a94b1950f76c8";
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSettingsFromUser')).success(function (response) {
+    console.log(response);
+    $scope.user = {};
+    $scope.user.phoneno = response.phoneno;
+    $scope.user.username = response.fullname;
+    $scope.user.birthday = response.birthday_nice;
+    $scope.user.email = response.email;
+    $scope.user.prename = response.prename;
+    $scope.user.name = response.name;
+    $scope.user.country = response.country;
+    $scope.user.state = response.state;
+    $scope.user.city = response.city;
+    $scope.user.postal_code = response.postal_code;
+    $scope.user.street = response.street;
+    $scope.user.house_number = response.house_number;
+    $scope.user.extra = response.extra;
+  });
+
+  var skillArray = [];
+
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getAllSkills')).success(function (response) {
+    console.log(response);
+    $scope.skilllist= [];
+    for (var i = 0; i < response.getAllSkills.length; i++) {
+      var dataJson = { description: response.getAllSkills[i].description, id: response.getAllSkills[i].id, s1:"true"};
+      skillArray.push( dataJson );
+    };
+
+
+    $http.get(smartbackend.getApiUrl('/smarthandwerk/user/getSkillFromUser')).success(function (response) {
+      console.log(response);
+      for (var j = 0; j < skillArray.length; j++) {
+        skillArray[j].s1 = "true";
+        delete skillArray[j].s2;
+        delete skillArray[j].s3;
+        delete skillArray[j].s4;
+      }
+      for (var i = 0; i < response.skills.length; i++) {
+        var curSkill = response.skills[i];
+        for (var j = 0; j < skillArray.length; j++) {
+          if (skillArray[j].id == curSkill.skillcatalog_id) {
+            delete skillArray[j].s1;
+            switch(curSkill.level) {
+              case "learned":
+                skillArray[j].s2 = "true";
+                break;
+              case "hobby":
+                skillArray[j].s3 = "true";
+                break;
+              case "professional":
+                skillArray[j].s4 = "true";
+                break;
+              default:
+                skillArray[j].s1 = "true";
+            }
+          }
+        };
+      };
+      for (var j = 0; j < skillArray.length; j++) {
+        $scope.skilllist.push(skillArray[j]);
+      }
+    });
+
+  });
+
+  $scope.speichern=function(){
+    var data = {};
+    data.phoneno = $scope.user.phoneno;
+    data.birthday = $scope.user.birthday;
+    data.email = $scope.user.email;
+    data.prename = $scope.user.prename;
+    data.name = $scope.user.name;
+
+    data.country = $scope.user.country;
+    data.state = $scope.user.state;
+    data.city = $scope.user.city;
+    data.postal_code = $scope.user.postal_code;
+    data.street = $scope.user.street;
+    data.house_number = $scope.user.house_number;
+    data.extra = $scope.user.extra;
+    console.log(data);
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/user/setProfileFromUser'), data).success(function (response) {
+      console.log(response);
+    });
+
+    var data3 = [];
+    for (var i = 0; i < $scope.skilllist.length; i++) {
+      if ($scope.skilllist[i].sel != undefined) {
+        var str = null;
+        switch($scope.skilllist[i].sel) {
+          case "Hobby":
+            str = "hobby";
+            break;
+          case "Gelernt":
+            str = "learned";
+            break;
+          case "Professional":
+            str = "professional";
+            break;
+        };
+        data3.push({skillcatalog_id: $scope.skilllist[i].id, level: str});
+      } else {
+        var str = null;
+        if ($scope.skilllist[i].s2 == "true") {
+          str = "hobby";
+        } else if ($scope.skilllist[i].s3 == "true") {
+          str = "learned";
+        } else if ($scope.skilllist[i].s4 == "true") {
+          str = "professional";
+        };
+        if (str != null) {
+          data3.push({skillcatalog_id: $scope.skilllist[i].id, level: str });
+        }
+      }
+    }
+    console.log(data3);
+    var sendPackage = {};
+    sendPackage.skills = data3;
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/user/setSkillFromUser'), sendPackage).success(function (response) {
+      console.log(response);
+    });
+  };
 })
 
 .controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
