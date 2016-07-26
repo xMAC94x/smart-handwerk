@@ -1,10 +1,7 @@
 <ion-view title="Home Tab" id="templates/homeTab.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Anfragen, die dich interessieren könnten:</h1>
-
-
+        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Interessante Anfragen:</h1>
 <!--loop + anzeigen aller Items -->
-
             <ion-list class=" " can-swipe="listCanSwipe">
               <ion-item class="item item-thumbnail-left" ng-repeat="anfrage in anfragen" ng-click="anzeigenByID(anfrage.id)" ui-sref="anfrageBersicht" >
                 <img src="img/{{anfrage.type}}.png">

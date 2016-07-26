@@ -1,0 +1,54 @@
+{
+  "name": "ionic-toastr",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Paul Todd",
+      "email": "waterishail@gmail.com"
+    }
+  ],
+  "homepage": "https://github.com/Paul-Todd/angular-toastr.git",
+
+  "keywords": [
+    "angular",
+    "angularjs",
+    "toast",
+    "toastr",
+    "ionic"
+  ],
+
+  "main": [
+    "dist/ionic-toastr.scss"
+  ],
+
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Paul-Todd/ionic-toastr.git"
+  },
+
+  "dependencies": {
+    "angular-toastr": "~1.4.1",
+    "ionic": "driftyco/ionic-bower#1.0.1"
+  },
+
+  "devDependencies": {
+
+  },
+
+  "ignore": [
+    "hooks",
+    "node_modules",
+    "platforms",
+    "plugins",
+    "www",
+    "scss",
+    ".gitignore",
+    "bowerrc",
+    "bower.json",
+    "ionic.project",
+    "config.xml",
+    "gulpfile.js",
+    "package.json",
+    ".bowerrc"
+  ]
+}
