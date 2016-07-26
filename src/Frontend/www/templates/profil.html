@@ -9,51 +9,51 @@
                 <form id="profil-form9" class="list ">
                     <label class="item item-input " id="profil-input1">
                       <span class="input-label">Geburtsdatum</span>
-                      <input type="text" placeholder="e.g. 24.12.1992" value="{{birthday}}">
+                      <input type="text" placeholder="e.g. 24.12.1992" value="{{user.birthday}}" id="user.birthday" name="user.birthday" ng-model="user.birthday">
                     </label>
                     <label class="item item-input " id="profil-input2">
                         <span class="input-label">E-Mail-Addresse</span>
-                        <input type="text" placeholder="e.g. santa.claus@googlemail.com" value="{{email}}">
+                        <input type="text" placeholder="e.g. santa.claus@googlemail.com" value="{{user.email}}" ng-model="user.email">
                     </label>
                     <label class="item item-input " id="profil-input3">
                       <span class="input-label">Vorname</span>
-                      <input type="text" placeholder="e.g. Santa" value="{{prename}}">
+                      <input type="text" placeholder="e.g. Santa" value="{{user.prename}}" ng-model="user.prename">
                     </label>
                     <label class="item item-input " id="profil-input4">
                       <span class="input-label">Nachname</span>
-                      <input type="text" placeholder="e.g. Claus" value="{{name}}">
+                      <input type="text" placeholder="e.g. Claus" value="{{user.name}}" ng-model="user.name">
                     </label>
                     <label class="item item-input " id="profil-input5">
                       <span class="input-label">Telefon-Nr</span>
-                      <input type="text" placeholder="e.g. 0621/12345" value="{{phoneno}}">
+                      <input type="text" placeholder="e.g. 0621/12345" value="{{user.phoneno}}" ng-model="user.phoneno">
                     </label>
                   <label class="item item-input " id="profil-input6">
                     <span class="input-label">Land</span>
-                    <input type="text" placeholder="e.g. Deutschland" value="{{country}}">
+                    <input type="text" placeholder="e.g. Deutschland" value="{{user.country}}" ng-model="user.country">
                   </label>
                   <label class="item item-input " id="profil-input7">
                     <span class="input-label">Bundesland</span>
-                    <input type="text" placeholder="e.g. Rheinland-Pfalz" value="{{state}}">
+                    <input type="text" placeholder="e.g. Rheinland-Pfalz" value="{{user.state}}" ng-model="user.state">
                   </label>
                   <label class="item item-input " id="profil-input8">
                     <span class="input-label">Stadt</span>
-                    <input type="text" placeholder="e.g. Mannheim" value="{{city}}">
+                    <input type="text" placeholder="e.g. Mannheim" value="{{user.city}}" ng-model="user.city">
                   </label>
                   <label class="item item-input " id="profil-input9">
                     <span class="input-label">Postleitzahl</span>
-                    <input type="text" placeholder="e.g. 53257" value="{{postal_code}}">
+                    <input type="text" placeholder="e.g. 53257" value="{{user.postal_code}}" ng-model="user.postal_code">
                   </label>
                   <label class="item item-input " id="profil-input10">
                     <span class="input-label">Straße</span>
-                    <input type="text" placeholder="e.g. Hauptstraße" value="{{street}}">
+                    <input type="text" placeholder="e.g. Hauptstraße" value="{{user.street}}" ng-model="user.street">
                   </label>
                   <label class="item item-input " id="profil-input11">
                     <span class="input-label">Hausnummer</span>
-                    <input type="text" placeholder="e.g. 7" value="{{house_number}}">
+                    <input type="text" placeholder="e.g. 7" value="{{user.house_number}}" ng-model="user.house_number">
                   </label>
                   <label class="item item-input " id="profil-input12">
                     <span class="input-label">Extra</span>
-                    <input type="text" placeholder="e.g. a" value="{{extra}}">
+                    <input type="text" placeholder="e.g. a" value="{{user.extra}}" ng-model="user.extra">
                   </label>
                   <label class="item item-input " id="profil-divider">
                     <span class="input-label">Skills</span>
@@ -63,7 +63,7 @@
                         <div class="input-label">
                           {{item.description}}
                         </div>
-                        <select id="{{item.id}}_sel">
+                        <select id="{{item.id}}_sel" ng-model="item.sel">
                           <option id="{{item.id}}_1" ng-selected="{{item.s1}}">Nicht vorhanden</option>
                           <option id="{{item.id}}_2" ng-selected="{{item.s2}}">Hobby</option>
                           <option id="{{item.id}}_3" ng-selected="{{item.s3}}">Gelernt</option>
