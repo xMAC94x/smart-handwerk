@@ -30,8 +30,6 @@ angular.module('app.services', [])
 
   return {
     reqId: {}
-
-
   };
 
 }])

@@ -275,7 +275,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('anfrageBersichtCtrl', function($scope, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+.controller('anfrageBersichtCtrl', function($scope, $state, $http, smartbackend, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
   //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
   var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
 
@@ -297,6 +297,19 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     $scope.requestitems = response.requestitems;
     console.log(JSON.stringify($scope.titel));
   })
+
+  $scope.ignoreRequest=function(reqId) {
+    alert("ignoriert");
+    //ID ans Backend senden
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageignorieren?id=' + reqId)).success(function (response) {
+      //seite neu laden
+      $state.go($state.current, {}, {reload: true});
+      var path = "#/Startseite/Home";
+      window.location.href = path;
+
+    })
+  }
+
 })
 
 .controller('anfragenannahmeCtrl', function($scope) {
