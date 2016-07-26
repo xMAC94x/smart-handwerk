@@ -7,10 +7,10 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
 
-      /* 
+
+
+      /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -24,7 +24,8 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page2
   */
   .state('tabsController.homeTab', {
-    url: '/page2',
+    cache: false,
+    url: '/Home',
     views: {
       'tab1': {
         templateUrl: 'templates/homeTab.html',
@@ -33,8 +34,25 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
+.state('agbs', {
+    url: '/AGBs',
+    templateUrl: 'templates/agbs.html',
+    controller: 'agbsCtrl'
+  })
+.state('datenschutz', {
+    url: '/Datenschutz',
+    templateUrl: 'templates/datenschutz.html',
+    controller: 'datenschutzCtrl'
+  })
+
+  .state('impressum', {
+    url: '/Impressum',
+    templateUrl: 'templates/impressum.html',
+    controller: 'impressumCtrl'
+  })
+
   .state('tabsController.nachrichten', {
-    url: '/page3',
+    url: '/Nachrichten',
     views: {
       'tab4': {
         templateUrl: 'templates/nachrichten.html',
@@ -44,7 +62,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('tabsController.maps', {
-    url: '/page4',
+    url: '/Karte',
     views: {
       'tab3': {
         templateUrl: 'templates/maps.html',
@@ -54,36 +72,36 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('tabsController', {
-    url: '/page1',
+    url: '/Startseite',
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
 
   .state('login', {
-    url: '/page5',
+    url: '/Einloggen',
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
 
   .state('signup', {
-    url: '/page6',
+    url: '/Registrierung',
     templateUrl: 'templates/signup.html',
     controller: 'signupCtrl'
   })
 
   .state('anlegen', {
-    url: '/page7',
+    url: '/AnfrageAnlegen',
     templateUrl: 'templates/anlegen.html',
     controller: 'anlegenCtrl'
   })
 
   .state('meineOrte', {
-    url: '/page8',
+    url: '/Orte',
     templateUrl: 'templates/meineOrte.html',
     controller: 'meineOrteCtrl'
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -97,36 +115,36 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page9
   */
   .state('meineBeitrGe', {
-    url: '/page9',
+    url: '/MeineBeitraege',
     templateUrl: 'templates/meineBeitrGe.html',
     controller: 'meineBeitrGeCtrl'
   })
 
   .state('historie', {
-    url: '/page10',
+    url: '/Historie',
     templateUrl: 'templates/historie.html',
     controller: 'historieCtrl'
   })
 
   .state('einstellungen', {
-    url: '/page11',
+    url: '/Einstellungen',
     templateUrl: 'templates/einstellungen.html',
     controller: 'einstellungenCtrl'
   })
 
   .state('hilfe', {
-    url: '/page12',
+    url: '/Hilfe',
     templateUrl: 'templates/hilfe.html',
     controller: 'hilfeCtrl'
   })
 
   .state('profil', {
-    url: '/page13',
+    url: '/Profil',
     templateUrl: 'templates/profil.html',
     controller: 'profilCtrl'
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -140,12 +158,13 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page14
   */
   .state('anfrageBersicht', {
-    url: '/page14',
+    cache:false,
+    url: '/AnfrageUebersicht',
     templateUrl: 'templates/anfrageBersicht.html',
     controller: 'anfrageBersichtCtrl'
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -159,13 +178,14 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page15
   */
   .state('anfragenannahme', {
-    url: '/page15',
+    url: '/AnfrageAnnahme',
     templateUrl: 'templates/anfragenannahme.html',
     controller: 'anfragenannahmeCtrl'
   })
-  
+
   .state('tabsController.anfrageErstellen', {
-    url: '/page16',
+    cache: false,
+    url: '/AnfrageErstellen',
     views: {
       'tab2': {
         templateUrl: 'templates/anfrageErstellen.html',
@@ -174,7 +194,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -188,18 +208,19 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page19
   */
   .state('angebotsBersicht', {
-    url: '/page19',
+    cache:false,
+    url: '/AngebotsUebersicht',
     templateUrl: 'templates/angebotsBersicht.html',
     controller: 'angebotsBersichtCtrl'
   })
 
   .state('anfrageErstellenBersicht', {
-    url: '/page17',
+    url: '/AnfrageErstellenUebersicht',
     templateUrl: 'templates/anfrageErstellenBersicht.html',
     controller: 'anfrageErstellenBersichtCtrl'
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -213,12 +234,12 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page18
   */
   .state('pakete', {
-    url: '/page18',
+    url: '/Pakete',
     templateUrl: 'templates/pakete.html',
     controller: 'paketeCtrl'
   })
 
-  /* 
+  /*
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
       1) Using the ui-sref HTML attribute:
@@ -233,7 +254,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab4/page20
   */
   .state('tabsController.chatEinzelperson', {
-    url: '/page20',
+    url: '/Einzelchat',
     views: {
       'tab4': {
         templateUrl: 'templates/chatEinzelperson.html',
@@ -243,7 +264,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('tabsController.chatGruppenchat', {
-    url: '/page21',
+    url: '/Gruppenchat',
     views: {
       'tab4': {
         templateUrl: 'templates/chatGruppenchat.html',
@@ -252,8 +273,8 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-$urlRouterProvider.otherwise('/page5')
+$urlRouterProvider.otherwise('/Einloggen')
 
-  
+
 
 });

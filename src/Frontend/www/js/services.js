@@ -13,10 +13,26 @@ angular.module('app.services', [])
          return {
              anfrageData: {},
              titel: {}
+         };
+
+ }])
+
+.factory('ChecklisteOriginalCtrl', [function () {
+
+         return {
+             gesamteListe: {}
 
          };
 
  }])
+
+.factory('DataFromHomeTabCtrlToAnfrageBersichtCtrl', [function () {
+
+  return {
+    reqId: {}
+  };
+
+}])
 
 .factory('smartbackend', [function(){
   var smartbackend={};
