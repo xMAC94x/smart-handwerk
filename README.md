@@ -38,6 +38,8 @@ cordova plugin add cordova-plugin-splashscreen
 cordova plugin add cordova-plugin-statusbar
 cordova plugin add ionic-plugin-keyboard
 cordova plugin add cordova-plugin-compat
+cordova plugin add cordova-plugin-x-toast
+cordova prepare
 ```
 9. Build Platform browser
 ```bash
