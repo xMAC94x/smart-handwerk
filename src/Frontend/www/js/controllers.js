@@ -28,24 +28,151 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('mapsCtrl', function($scope, $state, $cordovaGeolocation) {
+.controller('mapsCtrl', function($scope, $state, $cordovaGeolocation, $http, smartbackend) {
+    
+    
   var options = {timeout: 10000, enableHighAccuracy: true};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    var latLngTest = new google.maps.LatLng(49.4749516, 8.53439449);
 
     var mapOptions = {
-      center: latLng,
-      zoom: 15,
+      center: latLngTest,
+      zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      
+
+      $scope.adressen=[
+          "2000+Simcoe+St+N,+Oshawa,+ON+L1H+7K4", "U5+Building,+2000+Founders+Dr,+Oshawa,+ON+L1G+8C4", "43+Conlin+Rd,+Oshawa,+ON+L1H+7K4"
+      ];
+      
+
+     $scope.getData = function(adresse) {
+    var promise = $http({
+    method: 'GET',
+    url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + adresse + "&key=AIzaSyDtKuoMbWqsicTx6i-aDgI1CHLB_R0wu30",  
+    headers: {
+        "Authorization": undefined
+           }
+  })
+    .success(function(data,status,headers,config) {
+        
+       return data;
+    })
+    .error(function(data,status,headers,config) {
+        return {"status": false};
+    });
+    
+    return promise;
+    }
+     
+     $http({
+  method: 'GET',
+  url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfrageadressen')
+}).then(function successCallback(response) {
+        $scope.adressenAusDB = response.data;
+    //    alert(JSON.stringify($scope.adressenAusDB));
+         
+         $scope.adressen = [];
+         $scope.beschreibungen = [];
+         
+         var stadt ="";
+         var plz = "";
+         var land="";
+         var strasse="";
+         var hausnr = "";
+         var beschreibung = "";
+         
+       for (var i in $scope.adressenAusDB) {
+           if($scope.adressenAusDB[i].city!=null) {
+                stadt = $scope.adressenAusDB[i].city;
+           }
+           if($scope.adressenAusDB[i].street!=null) {
+                strasse = $scope.adressenAusDB[i].street;
+                strasse = strasse.split(' ').join('+');
+           }
+           if($scope.adressenAusDB[i].postal_code!=null) {
+                plz = $scope.adressenAusDB[i].postal_code;
+           }
+           if($scope.adressenAusDB[i].country!=null) {
+                land = $scope.adressenAusDB[i].country;
+           }
+           if($scope.adressenAusDB[i].house_number!=null) {
+                hausnr = $scope.adressenAusDB[i].house_number;
+           }
+           if($scope.adressenAusDB[i].description!=null) {
+                beschreibung = $scope.adressenAusDB[i].description;
+           }
+           
+           var adresseGesamt = strasse + "+" + hausnr + ",+" + plz + "+" + stadt + ",+" + land;
+        //   alert(adresseGesamt);
+           $scope.adressen.push(adresseGesamt);
+           $scope.beschreibungen.push(beschreibung);
+        //   alert($scope.adressen);
+
+        }
+          
+
+
+          
+                   
+for (var i = 0; i < $scope.adressen.length; i++) {
+    
+    $scope.getData($scope.adressen[i]).then(function(promise) {
+     //   alert(JSON.stringify(promise));
+        var jsonadresse = promise;
+        
+         var lat = jsonadresse.data.results[0].geometry.location.lat;
+        var lng = jsonadresse.data.results[0].geometry.location.lng;
+        var text = $scope.beschreibungen[i];
+                
+      var latLng1 = new google.maps.LatLng(lat, lng);
+
+      var marker = new google.maps.Marker({
+    position: latLng1,
+    map: $scope.map,
+    animation: google.maps.Animation.DROP,
+    title: text
+});
+        
+    })
+
+}
+
+
+  }, function errorCallback(response) {
+    alert("error");
+  });
+
 
   }, function(error){
     console.log("Could not get location");
   });
+    
+    
+ /*   $http({
+    method: 'GET',
+    url: "https://maps.googleapis.com/maps/api/geocode/json?address=2000+Simcoe+St+N,+Oshawa,+ON+L1H+7K4&key=AIzaSyDtKuoMbWqsicTx6i-aDgI1CHLB_R0wu30"
+  }).then(function successCallback(response) {
+        $scope.adresse = response.data;
+        alert($scope.adresse);
+
+  }, function errorCallback(response) {
+    alert("error");
+  });*/
+    
+    
+    
+    
+
+
+    
+    
 })
 
 .controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth) {
