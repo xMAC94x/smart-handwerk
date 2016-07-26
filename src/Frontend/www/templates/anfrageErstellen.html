@@ -11,7 +11,7 @@
                 </input>        
         </div>
         
-    <div ng-model="addform" style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
+    <div style="padding:0;margin:0" ng-controller="einblendenCtrl" ng-repeat="kategorie in kategorien" class="item item-body " id="anfrageErstellen-list-item-container6">
             
             <div style="padding:0.5em;background:#e6e6e6" ng-click="toggle()" >
             <p id="anfrageErstellen-markdown13" style="margin-top:0px;color:#000000;font-size:14pt" class=" ">{{kategorie.oberkategorie}}</p>
@@ -33,7 +33,7 @@
                         <tr style="font-size:13pt" ng-repeat="eigenschaft in element.eigenschaften">
                             <td><label style="font-size:14pt" for="{{eigenschaft.id}}"></label>                    &nbsp&nbsp&nbsp
 {{eigenschaft.beschriftung}}</td>
-                            <td ALIGN="RIGHT"><input type="{{eigenschaft.art}}" id="{{eigenschaft.id}}" style="{{eigenschaft.style}};font-size:13pt" name="{{eigenschaft.gruppe}}" placeholder="{{eigenschaft.placeholder}}">
+                            <td ALIGN="RIGHT"><input type="{{eigenschaft.art}}" id="{{eigenschaft.id}}" style="{{eigenschaft.style}};font-size:13pt;width:6em" name="{{eigenschaft.gruppe}}" placeholder="{{eigenschaft.placeholder}}">
                     </input></td>
                             <td>&nbsp{{eigenschaft.name}}</td>
                         </tr>

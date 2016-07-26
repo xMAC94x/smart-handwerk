@@ -28,7 +28,9 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('mapsCtrl', function($scope, $state, $cordovaGeolocation) {
+.controller('mapsCtrl', function($scope, $state, $cordovaGeolocation, $http) {
+    
+    
   var options = {timeout: 10000, enableHighAccuracy: true};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
@@ -42,10 +44,157 @@ angular.module('app.controllers', [])
     };
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      
+    
+      
+      
+      
+      
+  $scope.jsonadresse =  {
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Simcoe Building",
+               "short_name" : "Simcoe Building",
+               "types" : [ "premise" ]
+            },
+            {
+               "long_name" : "2000",
+               "short_name" : "2000",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Simcoe Street North",
+               "short_name" : "Simcoe St N",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Oshawa",
+               "short_name" : "Oshawa",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Durham Regional Municipality",
+               "short_name" : "Durham Regional Municipality",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Ontario",
+               "short_name" : "ON",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Kanada",
+               "short_name" : "CA",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "L1H 7K4",
+               "short_name" : "L1H 7K4",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Simcoe Building, 2000 Simcoe St N, Oshawa, ON L1H 7K4, Kanada",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 43.94627029999999,
+                  "lng" : -78.894031
+               },
+               "southwest" : {
+                  "lat" : 43.94474650000001,
+                  "lng" : -78.895234
+               }
+            },
+            "location" : {
+               "lat" : 43.9455084,
+               "lng" : -78.8946325
+            },
+            "location_type" : "ROOFTOP",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 43.9468573802915,
+                  "lng" : -78.89328351970849
+               },
+               "southwest" : {
+                  "lat" : 43.94415941970851,
+                  "lng" : -78.89598148029151
+               }
+            }
+         },
+         "place_id" : "ChIJ57DneZob1YkRrInw-O3sTPs",
+         "types" : [ "premise" ]
+      }
+   ],
+   "status" : "OK"
+}
+    
+  
+  var lat = $scope.jsonadresse.results[0].geometry.location.lat;
+  var lng = $scope.jsonadresse.results[0].geometry.location.lng;
+
+      
+  
+      
+  //    $sccope.getPositions = function(adresse){
+  /*         $http({
+    method: 'GET',
+    url: //adresse
+    "https://maps.googleapis.com/maps/api/geocode/json?address=2000+Simcoe+St+N,+Oshawa,+ON+L1H+7K4&key=AIzaSyDtKuoMbWqsicTx6i-aDgI1CHLB_R0wu30",
+    headers: {
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Key'
+           }
+  }).then(function successCallback(response) {
+        $scope.adresse = response.data;
+        alert($scope.adresse);
+
+  }, function errorCallback(response) {
+    alert("error");
+  });*/
+  //}
+
+
+//for (var i = 0; i < $scope.comments.length; i++) {
+//  getIsLiked(i);
+//}
+      
+      
+    var latLng1 = new google.maps.LatLng(lat, lng);
+
+    var marker = new google.maps.Marker({
+    position: latLng1,
+    map: $scope.map,
+    animation: google.maps.Animation.DROP,
+    title: "Mark On Map"
+});
+      
+      
+      
 
   }, function(error){
     console.log("Could not get location");
   });
+    
+    
+ /*   $http({
+    method: 'GET',
+    url: "https://maps.googleapis.com/maps/api/geocode/json?address=2000+Simcoe+St+N,+Oshawa,+ON+L1H+7K4&key=AIzaSyDtKuoMbWqsicTx6i-aDgI1CHLB_R0wu30"
+  }).then(function successCallback(response) {
+        $scope.adresse = response.data;
+        alert($scope.adresse);
+
+  }, function errorCallback(response) {
+    alert("error");
+  });*/
+    
+    
+    
+    
+
+
+    
+    
 })
 
 .controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth) {
