@@ -304,7 +304,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 })
 
-.controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+.controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl, DataFromAnfrageBersichtCtrlToAngebotErst) {
   //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
   //abfragen woher ich komme
   var vorherTitel = $ionicHistory.backTitle();
@@ -363,16 +363,71 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     })
   }
 
-  $scope.testM=function() {
-    $ionicLoading.show({
-      template: 'Testtext',
-      duration: 2000
-    });
+  $scope.angebotauswahl=function() {
+    DataFromAnfrageBersichtCtrlToAngebotErst.reqDetails = $scope.request;
+
   }
 })
 
-.controller('anfragenannahmeCtrl', function($scope) {
+.controller('anfragenannahmeCtrl', function($scope, DataFromAnfrageBersichtCtrlToAngebotErst) {
+  $scope.request = DataFromAnfrageBersichtCtrlToAngebotErst.reqDetails;
+  $scope.titel = $scope.request.general.titel;
+  $scope.requestitems = $scope.request.requestitems;
 
+
+  $scope.angebotanDB=function(){
+    //auswahl abfragen
+    var offerSel = [];
+    var general = {};
+    var offeritems = [];
+
+    for (var j in $scope.request) {
+      //general data
+      general.reqid = $scope.request[j].general.reqid;
+      general.user_id = $scope.request[j].general.user_id;
+      general.discounttotalprice =
+      for (var i in $scope.request[j].requestitems) {
+
+        var ele = $document[0].getElementById($scope.kategorien[j].elemente[i].id);
+        var art = $scope.kategorien[j].elemente[i].art;
+        if(art==="radio" || art==="checkbox") {
+          if(!ele.checked) {
+            delete  $scope.kategorien[j].elemente[i];
+          } else {
+
+            if(ele.checked && $scope.kategorien[j].elemente[i].eigenschaften != null) {
+              for (var k in $scope.kategorien[j].elemente[i].eigenschaften) {
+                var eig = $document[0].getElementById($scope.kategorien[j].elemente[i].eigenschaften[k].id);
+                var eigart = $scope.kategorien[j].elemente[i].eigenschaften[k].art;
+
+                if(eigart==="radio" || eigart==="checkbox") {
+                  //       var urltext = eig.id.toString() + "=" + eig.checked.toString();
+
+                  if(!eig.checked) {
+                    delete  $scope.kategorien[j].elemente[i].eigenschaften[k];
+                  } else {
+
+                  }
+                }
+
+    //Auswahl an db
+    var req = {
+      method: 'POST',
+      url: smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: { offer: offerSel}
+    }
+
+    $http(req).then(function(elementsResponse) {
+      //Meldung
+      $ionicLoading.show({
+        template: 'Danke für dein Angebot!',
+        duration: 1000
+      });
+    })
+  }//function
 })
 
 

@@ -42,6 +42,13 @@ angular.module('app.services', [])
 
   }])
 
+  .factory('DataFromAnfrageBersichtCtrlToAngebotErst', [function () {
+
+    return {
+      reqDetails: {}
+    };
+
+  }])
 
 .factory('smartbackend', [function(){
   var smartbackend={};
