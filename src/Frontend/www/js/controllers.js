@@ -1,10 +1,6 @@
 //import {Http} from "angular/http";
 angular.module('app.controllers', [])
-<<<<<<< HEAD
 
-.controller('homeTabCtrl', function($scope) {
-=======
->>>>>>> master
 
 .controller('homeTabCtrl', function($scope, $http, smartbackend) {
   $http({
@@ -37,19 +33,12 @@ angular.module('app.controllers', [])
     })
   }
 })
-<<<<<<< HEAD
 
-.controller('nachrichtenCtrl', function($scope, $timeout, $ionicScrollDelegate) {
-
-
-
-    })
-=======
 
 .controller('nachrichtenCtrl', function($scope) {
 
 })
->>>>>>> master
+
 
 .controller('mapsCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
@@ -72,10 +61,7 @@ angular.module('app.controllers', [])
 
 })
 
-<<<<<<< HEAD
 
-.controller('loginCtrl', function($scope) {
-=======
 .controller('loginCtrl', function($scope, $http) {
 
   $scope.login=function(){
@@ -91,7 +77,7 @@ angular.module('app.controllers', [])
     $http.defaults.headers.common['User'] = 'bfa673de-21f7-11e6-b56d-4b52f205267c';
     }
  // }
->>>>>>> master
+
 
 })
 
@@ -135,12 +121,7 @@ angular.module('app.controllers', [])
 
 })
 
-<<<<<<< HEAD
-.controller('anfrageErstellenCtrl', function($scope, $http) {
-    $http.get('ElementeAnfrage.json').then(function(elementsResponse) {
-      $scope.kategorien = elementsResponse.data;
-      });
-=======
+
 
 //.controller('anfrageErstellenCtrl', function($scope, $http) {
 //    $http.get('ElementeAnfrage.json').then(function(elementsResponse) {
@@ -397,7 +378,6 @@ $scope.kategorien = [
     }
 
 
->>>>>>> master
 })
 
 
@@ -409,20 +389,7 @@ $scope.kategorien = [
 
  })
 
-<<<<<<< HEAD
-.controller('angebotsBersichtCtrl', function($scope) {
 
-})
-
-.controller('anfrageErstellenBersichtCtrl', function($scope) {
-=======
-.controller('auswahlEinblendenCtrl', function($scope) {
-    $scope.myVar2 = false;
-    $scope.auswahleinblenden = function() {
-        $scope.myVar2 = !$scope.myVar2;
-    };
-
- })
 
 .controller('anfrageErstellenBersichtCtrl', function($scope, $http, DataFromAnfrageErstellenCtrlToAnfrageBersichtCtrl, smartbackend) {
 
@@ -437,7 +404,7 @@ $scope.kategorien = [
        alert("Übertrage Daten....");
        var req = {
             method: 'POST',
-            url: smartbackend.getApiUrl('/smarthandwerk/anfrage/anfragespeichern'),
+            url: smartbackend.getApiUrl('https://sb.pftclan.de:546/api/smartbackend/chat/89d1011a-406b-11e6-ae3d-93e11eb48bfd/messages '),
            headers: {
                'Content-Type': 'application/json',
            },
@@ -456,7 +423,7 @@ $scope.kategorien = [
 
 
 .controller('angebotsBersichtCtrl', function($scope) {
->>>>>>> master
+
 
 })
 
@@ -464,20 +431,36 @@ $scope.kategorien = [
 
 })
 
-.controller('chatEinzelpersonCtrl', function($scope) {
-  scope.hideTime = true;
+.controller('chatEinzelpersonCtrl', function($scope, $http, smartbackend) {
+  $scope.hideTime = true;
 
   var alternate,
     isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
 
-  $scope.sendMessage = function() {
+  $http({
+    method: "GET",
+    url: "https://sb.pftclan.de:546/api/smartbackend/chat/rooms"
+    //"/01a88300-5270-11e6-859a-57831a410ff3/messages"
+  }).then(function(result) {
+    var rooms = result.data;
+    alert(rooms);
+  }, function {
+   alert("Error! Fehlgeschlagen!");
+    //alert(error.data);
+  });
+
+
+
+  $scope.sendMessage = function($ionicScrollDelegate) {
     alternate = !alternate;
+
 
     var d = new Date();
     d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 
+
     $scope.messages.push({
-      userId: alternate ? '12345' : '54321',
+      userId: alternate ? '367c8cb2-3dca-11e6-8a14-7f8726936171' : '39129992-3de0-11e6-bb0d-8757003dff00',
       text: $scope.data.message,
       time: d
     });
@@ -488,7 +471,7 @@ $scope.kategorien = [
   };
 
 
-  $scope.inputUp = function() {
+  $scope.inputUp = function($ionicScrollDelegate) {
     if (isIOS) $scope.data.keyboardHeight = 216;
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
@@ -496,7 +479,7 @@ $scope.kategorien = [
 
   };
 
-  $scope.inputDown = function() {
+  $scope.inputDown = function($ionicScrollDelegate) {
     if (isIOS) $scope.data.keyboardHeight = 0;
     $ionicScrollDelegate.resize();
   };
@@ -507,24 +490,39 @@ $scope.kategorien = [
 
 
   $scope.data = {};
-  $scope.myId = '12345';
+  $scope.myId = '367c8cb2-3dca-11e6-8a14-7f8726936171';
   $scope.messages = [];
 })
 
-.controller('chatGruppenchatCtrl', function($scope) {
-  scope.hideTime = true;
+.controller('chatGruppenchatCtrl', function($scope, $http, smartbackend) {
+  $scope.hideTime = true;
 
   var alternate,
     isIOS = ionic.Platform.isWebView() && ionic.Platform.isIOS();
 
-  $scope.sendMessage = function() {
+  $http({
+    method: "GET",
+    url: "https://sb.pftclan.de:546/api/smartbackend/chat/rooms"
+    //"/01a88300-5270-11e6-859a-57831a410ff3/messages"
+  }).then(function(result) {
+    var rooms = result.data;
+    alert(rooms);
+  }, function  {
+    alert("Error! Fehlgeschlagen!");
+  });
+
+
+
+  $scope.sendMessage = function($ionicScrollDelegate) {
     alternate = !alternate;
+
 
     var d = new Date();
     d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
 
+
     $scope.messages.push({
-      userId: alternate ? '12345' : '54321',
+      userId: alternate ? '367c8cb2-3dca-11e6-8a14-7f8726936171' : '39129992-3de0-11e6-bb0d-8757003dff00',
       text: $scope.data.message,
       time: d
     });
@@ -535,7 +533,7 @@ $scope.kategorien = [
   };
 
 
-  $scope.inputUp = function() {
+  $scope.inputUp = function($ionicScrollDelegate) {
     if (isIOS) $scope.data.keyboardHeight = 216;
     $timeout(function() {
       $ionicScrollDelegate.scrollBottom(true);
@@ -543,7 +541,7 @@ $scope.kategorien = [
 
   };
 
-  $scope.inputDown = function() {
+  $scope.inputDown = function($ionicScrollDelegate) {
     if (isIOS) $scope.data.keyboardHeight = 0;
     $ionicScrollDelegate.resize();
   };
@@ -554,6 +552,6 @@ $scope.kategorien = [
 
 
   $scope.data = {};
-  $scope.myId = '12345';
+  $scope.myId = '367c8cb2-3dca-11e6-8a14-7f8726936171';
   $scope.messages = [];
 })

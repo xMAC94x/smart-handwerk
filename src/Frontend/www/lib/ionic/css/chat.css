@@ -73,10 +73,11 @@
   -moz-transform: translate3d(120px, 0, 0) !important;
   transform: translate3d(120px, 0, 0) !important;
 }
-span {
+
+/*span {
   color: black !important;
   background-color: #C7C7CC !important;
-}
+
 
 span {
   background: #007AFF !important;
@@ -87,3 +88,4 @@ span {
   text-align: left !important;
   max-width: 240px !important;
 }
+*/

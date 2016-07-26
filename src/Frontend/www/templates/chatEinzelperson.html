@@ -6,7 +6,34 @@
                 <h2>Franziska Mönster</h2>
             </ion-item>
         </ion-list>
-      <ion-content class="content-stable"
+
+      <link href="lib/ionic/css/chat.css" rel="stylesheet">
+      <div ng-repeat="message in messages"
+           ng-class="{other: message.userId != myId}"
+           class="messages"
+           align="right">
+        <div class="message" ng-class="{'slide-right': hideTime, '': !hideTime}">
+          <span style="background: #007AFF ;display: inline-block ; color: white ; padding: 10px ; border-radius: 10px ; text-align:right; max-width: 240px;">
+
+            {{message.text}}</span>
+        </div>
+
+        <div class="time" ng-class="{'slide-right': hideTime, '': !hideTime}">{{message.timestamp}}</div>
+      </div>
+    </ion-content>
+
+  <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Type your message" on-return="sendMessage(); closeKeyboard()" ng-model="data.message" on-focus="inputUp()" on-blur="inputDown()" />
+    </label>
+    <button class="button button-positive" ng-click="sendMessage()">
+      Senden
+    </button>
+  </ion-footer-bar>
+</ion-view>
+
+<!--<ion-content class="content-stable"
                    on-swipe-left="hideTime = false"
                    on-swipe-right="hideTime = true">
 
@@ -30,4 +57,4 @@
         </form>
         <button id="chatEinzelperson-button26" class=" button button-positive  icon-right ion-android-send " ng-click="sendMessage()"></button>
     </ion-content>
-</ion-view>
+</ion-view>-->
