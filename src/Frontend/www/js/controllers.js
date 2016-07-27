@@ -282,7 +282,8 @@ for (var i = 0; i < $scope.adressen.length; i++) {
     }
 
       }, function errorCallback(response) {
-    alert("error");
+          alert("Du hast noch keine Anfragen erstellt oder Favoriten angegeben.");
+          window.location = '#/Startseite/Home'
   });
 
 
