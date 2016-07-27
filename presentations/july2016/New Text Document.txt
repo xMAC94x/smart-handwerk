@@ -1,0 +1,62 @@
+<section>
+                    <h2>Vorstellung</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rolle</th>
+                                <th>Mitarbeiter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Projektverantwortliche</td>
+                                <td>Franziska Mönster</td>
+                            </tr>
+                            <tr>
+                                <td>Ansprechpartner</td>
+                                <td>Franziska Mönster, Lisa Sommer</td>
+                            </tr>
+                            <tr>
+                                <td>Zeitmanagement</td>
+                                <td>Annika Schimbold</td>
+                            </tr>
+                            <tr>
+                                <td>Finanzplanung</td>
+                                <td>Doreen Riepel</td>
+                            </tr>
+                            <tr>
+                                <td>Technische Planung</td>
+                                <td>Marcel Märtens, Peter Jirsak</td>
+                            </tr>
+                            <tr>
+                                <td>Technische Umsetzung</td>
+                                <td>alle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+
+
+<section>
+                    <h2>Ergebnisse der Analysephase</h2>
+                    <ul>
+						<li>Eingrenzung der Räumlichkeiten</li>
+                        <li>Smarte Auswahlmöglichkeiten</li>
+                        <li>Smarte Komposition von komplexen Produkten</li>
+                        <li>Kontaktherstellung zwischen Anbietern und Nachfragern</li>
+					</ul>             
+                </section>
+                <section>
+                    <h2>Mock-ups</h2>
+                </section>
+                <section>
+                    <h2>Perspektive</h2>
+                    <ul>
+                    <li>Erweiterbarkeit</li>
+                    <li>Smarte Vernetzung der Apps durch gemeinsames Backend</li>
+                    <li>Mögliche Partner:</li>
+                    <img src="img/squadrat.png" alt="SQuadrat" height="25%" width="25%" style="background:none;  border:none; box-shadow:none;">
+                        <img src="img/dhbw.png" alt="DHBW" height="50%" width="50%" style="background:none;  border:none; box-shadow:none;">
+                   </ul> 
+                </section>
