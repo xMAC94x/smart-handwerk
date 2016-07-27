@@ -1,28 +1,39 @@
 <ion-view title="Anfragenannahme" id="templates/anfragenannahme.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <h1 id="anfragenannahme-heading3" style="color:#000000;" class=" ">Schrank gesucht!</h1>
-        <div class="item item-body " id="anfragenannahme-list-item-container12">
-            <p id="anfragenannahme-markdown11" style="margin-top:0px;color:#000000;" class=" ">Größe</p>
-            <form id="anfragenannahme-form3" class="list ">
-                <ion-checkbox>2,00 x 3,00 x 0,5</ion-checkbox>
-                <ion-checkbox>Checkbox</ion-checkbox>
-                <ion-checkbox>Checkbox</ion-checkbox>
-            </form>
-        </div>
-        <div class="item item-body " id="anfragenannahme-list-item-container13">
-            <p id="anfragenannahme-markdown12" style="margin-top:0px;color:#000000;" class=" ">Gesamtpreis</p>
-            <form id="anfragenannahme-form4" class="list ">
-                <label class="item item-input " id="anfragenannahme-input6">
-                    <input type="number" placeholder="€">
-                </label>
-                <ion-item class="range range-positive " id="anfragenannahme-range1">Untergrenze
-                    <input type="range" value="50" min="0" max="3000">
-                </ion-item>
-            </form>
-            <div id="anfragenannahme-button-bar3" class=" button-bar ">
-                <a ui-sref="tabsController.homeTab" id="anfragenannahme-button15" class=" button button-positive  button-block ">Abbrechen</a>
-                <a ui-sref="tabsController.homeTab" id="anfragenannahme-button16" class=" button button-positive  button-block ">Abschicken</a>
+        <h1 id="anfragenannahme-heading3" style="color:#000000;" class=" " ng-model="titel">{{titel}}</h1>
+          <span class="item-note">{{request.general.minprice}} - {{request.general.maxprice}}</span>
+          <h4>{{request.general.prename}} {{request.general.name}}</h4>
+          <a>Zu erledigen zwischen {{request.general.begin}} und {{request.general.end}}</a><br />
+          <a>Kommentar: <i>{{request.general.comment}}</i></a>
+          <!--loop + anzeigen aller Items -->
+          <ion-list>
+            <ion-item ng-repeat="requestitem in requestitems" class="" >
+              <h3>{{requestitem.item_description}}</h3>
+              <ion-list>
+                <div ng-repeat="attribute in requestitem.attributes">
+                  {{attribute.attribute_description}}: {{attribute.value}} {{attribute.uom}}
+                </div>
+              </ion-list>
+              <div>
+                <span style="font-size:12pt" class="ng-binding"></span>
+                <input type="checkbox" id="{{requestitem.requestitem_id}}" value="{{requestitem.checked}}" ng-model="requestitem.checked" style=";font-size:12pt" name="">
+                <label style="font-size:12pt" for={{requestitem.requestitem_id}} class="ng-binding">Ich mach es</label>
+              </div>
+              <div class="">
+                <span style="font-size:12pt" class="ng-binding">Für</span>
+                <input type="" id="preis_{{requestitem.requestitem_id}}" value="{{requestitem.preis}}" ng-model="requestitem.preis" style="width:5em;font-size:12pt" name="">
+                <label style="font-size:12pt" for="preis_{{requestitem.requestitem_id}}" class="ng-binding">€</label>
+              </div>
+            </ion-item>
+            <div class="">
+              <span style="font-size:12pt" class="ng-binding">Rabatt für Gesamtpaket:</span>
+              <input type="" id="discount" value="{{offerSel.discount}}" ng-model="offerSel.discount" style="width:5em;font-size:12pt" name="">
+              <label style="font-size:12pt" for="discount" class="ng-binding">€</label>
             </div>
-        </div>
+          </ion-list>
+          <div id="anfragenannahme-button-bar3" class=" button-bar ">
+              <a ui-sref="tabsController.homeTab" id="anfragenannahme-button15" class=" button button-positive">Abbrechen</a>
+              <a ui-sref="tabsController.homeTab" ng-click="angebotanDB()" id="anfragenannahme-button16" class=" button button-positive ">Abschicken</a>
+          </div>
     </ion-content>
 </ion-view>

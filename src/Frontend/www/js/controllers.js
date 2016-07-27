@@ -575,7 +575,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   };
 })
 
-.controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl) {
+.controller('anfrageBersichtCtrl', function($scope, $ionicHistory, $ionicLoading, $cordovaToast, $state, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl, DataFromHomeTabCtrlToAnfrageBersichtCtrl, DataFromAnfrageBersichtCtrlToAngebotErst) {
   //alert(DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId);
   //abfragen woher ich komme
   var vorherTitel = $ionicHistory.backTitle();
@@ -634,16 +634,48 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     })
   }
 
-  $scope.testM=function() {
-    $ionicLoading.show({
-      template: 'Testtext',
-      duration: 2000
-    });
+  $scope.angebotauswahl=function() {
+    DataFromAnfrageBersichtCtrlToAngebotErst.reqDetails = $scope.request;
+
   }
 })
 
-.controller('anfragenannahmeCtrl', function($scope) {
+.controller('anfragenannahmeCtrl', function($scope, $http, smartbackend, DataFromAnfrageBersichtCtrlToAngebotErst) {
+  $scope.request = DataFromAnfrageBersichtCtrlToAngebotErst.reqDetails;
+  $scope.titel = $scope.request.general.titel;
+  $scope.requestitems = $scope.request.requestitems;
+  $scope.offerSel = {};
 
+  $scope.angebotanDB=function(){
+    //auswahl abfragen
+    var offer = {};
+    var singleOfferItem = {};
+    var offerItems = [];
+    //general data
+    offer.discounttotalprice = $scope.offerSel.discount;
+    console.log(offer.discounttotalprice);
+    for (i in $scope.requestitems){
+      if ($scope.requestitems[i].checked) {
+        singleOfferItem.price = $scope.requestitems[i].preis;
+        console.log(singleOfferItem.price);
+        singleOfferItem.requestitem_id = $scope.requestitems[i].requestitem_id;
+        console.log(singleOfferItem.requestitem_id);
+        offerItems.push(singleOfferItem);
+      }//else: requestitem wurde nicht ausgewählt
+    }
+    offer.offerItems = offerItems;
+
+    //Auswahl an db
+    $http.post(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen'), offer).success(function (response) {
+    console.log(response);
+    //$location.path("/page1");
+    //Meldung
+    $ionicLoading.show({
+      template: 'Danke für dein Angebot!',
+      duration: 1000
+    });
+    })
+  }//function
 })
 
 

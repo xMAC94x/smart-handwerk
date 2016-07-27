@@ -179,6 +179,7 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/page15
   */
   .state('anfragenannahme', {
+    cache:false,
     url: '/AnfrageAnnahme',
     templateUrl: 'templates/anfragenannahme.html',
     controller: 'anfragenannahmeCtrl'
