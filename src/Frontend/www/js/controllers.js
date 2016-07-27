@@ -872,7 +872,8 @@ $http({
   }
   console.log($scope.pakete);
   },function errorCallback(response) {
-    alert("error");
+    alert(response.data);
+    window.location = '#/Startseite/Home';
   });
 
 })
@@ -894,7 +895,8 @@ $http({
       }
     }
   }, function errorCallback(response) {
-    alert("error");
+    alert("Du hast noch keine Anfragen erstellt");
+    window.location = '#/Startseite/Home'
   });
 
   $scope.PaketAnzeigenByID=function(id) {
