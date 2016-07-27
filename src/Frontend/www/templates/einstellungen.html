@@ -2,9 +2,16 @@
     <ion-content padding="true" class="has-header">
         <h1 id="einstellungen-heading10" style="color:#000000;" class=" ">Einstellungen</h1>
         <form id="einstellungen-form8" class="list ">
-            <ion-toggle toggle-class="toggle-positive" id="einstellungen-toggle2" class=" ">Standortübermittlung</ion-toggle>
-            <ion-toggle toggle-class="toggle-positive" id="einstellungen-toggle3" class=" ">Benachrichtigungen</ion-toggle>
-            <ion-toggle toggle-class="toggle-positive" id="einstellungen-toggle4" class=" ">Toggle</ion-toggle>
+            <ion-toggle ng-repeat="item in settingsList"
+                        ng-model="item.checked"
+                        ng-checked="item.checked">
+              {{ item.text }}
+            </ion-toggle>
         </form>
+      <!-- <ion-footer-bar class="bar bar-positive"> -->
+      <div class="button-bar">
+        <!-- <a ui-sref="tabsController.homeTab" id="anfrageBersicht-button11" class="button button-positive">Abbrechen</a> -->
+        <a ng-click="speichern()" id="einstellungen-button13" <a ui-sref="tabsController.homeTab" class="button button-positive">Speichern</a>
+      </div>
     </ion-content>
 </ion-view>
