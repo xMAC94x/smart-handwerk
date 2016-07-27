@@ -855,8 +855,8 @@ $http({
 
 .controller('paketeCtrl', function($http, $scope, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl) {
   //reqID
-  //var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
-  var reqId = 'ef4836ce-525b-11e6-bd74-2bef595934e6';
+  var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
+  //zum testen: var reqId = 'ef4836ce-525b-11e6-bd74-2bef595934e6';
   $http({
     method: 'GET',
     url: smartbackend.getApiUrl('/smarthandwerk/pakete/getpakete?request_id=' + reqId)
