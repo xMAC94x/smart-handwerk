@@ -2,22 +2,23 @@
     <ion-content padding="true" class="has-header">
         <form id="login-form1" class="list" ng-controller="loginCtrl">
             <ion-list id="login-list1" class=" ">
-                <center><img src="img/icon-handwerk.jpg" >
-                <h1 style="color:#2E9AFE;">Smart-Handwerk</h1></center>
+                 <div class="spacer" style="text-align: center;"><img  src="img/icon-handwerk.jpg" >
+                <h1> <b><font color="#006699">Smart-Handwerk</font></b></h1>
+                <br/></div>
                 <label class="item item-input " id="login-input1">
-                    <span class="input-label">Username</span>
+                    <span class="input-label">Benutzername</span>
                     <input type="text" ng-model="email" placeholder="">
                 </label>
                 <label class="item item-input " id="login-input2">
-                    <span class="input-label">Password</span>
+                    <span class="input-label">Passwort</span>
                     <input type="password" ng-model="password" placeholder="">
                 </label>
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>
-            <a id="login-button5" class=" button button-positive  button-block" ng-click="login('email')" >Log in</a>
-            <a id="facebook" class=" button button-positive  button-block" ng-click="authenticate('facebook')">Facebook Log in</a>
+            <a id="login-button5" class=" button button-positive  button-block" ng-click="login('email')" >Login</a>
+            <a id="facebook" class=" button button-positive  button-block" ng-click="authenticate('facebook')">Facebook Login</a>
             <!--<a id="google" class=" button button-positive  button-block" ng-click="authenticate('google') ">Google+ Log in</a>-->
-            <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block button-clear " >Or create an account</a>
+            <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block " >Neuen Benutzer anlegen</a>
         </form>
     </ion-content>
 </ion-view>
