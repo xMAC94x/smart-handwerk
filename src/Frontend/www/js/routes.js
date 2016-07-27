@@ -121,6 +121,13 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'meineBeitrGeCtrl'
   })
 
+  .state('MeinePakete', {
+    cache:false,
+    url: '/MeinePakete',
+    templateUrl: 'templates/meinePakete.html',
+    controller: 'meinePaketeCtrl'
+  })
+
   .state('historie', {
     url: '/Historie',
     templateUrl: 'templates/historie.html',

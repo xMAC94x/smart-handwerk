@@ -310,7 +310,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   var vorherTitel = $ionicHistory.backTitle();
   if (vorherTitel == "Home Tab") {
     var reqId = DataFromHomeTabCtrlToAnfrageBersichtCtrl.reqId;
-  }else{ 
+  }else{
     var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
   }
 
@@ -724,9 +724,46 @@ $http({
 
 })
 
-.controller('paketeCtrl', function($scope) {
+.controller('paketeCtrl', function($http, $scope, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl) {
+  //reqID
+  //var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
+  var reqId = 'ef4836ce-525b-11e6-bd74-2bef595934e6';
+  $http.get(smartbackend.getApiUrl('/smarthandwerk/pakete/getpakete?request_id=' + reqId)).success(function (response) {
+    $scope.pakete = response.data;
+    console.log($scope.pakete);
+  })
 
 })
+
+
+.controller('meinePaketeCtrl', function($scope, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl){
+  $http({
+    method: 'GET',
+    url: smartbackend.getApiUrl('/smarthandwerk/anfrage/favouritenliste')
+  }).then(function successCallback(response) {
+    var anfdata = response.data;
+    $scope.anfragen = [];
+    for (i=0; i< anfdata.length; i++){
+      if (anfdata[i].myself == "true"){
+        //meine eigenen Requests
+        $scope.anfragen.push(anfdata[i]);
+      }else{
+        //Favouritenliste
+        //do nothing
+      }
+    }
+  }, function errorCallback(response) {
+    alert("error");
+  });
+
+  $scope.PaketAnzeigenByID=function(id) {
+    //ausgewählten Request: Id weitergeben
+    DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId = id;
+  }
+
+  $scope.listCanSwipe = true;
+})
+
 
 
 .controller('chatEinzelpersonCtrl', function($scope) {
