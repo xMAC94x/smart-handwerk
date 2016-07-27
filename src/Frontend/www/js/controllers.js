@@ -728,13 +728,25 @@ $http({
   //reqID
   //var reqId = DataFromBeitrCtrlToAnfrageBersichtCtrl.reqId;
   var reqId = 'ef4836ce-525b-11e6-bd74-2bef595934e6';
-  $http.get(smartbackend.getApiUrl('/smarthandwerk/pakete/getpakete?request_id=' + reqId)).success(function (response) {
-    $scope.pakete = response.data;
-    console.log($scope.pakete);
-  })
+  $http({
+    method: 'GET',
+    url: smartbackend.getApiUrl('/smarthandwerk/pakete/getpakete?request_id=' + reqId)
+  }).then(function successCallback(response) {
+    $scope.pakete = response.data.packages;
+  for (i=1; i <= $scope.pakete.length; i++){
+    //cnt setzen
+    $scope.pakete[i-1].cnt = i;
+    for (j=1; j <= $scope.pakete[i-1].bidders.length; j++){
+      //bidderscnt setzen
+      $scope.pakete[i-1].bidders[j-1].cnt =j;
+    }
+  }
+  console.log($scope.pakete);
+  },function errorCallback(response) {
+    alert("error");
+  });
 
 })
-
 
 .controller('meinePaketeCtrl', function($scope, $http, smartbackend, DataFromBeitrCtrlToAnfrageBersichtCtrl){
   $http({

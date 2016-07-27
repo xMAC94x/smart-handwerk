@@ -2,16 +2,16 @@
     <ion-content padding="true" class="has-header">
         <h2 id="pakete-heading6" style="color:#000000;" class=" ">Deine Pakete</h2>
         <ion-list id="pakete-list13" class=" ">
-          <ion-item class="item item-thumbnail-left" ng-repeat="paket in pakete"  >
-            <img src="img/{{anfrage.type}}.png">
-            <h3>{{anfrage.titel}}</h3>
-            <span class="item-note">{{anfrage.cnt}} Anfrageposten</span>
-            <p>{{anfrage.minPrice}} - {{anfrage.maxPrice}}</p>
-            <p>Von {{anfrage.begindate}} bis {{anfrage.enddate}}</p>
+          <ion-item class="item item" ng-repeat="paket in pakete"  >
+            <div class ="list">
+              <div class="item item-divider">
+                Paket {{paket.cnt}} für {{paket.price}} €
+              </div>
+              <ion-item class="" ng-repeat="anbieter in paket.bidders">
+                <p>Posten {{anbieter.cnt}} wird erledigt von: <h4>{{anbieter.first_name}} {{anbieter.last_name}}</h4></p>
+              </ion-item>
+            </div>
           </ion-item>
-            <ion-item id="pakete-list-item28" ui-sref="angebotsBersicht" class="  ">Paket 1</ion-item>
-            <ion-item id="pakete-list-item29" ui-sref="angebotsBersicht" class="  ">Paket 2</ion-item>
-            <ion-item id="pakete-list-item30" ui-sref="angebotsBersicht" class="  ">Paket 3</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
