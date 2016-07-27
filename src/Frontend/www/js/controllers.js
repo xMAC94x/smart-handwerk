@@ -392,6 +392,7 @@ var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         offerItems.push(singleOfferItem);
       }//else: requestitem wurde nicht ausgewählt
     }
+    offer.offerItems = offerItems;
 
     //Auswahl an db
     $http.post(smartbackend.getApiUrl('/smarthandwerk/angebot/angeboterstellen'), offer).success(function (response) {
