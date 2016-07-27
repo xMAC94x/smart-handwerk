@@ -58,7 +58,7 @@ angular.module('app.controllers', [])
   });
 })
 
-.controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http, $auth, smartbackend) {
+.controller('loginCtrl', ['$scope', '$http','$auth', 'smartbackend', function($scope, $http, $auth, smartbackend) {
     $scope.data = {};
     // $scope.email="";//neu50@yahoo.de";
    // $scope.password="";//12345678";
@@ -72,7 +72,7 @@ angular.module('app.controllers', [])
         if(provider==="email"){
               //SENT EMAIL TO SERVER GET A SALT
                 $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT
-                $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/email", params:{email:$scope.email,password: $scope.passwordPost}})
+                $http({method: "POST", url:smartbackend.getApiUrl('/smartbackend/auth/email'), params:{email:$scope.email,password: $scope.passwordPost}})
                     .then(function(result) {
                                 $scope.data.access_token = result.data.access_token;
                                 $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
@@ -92,7 +92,7 @@ angular.module('app.controllers', [])
                   $auth.authenticate(provider).then(function(response) {
             console.log($auth.getToken());
             console.log($auth.getPayload());
-                $http({method: "GET", url:"https://sb.pftclan.de:546/api/smartbackend/auth/"+provider+"/", params:{id_token: $auth.getToken()}})
+                $http({method: "GET", url:smartbackend.getApiUrl('/smartbackend/auth/')+provider+"/", params:{id_token: $auth.getToken()}})
                 .then(function(result) {
                         console.log('yes im ok');
 
