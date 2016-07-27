@@ -1,54 +1,16 @@
 <ion-view title="Home Tab" id="templates/homeTab.html" class=" ">
     <ion-content padding="true" class="has-header">
-        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Übersicht</h1>
-
-        <div style="padding:0;margin:0" ng-repeat="anfrage in anfragen" class="item item-body " id="anfrageErstellen-list-item-container6">
-
-
-          <div class="item item-body " id="">
-            <ion-list class=" ">
-              <ion-item class="item-thumbnail-left  ">
-                <h2>{{anfrage.titel}}</h2>
+        <h1 id="homeTab-heading1" style="color:#000000;" class=" ">Interessante Anfragen:</h1>
+<!--loop + anzeigen aller Items -->
+            <ion-list class=" " can-swipe="listCanSwipe">
+              <ion-item class="item item-thumbnail-left" ng-repeat="anfrage in anfragen" ng-click="anzeigenByID(anfrage.id)" ui-sref="anfrageBersicht" >
+                <img src="img/{{anfrage.type}}.png">
+                <h3>{{anfrage.titel}}</h3>
+                <span class="item-note">{{anfrage.cnt}} Anfrageposten</span>
+                <p>{{anfrage.prename}} {{anfrage.name}}</p>
+                <p>{{anfrage.minPrice}} - {{anfrage.maxPrice}}</p>
+                <p>Von {{anfrage.begindate}} bis {{anfrage.enddate}}</p>
               </ion-item>
             </ion-list>
-            <p  style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
-          </div>
-        </div>
-
-
-
-        <div ng-click="anzeigenByID(id)" ui-sref="anfrageBersicht" class="item item-body " id="homeTab-list-item-container4">
-            <p id="homeTab-markdown3" style="margin-top:0px;color:#000000;" class=" ">SucheTEEEEEEEEEEEEST...</p>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container5">
-            <p id="homeTab-markdown4" style="margin-top:0px;color:#000000;" class=" ">Biete...</p>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container6">
-            <ion-list id="homeTab-list6" class=" ">
-                <ion-item class="item-thumbnail-left  " id="homeTab-list-item16" ui-sref="anfrageBersicht">
-                    <h2>Schrank</h2>
-                </ion-item>
-            </ion-list>
-            <p id="homeTab-markdown5" style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container7">
-            <p id="homeTab-markdown6" style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container8">
-            <p id="homeTab-markdown7" style="margin-top:0px;color:#000000;" class=" ">Biete...</p>
-            <ion-list id="homeTab-list7" class=" ">
-                <ion-item class="item-thumbnail-left  " id="homeTab-list-item17">
-                    <h2>Nachttisch</h2>
-                </ion-item>
-            </ion-list>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container10">
-            <p id="homeTab-markdown9" style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
-        </div>
-        <div class="item item-body " id="homeTab-list-item-container9">
-            <p id="homeTab-markdown8" style="margin-top:0px;color:#000000;" class=" ">Suche...</p>
-        </div>
-
-
     </ion-content>
 </ion-view>

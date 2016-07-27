@@ -3008,6 +3008,11 @@ time, mark, audio, video {
   font: inherit;
   font-size: 100%; }
 
+em,i{
+  font-style:italic;
+}
+
+
 ol, ul {
   list-style: none; }
 

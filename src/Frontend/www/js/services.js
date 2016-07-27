@@ -13,18 +13,50 @@ angular.module('app.services', [])
          return {
              anfrageData: {},
              titel: {}
+         };
+
+ }])
+
+.factory('ChecklisteOriginalCtrl', [function () {
+
+         return {
+             gesamteListe: {}
 
          };
 
  }])
 
+.factory('DataFromHomeTabCtrlToAnfrageBersichtCtrl', [function () {
+
+  return {
+    reqId: {}
+  };
+
+}])
+
+  .factory('DataFromBeitrCtrlToAnfrageBersichtCtrl', [function () {
+
+    return {
+      reqId: {}
+    };
+
+  }])
+
+  .factory('DataFromAnfrageBersichtCtrlToAngebotErst', [function () {
+
+    return {
+      reqDetails: {}
+    };
+
+  }])
+
 .factory('smartbackend', [function(){
   var smartbackend={};
 
   smartbackend.urlLocation={};
-  smartbackend.urlLocation.serverip="localhost";
-  smartbackend.urlLocation.serverport="3000";
-  smartbackend.urlLocation.serverprotocol="http";
+  smartbackend.urlLocation.serverip="sb.pftclan.de";
+  smartbackend.urlLocation.serverport="546";
+  smartbackend.urlLocation.serverprotocol="https";
   smartbackend.urlLocation.baseurl= smartbackend.urlLocation.serverprotocol + "://" + smartbackend.urlLocation.serverip + ":" + smartbackend.urlLocation.serverport;
   smartbackend.urlLocation.api=smartbackend.urlLocation.baseurl + "/api";
   smartbackend.urlLocation.smartbackend=smartbackend.urlLocation.api + "/smartbackend";
