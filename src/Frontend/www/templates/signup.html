@@ -4,26 +4,26 @@
             <ion-list id="signup-list2" class=" ">
                 <label class="item item-input " id="vname">
                     <span class="input-label">Vorname</span>
-                    <input ng-model="vname" type="text" placeholder="">
+                    <input ng-model="input.vname" value="input.vname" type="text" placeholder="">
                 </label>
               <label class="item item-input " id="nname">
                 <span class="input-label">Nachname</span>
-                <input ng-model="nname" type="text" placeholder="">
+                <input ng-model="input.nname" value="input.nname" type="text" placeholder="">
               </label>
               <label class="item item-input " id="email">
                 <span class="input-label">E-Mail</span>
-                <input ng-model="email" type="email" placeholder="">
+                <input ng-model="input.email" value="input.email" type="email" placeholder="">
               </label>
                 <label class="item item-input " id="password">
                     <span class="input-label">Password</span>
-                    <input ng-model="password" type="password" placeholder="" minlength="7" maxlength="12">
+                    <input ng-model="input.password" value="input.password" type="password" placeholder="">
                 </label>
             </ion-list>
             <button id="signup" class=" button button-positive  button-block" ng-click="signup()" >Registrieren</button>
            <!-- <button  id="signup" class=" button button-stable  button-block " ng-click="signup(provider)">Sign up</button>
 
  <div class="spacer" style="height: 40px;"></div>-->
-            
+
             <!-- Verbindung von HTML zum Backend um die Einträge zu senden und in die Datenbank zu schreiben-->
         </form>
     </ion-content>

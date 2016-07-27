@@ -57,8 +57,8 @@ angular.module('app.controllers', [])
     console.log("Could not get location");
   });
 })
-         
-.controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http,$auth) {
+
+.controller('loginCtrl', ['$scope', '$http','$auth', function($scope, $http, $auth, smartbackend) {
     $scope.data = {};
     // $scope.email="";//neu50@yahoo.de";
    // $scope.password="";//12345678";
@@ -78,61 +78,64 @@ angular.module('app.controllers', [])
                                 $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
                  //   $state.go('tabsController.homeTab');
                    window.location = '#/Startseite/Home';
-                    
+
                     },function(error) {
                             // toSomething
                     alert('Falsche E-Mail Adresse oder Passwort')
                     })
-            
+
         }
     }
     $scope.authenticate=function(provider){
-            if(provider==="facebook"){     
-                
+            if(provider==="facebook"){
+
                   $auth.authenticate(provider).then(function(response) {
             console.log($auth.getToken());
             console.log($auth.getPayload());
                 $http({method: "GET", url:"https://sb.pftclan.de:546/api/smartbackend/auth/"+provider+"/", params:{id_token: $auth.getToken()}})
                 .then(function(result) {
                         console.log('yes im ok');
-                    
+
                     },function(error) {
                         console.log('Error: ' + error);
                     }
-                
+
             )
             .catch(function(response) {
                 userService.SocialLoginFailed();
             });
-        
+
             })
             }
 }}])
-    
-.controller('signupCtrl', ['$scope', '$http','$auth', '$document', function($scope, $http,$auth, $document) {
+
+.controller('signupCtrl', ['$scope', '$http','$auth', '$document', 'smartbackend', function($scope, $http, $auth, $document, smartbackend) {
     $scope.data = {};
+    $scope.input = {};
     // $scope.email="";//neu50@yahoo.de";
-   // $scope.password="";//12345678";
+    // $scope.password="";//12345678";
     var sha512 = function(password, salt){ // bower install crypto-js --save
         var hash = window.CryptoJS.HmacSHA512(password, salt).toString(); /** Hashing algorithm sha512 */
         return hash;
-    };    
-      $scope.signup=function(){
-         $scope.passwordPost= sha512($scope.password,  $scope.email);  // THERE IS NO GUARANTEE THAT THE SALT IS CORRECT MAY ITS A RANDOM SALT FOR SAFTEY IF EMAIL ISNT CORRECT                  
-            $http({method: "POST", url:"https://sb.pftclan.de:546/api/smartbackend/auth/signup", params:{email:$scope.email,password: $scope.passwordPost,salt:$scope.salt}})
-            .then(function(result) {
-                $scope.data.access_token = result.data.access_token;
-                $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
-               // $http(method: "PUT", url: + "profile", data:{
-                    //  vname: 
-                      })
-            window.location  ='#/Einloggen';
-            },function(error) {
-                // toSomething
-      alert ("Konnte nicht registriert werden!")      
-      }
+    };
 
-   
+    $scope.signup=function() {
+        if ($scope.input.password == null || $scope.input.email == null || $scope.input.vname == null || $scope.input.nname == null) {
+          alert('Felder müssen korrekt ausgefüllt werden');
+        } else {
+
+          var passwordPost = sha512($scope.input.password, $scope.input.email);
+          $http({method: "POST", url:smartbackend.getApiUrl('/smartbackend/auth/signup'), params:{email:$scope.input.email,password: passwordPost}})
+            .then(function(result) {
+              $scope.data.access_token = result.data.access_token;
+              $http.defaults.headers.common['Authorization'] = "Bearer "+ $scope.data.access_token;
+            },function(error) {
+              alert("Konnte nicht registriert werden!")
+            })
+
+          window.location = '#/Startseite/Home';
+        }
+    }
 }])
 
 .controller('anlegenCtrl', function($scope) {
@@ -489,7 +492,7 @@ $scope.kategorien = [
 .controller('chatEinzelpersonCtrl', function($scope) {
 
 
-    
+
 })
 
 .controller('chatGruppenchatCtrl', function($scope) {
